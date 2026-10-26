@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============ 面知 Design Tokens（权威，与 Design System 一致） ============ */
+:root {
+  --primary: #007AFF;
+  --primary-hover: #0066D6;
+  --primary-active: #0055B3;
+  --primary-light: #E6F1FB;
+  --primary-lighter: #F0F7FF;
+  --bg-page: #F5F5F7;
+  --bg-card: #FFFFFF;
+  --bg-hover: #F5F5F7;
+  --bg-active: #EBEBED;
+  --text-primary: #1D1D1F;
+  --text-secondary: #6E6E73;
+  --text-tertiary: #AEAEB2;
+  --text-inverse: #FFFFFF;
+  --border: #E5E5EA;
+  --border-hover: #D1D1D6;
+  --success: #34C759;
+  --success-light: #E8F8EC;
+  --warning: #FF9500;
+  --warning-light: #FFF4E6;
+  --error: #FF3B30;
+  --error-light: #FFEBE8;
+  --subject: #3B82F6;
+  --subject-light: #EBF3FF;
+  --analysis: #10B981;
+  --analysis-light: #E8F8F0;
+
+  --topbar-h: 56px;
+  --sidebar-w: 240px;
+  --sidebar-w-collapsed: 64px;
+  --content-max: 1200px;
+}
+
+/* ============ Base ============ */
+html, body, #app {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: 'PingFang SC', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 设计语言：无阴影，仅输入框聚焦环 */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.12);
+}
+
+/* 滚动条极简 */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 9999px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* 隐藏折叠侧栏文字（平板断点） */
+.side-collapsed .side-label { display: none; }
+
+/* 评分等级色彩映射工具类 */
+.grade-S, .grade-A { color: var(--success); }
+.grade-B { color: var(--warning); }
+.grade-C, .grade-D { color: var(--error); }
+.badge-S, .badge-A { background: var(--success-light); color: var(--success); }
+.badge-B { background: var(--warning-light); color: var(--warning); }
+.badge-C, .badge-D { background: var(--error-light); color: var(--error); }

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面知 · Web UI Design System</title>
+<style>
+:root{
+  /* Primary */
+  --primary:#007AFF; --primary-hover:#0066D6; --primary-active:#0055B3;
+  --primary-light:#E6F1FB; --primary-lighter:#F0F7FF;
+  /* Background */
+  --bg-page:#F5F5F7; --bg-card:#FFFFFF; --bg-hover:#F5F5F7; --bg-active:#EBEBED;
+  /* Text */
+  --text-primary:#1D1D1F; --text-secondary:#6E6E73; --text-tertiary:#AEAEB2; --text-inverse:#FFFFFF;
+  /* Border */
+  --border:#E5E5EA; --border-hover:#D1D1D6;
+  /* Semantic */
+  --success:#34C759; --success-light:#E8F8EC;
+  --warning:#FF9500; --warning-light:#FFF4E6;
+  --error:#FF3B30; --error-light:#FFEBE8;
+  /* Functional */
+  --subject:#3B82F6; --subject-light:#EBF3FF;
+  --analysis:#10B981; --analysis-light:#E8F8F0;
+  /* Notebook 8 colors */
+  --nb-blue:#007AFF; --nb-green:#34C759; --nb-orange:#FF9500; --nb-purple:#AF52DE;
+  --nb-pink:#FF2D92; --nb-cyan:#5AC8FA; --nb-amber:#FFB340; --nb-indigo:#5856D6;
+  /* Spacing */
+  --space-xs:4px; --space-sm:8px; --space-md:12px; --space-lg:16px;
+  --space-xl:24px; --space-2xl:32px; --space-3xl:48px;
+  /* Radius */
+  --radius-sm:6px; --radius-md:8px; --radius-lg:12px; --radius-full:9999px;
+  /* Font */
+  --font-sans:'PingFang SC','SF Pro Text',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:'SF Mono','Fira Code','Cascadia Code',monospace;
+  /* Transition */
+  --transition:all .2s ease;
+  /* Layout */
+  --sidebar-w:240px; --topbar-h:56px; --content-max-w:960px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font-sans);background:var(--bg-page);color:var(--text-primary);
+  line-height:1.5;-webkit-font-smoothing:antialiased;font-size:14px;}
+
+/* ---------- Doc shell ---------- */
+.doc-top{position:sticky;top:0;z-index:1000;background:var(--bg-card);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:var(--space-lg);padding:0 var(--space-xl);height:var(--topbar-h);}
+.doc-top .logo{font-size:18px;font-weight:600;}
+.doc-top .logo b{color:var(--primary);}
+.doc-top nav{display:flex;gap:var(--space-md);flex-wrap:wrap;margin-left:auto;}
+.doc-top nav a{font-size:13px;color:var(--text-secondary);text-decoration:none;transition:var(--transition);}
+.doc-top nav a:hover{color:var(--primary);}
+.wrap{max-width:1200px;margin:0 auto;padding:var(--space-3xl) var(--space-xl) 96px;}
+
+/* ---------- Hero ---------- */
+.hero{margin-bottom:var(--space-3xl);}
+.hero h1{font-size:28px;font-weight:600;letter-spacing:-.02em;margin-bottom:var(--space-sm);}
+.hero p{font-size:14px;color:var(--text-secondary);max-width:760px;}
+.hero .pill{display:inline-flex;align-items:center;gap:6px;margin-top:var(--space-md);
+  padding:6px 12px;border-radius:var(--radius-full);background:var(--primary-light);color:var(--primary);font-size:12px;font-weight:600;}
+
+/* ---------- Section ---------- */
+section{margin-bottom:var(--space-3xl);scroll-margin-top:72px;}
+.sec-head{display:flex;align-items:baseline;gap:var(--space-sm);margin-bottom:var(--space-xl);}
+.sec-head .num{font-size:13px;font-weight:600;color:var(--primary);background:var(--primary-light);
+  border-radius:var(--radius-sm);padding:2px 8px;}
+.sec-head h2{font-size:20px;font-weight:600;}
+.sec-head .desc{font-size:13px;color:var(--text-tertiary);margin-left:auto;}
+
+/* ---------- Generic card ---------- */
+.panel{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:var(--space-xl);}
+
+/* ---------- Style recommendation ---------- */
+.style-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-lg);}
+.style-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:var(--space-xl);display:flex;flex-direction:column;gap:var(--space-md);}
+.style-card.chosen{border:2px solid var(--primary);}
+.style-card .sname{font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;}
+.style-card .badge{font-size:11px;font-weight:600;color:var(--primary);background:var(--primary-light);
+  border-radius:var(--radius-full);padding:2px 8px;}
+.style-card h4{font-size:12px;font-weight:600;color:var(--text-tertiary);margin-top:4px;}
+.style-card p{font-size:13px;color:var(--text-secondary);line-height:1.6;}
+.style-card .swatches{display:flex;gap:6px;margin-top:auto;}
+.style-card .swatches i{width:28px;height:28px;border-radius:var(--radius-sm);display:block;border:1px solid var(--border);}
+
+/* ---------- Color swatches ---------- */
+.cg{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-lg);}
+.swatch{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;}
+.swatch .chip{height:72px;border-bottom:1px solid var(--border);}
+.swatch .meta{padding:var(--space-md);}
+.swatch .meta .tk{font-size:13px;font-weight:600;font-family:var(--font-mono);}
+.swatch .meta .hx{font-size:12px;color:var(--text-tertiary);font-family:var(--font-mono);}
+.swatch .meta .us{font-size:12px;color:var(--text-secondary);margin-top:4px;}
+.nb8{display:grid;grid-template-columns:repeat(8,1fr);gap:var(--space-sm);margin-top:var(--space-lg);}
+.nb8 .c{height:56px;border-radius:var(--radius-md);border:1px solid var(--border);position:relative;}
+.nb8 .c span{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:11px;color:#fff;font-weight:600;}
+
+/* ---------- Type scale ---------- */
+.type-row{display:flex;align-items:baseline;gap:var(--space-xl);padding:var(--space-lg) 0;border-bottom:1px solid var(--border);}
+.type-row:last-child{border-bottom:none;}
+.type-row .tl{width:120px;flex-shrink:0;}
+.type-row .tl b{font-size:13px;font-weight:600;font-family:var(--font-mono);}
+.type-row .tl span{display:block;font-size:11px;color:var(--text-tertiary);}
+.type-row .ts{flex:1;overflow:hidden;}
+.ts.h1{font-size:28px;font-weight:600;letter-spacing:-.02em;}
+.ts.h2{font-size:20px;font-weight:600;}
+.ts.h3{font-size:16px;font-weight:600;}
+.ts.body{font-size:14px;font-weight:400;}
+.ts.cap{font-size:12px;font-weight:400;color:var(--text-secondary);}
+.ts.code{font-size:13px;font-weight:400;font-family:var(--font-mono);color:var(--text-secondary);}
+
+/* ---------- Spacing ---------- */
+.sp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--space-md);}
+.sp{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-md);}
+.sp .bar{background:var(--primary-light);border:1px solid var(--primary);border-radius:var(--radius-sm);margin:0 auto var(--space-sm);}
+.sp .nm{font-size:12px;font-weight:600;text-align:center;}
+.sp .px{font-size:11px;color:var(--text-tertiary);text-align:center;font-family:var(--font-mono);}
+
+/* ---------- Radius ---------- */
+.rad-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-lg);}
+.rad{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-xl);text-align:center;}
+.rad .box{height:64px;background:var(--primary-light);border:1px solid var(--primary);margin-bottom:var(--space-md);}
+.rad .nm{font-size:13px;font-weight:600;font-family:var(--font-mono);}
+.rad .px{font-size:11px;color:var(--text-tertiary);}
+
+/* ---------- Components ---------- */
+.comp-group{margin-bottom:var(--space-2xl);}
+.comp-group > h3{font-size:16px;font-weight:600;margin-bottom:var(--space-md);}
+.comp-row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-md);}
+
+/* Button */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;cursor:pointer;
+  font-family:var(--font-sans);transition:var(--transition);text-decoration:none;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.btn-md{padding:8px 16px;font-size:14px;border-radius:var(--radius-md);min-height:36px;}
+.btn-sm{padding:6px 12px;font-size:13px;border-radius:var(--radius-md);min-height:32px;}
+.btn-lg{padding:10px 24px;font-size:15px;border-radius:var(--radius-md);min-height:44px;}
+.btn-primary{background:var(--primary);color:var(--text-inverse);}
+.btn-primary:hover:not(:disabled){background:var(--primary-hover);}
+.btn-primary:active:not(:disabled){background:var(--primary-active);}
+.btn-secondary{background:var(--bg-card);color:var(--primary);border:1px solid var(--primary);}
+.btn-secondary:hover:not(:disabled){background:var(--primary-lighter);}
+.btn-ghost{background:transparent;color:var(--primary);}
+.btn-ghost:hover:not(:disabled){background:var(--primary-lighter);}
+.btn-danger{background:var(--error);color:var(--text-inverse);}
+.btn-success{background:var(--success);color:var(--text-inverse);}
+.btn-neutral{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border);}
+.btn-neutral:hover:not(:disabled){background:var(--bg-hover);}
+.btn-icon{width:36px;height:36px;padding:0;border-radius:var(--radius-md);background:var(--bg-card);
+  border:1px solid var(--border);color:var(--text-secondary);}
+.btn-icon:hover{background:var(--bg-hover);color:var(--text-primary);}
+
+/* Card */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-xl);}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-md);}
+.card-title{font-size:16px;font-weight:600;}
+.card-body{font-size:14px;color:var(--text-secondary);line-height:1.6;}
+.stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-lg);}
+.stat-label{font-size:12px;color:var(--text-secondary);}
+.stat-value{font-size:28px;font-weight:600;margin-top:4px;letter-spacing:-.02em;}
+.stat-trend{font-size:12px;margin-top:4px;}
+.stat-trend.up{color:var(--success);}
+.stat-trend.down{color:var(--error);}
+.eq-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;max-width:420px;}
+.eq-header{display:flex;align-items:center;gap:var(--space-sm);padding:var(--space-sm) var(--space-lg);
+  border-bottom:1px solid var(--border);background:var(--bg-page);}
+.eq-body{padding:var(--space-lg);}
+.eq-question{font-size:14px;line-height:1.7;color:var(--text-primary);margin-bottom:var(--space-md);}
+.eq-analysis{background:var(--analysis-light);border-left:3px solid var(--analysis);padding:var(--space-md);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:13px;color:var(--text-secondary);line-height:1.6;}
+.eq-footer{display:flex;justify-content:space-between;align-items:center;padding:var(--space-sm) var(--space-lg);
+  border-top:1px solid var(--border);background:var(--bg-page);}
+
+/* Input */
+.input{padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius-md);font-size:14px;
+  font-family:var(--font-sans);background:var(--bg-card);color:var(--text-primary);outline:none;
+  transition:var(--transition);width:100%;}
+.input::placeholder{color:var(--text-tertiary);}
+.input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,122,255,.12);}
+.input:hover:not(:focus){border-color:var(--border-hover);}
+.input-error{border-color:var(--error);}
+.input-error:focus{box-shadow:0 0 0 3px rgba(255,59,48,.12);}
+.input:disabled{background:var(--bg-page);color:var(--text-tertiary);cursor:not-allowed;}
+.input-group{display:flex;align-items:center;gap:var(--space-sm);max-width:360px;}
+.input-group .input-icon{color:var(--text-tertiary);flex-shrink:0;}
+.textarea{min-height:80px;resize:vertical;line-height:1.6;}
+.field-label{display:block;font-size:13px;font-weight:500;margin-bottom:6px;color:var(--text-primary);}
+.field-help{font-size:12px;color:var(--text-tertiary);margin-top:4px;}
+.field-error{font-size:12px;color:var(--error);margin-top:4px;}
+.field{margin-bottom:var(--space-lg);max-width:360px;}
+
+/* Tag */
+.tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:var(--radius-sm);
+  font-size:12px;font-weight:500;line-height:1;}
+.tag-blue{background:var(--primary-light);color:var(--primary);}
+.tag-green{background:var(--success-light);color:var(--success);}
+.tag-orange{background:var(--warning-light);color:var(--warning);}
+.tag-red{background:var(--error-light);color:var(--error);}
+.tag-gray{background:var(--bg-page);color:var(--text-secondary);}
+.tag-subject{background:var(--subject-light);color:var(--subject);}
+.tag-analysis{background:var(--analysis-light);color:var(--analysis);}
+.tag-purple{background:#F3E8FF;color:var(--nb-purple);}
+.tag-pink{background:#FFEBF3;color:var(--nb-pink);}
+.tag-cyan{background:#E6F7FF;color:var(--nb-cyan);}
+.tag-dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+
+/* Progress / Tabs */
+.progress{height:6px;background:var(--bg-page);border-radius:var(--radius-full);overflow:hidden;max-width:320px;}
+.progress-bar{height:100%;background:var(--primary);border-radius:var(--radius-full);}
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:var(--space-lg);}
+.tab-item{padding:8px 16px;font-size:14px;color:var(--text-secondary);cursor:pointer;
+  border-bottom:2px solid transparent;transition:var(--transition);}
+.tab-item:hover{color:var(--text-primary);}
+.tab-item.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:500;}
+
+/* ---------- Layout spec ---------- */
+.layout-shell{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:var(--space-xl);}
+.ls-top{height:48px;background:var(--bg-card);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 var(--space-lg);font-size:12px;color:var(--text-secondary);gap:var(--space-lg);}
+.ls-top b{color:var(--text-primary);font-weight:600;}
+.ls-body{display:flex;min-height:300px;}
+.ls-side{width:200px;flex-shrink:0;background:var(--bg-page);border-right:1px solid var(--border);padding:var(--space-lg);font-size:12px;color:var(--text-secondary);}
+.ls-side .si{display:block;padding:6px 0;color:var(--text-secondary);}
+.ls-side .si.active{color:var(--primary);font-weight:600;}
+.ls-main{flex:1;padding:var(--space-lg);}
+.ls-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md);}
+.ls-grid .gc{background:var(--bg-page);border:1px solid var(--border);border-radius:var(--radius-md);height:80px;}
+.token-tbl{width:100%;border-collapse:collapse;font-size:13px;}
+.token-tbl th,.token-tbl td{text-align:left;padding:var(--space-md);border-bottom:1px solid var(--border);}
+.token-tbl th{font-size:12px;color:var(--text-tertiary);font-weight:500;}
+.token-tbl td{color:var(--text-secondary);font-family:var(--font-mono);}
+
+/* ---------- Responsive table ---------- */
+.resp-tbl{width:100%;border-collapse:collapse;font-size:13px;}
+.resp-tbl th,.resp-tbl td{text-align:left;padding:var(--space-md);border-bottom:1px solid var(--border);}
+.resp-tbl th{font-size:12px;color:var(--text-tertiary);font-weight:500;}
+.resp-tbl td{color:var(--text-secondary);}
+.resp-tbl td b{color:var(--text-primary);}
+
+.note{font-size:12px;color:var(--text-tertiary);margin-top:var(--space-md);line-height:1.6;}
+
+@media (max-width:1024px){
+  .cg{grid-template-columns:repeat(3,1fr);}
+  .style-grid{grid-template-columns:1fr;}
+  .sp-grid{grid-template-columns:repeat(4,1fr);}
+}
+@media (max-width:768px){
+  .cg{grid-template-columns:repeat(2,1fr);}
+  .rad-grid{grid-template-columns:repeat(2,1fr);}
+  .sp-grid{grid-template-columns:repeat(3,1fr);}
+  .wrap{padding:var(--space-xl) var(--space-md) 80px;}
+  .ls-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="doc-top">
+  <div class="logo">面知<b>.</b> DS</div>
+  <nav>
+    <a href="#styles">风格推荐</a>
+    <a href="#color">色彩</a>
+    <a href="#type">字体</a>
+    <a href="#space">间距</a>
+    <a href="#radius">圆角</a>
+    <a href="#comp">组件</a>
+    <a href="#layout">布局</a>
+    <a href="#resp">响应式</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <h1>面知 · Web UI Design System</h1>
+    <p>面向大学应届生的 AI 面试陪练工具设计系统。采用「极简蓝调（Apple 变体）」视觉语言：无阴影、靠 1px 细边框（#E5E5EA）与背景色差分层，留白优先，主色 #007AFF。本系统为页面生成、组件开发、评审对齐的单一事实来源。</p>
+    <span class="pill">● 设计风格：极简蓝调（Apple 变体）</span>
+  </div>
+
+  <!-- ============ 风格推荐 ============ -->
+  <section id="styles">
+    <div class="sec-head"><span class="num">0</span><h2>设计风格推荐</h2>
+      <span class="desc">面向应届生面试陪练场景的 3 种候选风格</span></div>
+    <div class="style-grid">
+      <div class="style-card chosen">
+        <div class="sname">极简蓝调（Apple 变体）<span class="badge">已选定</span></div>
+        <h4>适用原因</h4>
+        <p>应届生常用 iOS/微信生态，对苹果式简洁有天然信任感；无阴影+细边框降低认知负担，长文（题目/AI 点评）阅读舒适，科技蓝传达"智能/专业"，契合校招严肃场景。</p>
+        <h4>视觉特点</h4>
+        <p>无 box-shadow，仅用 1px #E5E5EA 边框与 #F5F5F7/#FFFFFF 背景差分层；字重仅 400/600；线框图标；大量留白；聚焦环为唯一允许的阴影。</p>
+        <h4>色彩方向</h4>
+        <p>主色 #007AFF，页面 #F5F5F7，卡片 #FFFFFF；文字三级 #1D1D1F / #6E6E73 / #AEAEB2；语义色成功绿、警告橙、错误红；题目区蓝、解析区绿。</p>
+        <div class="swatches"><i style="background:#007AFF"></i><i style="background:#F5F5F7"></i><i style="background:#FFFFFF"></i><i style="background:#3B82F6"></i><i style="background:#10B981"></i></div>
+      </div>
+      <div class="style-card">
+        <div class="sname">清新校园活力</div>
+        <h4>适用原因</h4>
+        <p>强调"陪伴感与鼓励"，适合焦虑的面试新手；暖色调缓解紧张情绪，圆润形态更亲和，利于日活打卡与坚持练习。</p>
+        <h4>视觉特点</h4>
+        <p>柔和渐变（蓝紫→青）、大圆角（16–24px）、插画/emoji 点缀、轻投影（低透明度）、活泼字体；信息密度偏低。</p>
+        <h4>色彩方向</h4>
+        <p>渐变主色 #5B8DEF→#7C5CFF，背景 #FBFDFF，强调 #FF8A65 珊瑚橙，成功 #4CD964，点缀 #FFD166。</p>
+        <div class="swatches"><i style="background:#5B8DEF"></i><i style="background:#7C5CFF"></i><i style="background:#FF8A65"></i><i style="background:#4CD964"></i><i style="background:#FFD166"></i></div>
+      </div>
+      <div class="style-card">
+        <div class="sname">专业数据看板</div>
+        <h4>适用原因</h4>
+        <p>突出"能力成长可量化"，适合看重结果与进步的理性用户；中性灰底+单一强调色，让折线图/雷达图成为视觉主角。</p>
+        <h4>视觉特点</h4>
+        <p>中性深灰（#1C1C1E）侧栏/顶栏，浅灰内容区；图表优先、信息密度高；扁平无装饰；强调色仅用于关键数据。</p>
+        <h4>色彩方向</h4>
+        <p>基底 #1C1C1E / #F2F2F4，主数据色 #0A84FF，正向 #30D158，负向 #FF453A，多维分类用 8 色板。</p>
+        <div class="swatches"><i style="background:#1C1C1E"></i><i style="background:#F2F2F4"></i><i style="background:#0A84FF"></i><i style="background:#30D158"></i><i style="background:#FF453A"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 1. 色彩规范 ============ -->
+  <section id="color">
+    <div class="sec-head"><span class="num">1</span><h2>色彩规范</h2>
+      <span class="desc">所有颜色必须取自以下令牌，禁止自定义色值</span></div>
+    <div class="panel">
+      <div class="cg">
+        <div class="swatch"><div class="chip" style="background:var(--primary)"></div><div class="meta"><div class="tk">--primary</div><div class="hx">#007AFF</div><div class="us">主色 · 按钮/链接/选中</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--primary-hover)"></div><div class="meta"><div class="tk">--primary-hover</div><div class="hx">#0066D6</div><div class="us">主按钮 hover</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--primary-active)"></div><div class="meta"><div class="tk">--primary-active</div><div class="hx">#0055B3</div><div class="us">主按钮 active</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--primary-light)"></div><div class="meta"><div class="tk">--primary-light</div><div class="hx">#E6F1FB</div><div class="us">标签底 / ghost hover</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--bg-page)"></div><div class="meta"><div class="tk">--bg-page</div><div class="hx">#F5F5F7</div><div class="us">页面背景</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--bg-card)"></div><div class="meta"><div class="tk">--bg-card</div><div class="hx">#FFFFFF</div><div class="us">卡片 / 面板</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--bg-active)"></div><div class="meta"><div class="tk">--bg-active</div><div class="hx">#EBEBED</div><div class="us">按下态背景</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--text-primary)"></div><div class="meta"><div class="tk">--text-primary</div><div class="hx">#1D1D1F</div><div class="us">主文字 / 标题</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--text-secondary)"></div><div class="meta"><div class="tk">--text-secondary</div><div class="hx">#6E6E73</div><div class="us">次文字 / 辅助</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--text-tertiary)"></div><div class="meta"><div class="tk">--text-tertiary</div><div class="hx">#AEAEB2</div><div class="us">辅文字 / 占位</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--border)"></div><div class="meta"><div class="tk">--border</div><div class="hx">#E5E5EA</div><div class="us">边框 / 分隔线</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--border-hover)"></div><div class="meta"><div class="tk">--border-hover</div><div class="hx">#D1D1D6</div><div class="us">输入框 hover 边框</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--success)"></div><div class="meta"><div class="tk">--success</div><div class="hx">#34C759</div><div class="us">成功 / 已掌握</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--warning)"></div><div class="meta"><div class="tk">--warning</div><div class="hx">#FF9500</div><div class="us">警告 / 待强化</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--error)"></div><div class="meta"><div class="tk">--error</div><div class="hx">#FF3B30</div><div class="us">错误 / 薄弱</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--subject)"></div><div class="meta"><div class="tk">--subject</div><div class="hx">#3B82F6</div><div class="us">题目区标识</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--analysis)"></div><div class="meta"><div class="tk">--analysis</div><div class="hx">#10B981</div><div class="us">解析区 / AI 点评</div></div></div>
+      </div>
+      <h4 style="font-size:13px;color:var(--text-tertiary);margin:var(--space-xl) 0 var(--space-sm);font-weight:600;">错题本 8 色（分类标识，用于卡片左侧色条 / 圆点标签）</h4>
+      <div class="nb8">
+        <div class="c" style="background:var(--nb-blue)"><span>蓝</span></div>
+        <div class="c" style="background:var(--nb-green)"><span>绿</span></div>
+        <div class="c" style="background:var(--nb-orange)"><span>橙</span></div>
+        <div class="c" style="background:var(--nb-purple)"><span>紫</span></div>
+        <div class="c" style="background:var(--nb-pink)"><span>粉</span></div>
+        <div class="c" style="background:var(--nb-cyan)"><span>青</span></div>
+        <div class="c" style="background:var(--nb-amber)"><span>琥珀</span></div>
+        <div class="c" style="background:var(--nb-indigo)"><span>靛蓝</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. 字体规范 ============ -->
+  <section id="type">
+    <div class="sec-head"><span class="num">2</span><h2>字体规范</h2>
+      <span class="desc">仅 400 / 600 两级字重，禁止 300 / 700</span></div>
+    <div class="panel">
+      <div style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-lg);">
+        字体栈：<code style="font-family:var(--font-mono);color:var(--text-primary);">'PingFang SC','SF Pro Text',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif</code>
+      </div>
+      <div class="type-row"><div class="tl"><b>H1</b><span>28 / 600 · -0.02em</span></div><div class="ts h1">模拟面试 · 前端开发工程师</div></div>
+      <div class="type-row"><div class="tl"><b>H2</b><span>20 / 600</span></div><div class="ts h2">本场面试得分与能力分析</div></div>
+      <div class="type-row"><div class="tl"><b>H3</b><span>16 / 600</span></div><div class="ts h3">错题回看 · 结构化答题模板</div></div>
+      <div class="type-row"><div class="tl"><b>Body</b><span>14 / 400</span></div><div class="ts body">请结合项目经历，说明你是如何定位并解决一个技术难点的。</div></div>
+      <div class="type-row"><div class="tl"><b>Caption</b><span>12 / 400</span></div><div class="ts cap">第 3 / 8 题 · 行为题 · 难度 ★★☆ · 142 字/分</div></div>
+      <div class="type-row"><div class="tl"><b>Code</b><span>13 / 400 mono</span></div><div class="ts code">POST /api/v1/interview/start · 200 OK</div></div>
+    </div>
+  </section>
+
+  <!-- ============ 3. 间距规范 ============ -->
+  <section id="space">
+    <div class="sec-head"><span class="num">3</span><h2>间距规范</h2>
+      <span class="desc">8px 栅格，所有间距为 4 的倍数</span></div>
+    <div class="panel">
+      <div class="sp-grid">
+        <div class="sp"><div class="bar" style="height:8px;width:8px"></div><div class="nm">xs</div><div class="px">4px</div></div>
+        <div class="sp"><div class="bar" style="height:8px;width:16px"></div><div class="nm">sm</div><div class="px">8px</div></div>
+        <div class="sp"><div class="bar" style="height:8px;width:24px"></div><div class="nm">md</div><div class="px">12px</div></div>
+        <div class="sp"><div class="bar" style="height:8px;width:32px"></div><div class="nm">lg</div><div class="px">16px</div></div>
+        <div class="sp"><div class="bar" style="height:8px;width:48px"></div><div class="nm">xl</div><div class="px">24px</div></div>
+        <div class="sp"><div class="bar" style="height:8px;width:64px"></div><div class="nm">2xl</div><div class="px">32px</div></div>
+        <div class="sp"><div class="bar" style="height:8px;width:96px"></div><div class="nm">3xl</div><div class="px">48px</div></div>
+      </div>
+      <p class="note">xs 图标与文字间距 · sm 组件内部元素 / 标签内边距 · md 输入框内边距 / 卡片内部 · lg 按钮内边距 / 卡片内边距 · xl 区块间距 / 侧边栏内边距 · 2xl 页面级区块 · 3xl 页面顶部/底部留白。</p>
+    </div>
+  </section>
+
+  <!-- ============ 4. 圆角规范 ============ -->
+  <section id="radius">
+    <div class="sec-head"><span class="num">4</span><h2>圆角规范</h2>
+      <span class="desc">仅四级圆角：6 / 8 / 12 / 9999</span></div>
+    <div class="panel">
+      <div class="rad-grid">
+        <div class="rad"><div class="box" style="border-radius:var(--radius-sm)"></div><div class="nm">--radius-sm</div><div class="px">6px · 标签/徽章</div></div>
+        <div class="rad"><div class="box" style="border-radius:var(--radius-md)"></div><div class="nm">--radius-md</div><div class="px">8px · 按钮/输入</div></div>
+        <div class="rad"><div class="box" style="border-radius:var(--radius-lg)"></div><div class="nm">--radius-lg</div><div class="px">12px · 卡片/面板</div></div>
+        <div class="rad"><div class="box" style="border-radius:var(--radius-full);width:64px;height:64px"></div><div class="nm">--radius-full</div><div class="px">9999px · 头像/进度</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. 组件规范 ============ -->
+  <section id="comp">
+    <div class="sec-head"><span class="num">5</span><h2>组件规范</h2>
+      <span class="desc">按钮 · 卡片 · 输入框（含标签/进度/标签页）</span></div>
+
+    <div class="panel">
+      <div class="comp-group">
+        <h3>5.1 按钮 Button</h3>
+        <div class="comp-row" style="margin-bottom:var(--space-md)">
+          <button class="btn btn-md btn-primary">开始面试</button>
+          <button class="btn btn-md btn-secondary">导出报告</button>
+          <button class="btn btn-md btn-ghost">查看详情</button>
+          <button class="btn btn-md btn-neutral">取消</button>
+          <button class="btn btn-md btn-danger">删除记录</button>
+          <button class="btn btn-md btn-success">重新练习</button>
+        </div>
+        <div class="comp-row" style="margin-bottom:var(--space-md)">
+          <button class="btn btn-sm btn-primary">小</button>
+          <button class="btn btn-md btn-primary">中</button>
+          <button class="btn btn-lg btn-primary">大</button>
+          <button class="btn btn-icon" aria-label="icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>
+          </button>
+          <button class="btn btn-md btn-primary" disabled>禁用</button>
+        </div>
+        <p class="note">尺寸：sm 32px / md 36px / lg 44px（移动端最小点击区 44×44）。主色仅用于一个主行动点，避免多主按钮并列。</p>
+      </div>
+
+      <div class="comp-group">
+        <h3>5.2 卡片 Card</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-lg);">
+          <div class="card">
+            <div class="card-header"><span class="card-title">面试配置</span><span class="tag tag-blue">普通</span></div>
+            <div class="card-body">前端开发工程师 · 互联网 · 45 分钟 · 行为/情景/专业/压力混合题型。</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">综合得分</div>
+            <div class="stat-value">78</div>
+            <div class="stat-trend up">▲ 较上次 +6</div>
+          </div>
+          <div class="eq-card" style="border-left:4px solid var(--nb-blue);max-width:none;">
+            <div class="eq-header"><span class="tag tag-subject">行为题</span><span class="tag tag-gray">STAR</span><span style="font-size:12px;color:var(--text-tertiary);margin-left:auto">薄弱</span></div>
+            <div class="eq-body">
+              <div class="eq-question">请举例说明你如何处理团队冲突。</div>
+              <div class="eq-analysis"><strong style="color:var(--analysis)">AI 解析：</strong>建议用 STAR 结构，补充量化结果与个人贡献。</div>
+            </div>
+            <div class="eq-footer"><span style="font-size:12px;color:var(--text-secondary)">得分 62 · 需强化</span><button class="btn btn-sm btn-ghost">重新练习</button></div>
+          </div>
+        </div>
+        <p class="note">基础卡用于配置/信息；统计卡用于看板 KPI；错题/题目卡左侧 4px 色条取自错题本 8 色，解析区用 --analysis 浅底+左边框。</p>
+      </div>
+
+      <div class="comp-group">
+        <h3>5.3 输入框 Input</h3>
+        <div class="field">
+          <label class="field-label">意向岗位</label>
+          <input class="input" placeholder="如：前端开发工程师"/>
+        </div>
+        <div class="field">
+          <label class="field-label">搜索题库 / 题目</label>
+          <div class="input-group">
+            <span class="input-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+            <input class="input" placeholder="输入关键词…"/>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">我的回答（文字答题）</label>
+          <textarea class="input textarea" placeholder="在此输入你的回答，或使用语音答题…"></textarea>
+          <div class="field-help">支持语音转写后自动回填，实时点评将持续更新。</div>
+        </div>
+        <div class="field">
+          <label class="field-label">面试时长</label>
+          <select class="input"><option>45 分钟</option><option>30 分钟</option><option>60 分钟</option></select>
+        </div>
+        <div class="field">
+          <label class="field-label">错因描述（错误态）</label>
+          <input class="input input-error" placeholder="请输入错因…"/>
+          <div class="field-error">错因描述不能为空</div>
+        </div>
+        <p class="note">聚焦环是唯一允许的 box-shadow：<code style="font-family:var(--font-mono)">0 0 0 3px rgba(0,122,255,.12)</code>；错误态聚焦环用红色 12% 透明度。</p>
+      </div>
+
+      <div class="comp-group">
+        <h3>5.4 标签 / 进度 / 标签页</h3>
+        <div class="comp-row" style="margin-bottom:var(--space-lg)">
+          <span class="tag tag-blue">待强化</span><span class="tag tag-green">已掌握</span><span class="tag tag-orange">需练习</span>
+          <span class="tag tag-red">薄弱</span><span class="tag tag-gray">已归档</span>
+          <span class="tag tag-subject">题目区</span><span class="tag tag-analysis">解析区</span>
+          <span class="tag tag-purple">专业题</span><span class="tag tag-pink">压力题</span><span class="tag tag-cyan">情景题</span>
+          <span class="tag tag-gray"><span class="tag-dot" style="background:var(--nb-blue)"></span>前端错题本</span>
+        </div>
+        <div style="margin-bottom:var(--space-lg)">
+          <div class="field-label" style="margin-bottom:8px;">能力掌握度</div>
+          <div class="progress"><div class="progress-bar" style="width:72%"></div></div>
+        </div>
+        <div class="tabs">
+          <div class="tab-item active">全部</div>
+          <div class="tab-item">薄弱题型</div>
+          <div class="tab-item">已掌握</div>
+          <div class="tab-item">压力面</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. 页面布局规范 ============ -->
+  <section id="layout">
+    <div class="sec-head"><span class="num">6</span><h2>页面布局规范</h2>
+      <span class="desc">App Shell：顶栏 56px + 侧边栏 240px + 主内容</span></div>
+    <div class="layout-shell">
+      <div class="ls-top"><b>面知</b> &nbsp; 模拟面试 &nbsp; 题库管理 &nbsp; 面试报告 &nbsp; 能力看板 &nbsp; 帮助 &nbsp; · &nbsp; 搜索 · 通知 · 用户</div>
+      <div class="ls-body">
+        <div class="ls-side">
+          <span class="si active">● 普通模拟</span>
+          <span class="si">● 压力面模拟</span>
+          <span class="si">● 岗位题库分类</span>
+          <span class="si" style="color:var(--text-tertiary)">　互联网</span>
+          <span class="si" style="color:var(--text-tertiary)">　国企</span>
+          <span class="si" style="color:var(--text-tertiary)">　外企</span>
+          <span class="si" style="color:var(--text-tertiary)">　快消</span>
+        </div>
+        <div class="ls-main">
+          <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:8px;">操作栏：岗位筛选 · 开始面试 · 历史记录 · 搜索</div>
+          <div class="ls-grid">
+            <div class="gc"></div><div class="gc"></div><div class="gc"></div>
+          </div>
+          <div style="font-size:11px;color:var(--text-tertiary);margin-top:8px;">面试配置卡片列表（响应式 1/2/3/4 列）</div>
+        </div>
+      </div>
+    </div>
+    <table class="token-tbl">
+      <tr><th>令牌</th><th>值</th><th>说明</th></tr>
+      <tr><td>--topbar-h</td><td>56px</td><td>顶部导航栏高度（固定）</td></tr>
+      <tr><td>--sidebar-w</td><td>240px</td><td>左侧边栏宽度（桌面展开 / 平板 64px 图标 / 移动隐藏）</td></tr>
+      <tr><td>--content-max-w</td><td>960px</td><td>主内容区最大宽度（看板类页面可全宽）</td></tr>
+      <tr><td>--content-padding</td><td>48px</td><td>主内容区内边距（移动端缩至 24px）</td></tr>
+      <tr><td>card-gap</td><td>16 / 24px</td><td>卡片紧凑 / 宽松间距</td></tr>
+    </table>
+    <p class="note">经典后台左右布局：顶栏含 Logo「面知」+ 主导航 + 搜索/通知/用户；左侧为面试模式导航（普通/压力面/岗位分类）。面试进行页采用顶栏 + 三栏（AI 提问 / 作答 / 实时分析）；报告页与看板页可弱化侧栏以放大内容。</p>
+  </section>
+
+  <!-- ============ 7. 响应式规范 ============ -->
+  <section id="resp">
+    <div class="sec-head"><span class="num">7</span><h2>响应式规范</h2>
+      <span class="desc">4 个断点 · 移动端转底部导航</span></div>
+    <div class="panel">
+      <table class="resp-tbl">
+        <tr><th>断点</th><th>范围</th><th>侧边栏</th><th>卡片网格</th><th>统计卡</th><th>字号调整</th></tr>
+        <tr><td><b>Mobile</b></td><td>&lt;768px</td><td>隐藏 → 底部导航</td><td>1 列</td><td>2 列</td><td>H1→24 / H2→18</td></tr>
+        <tr><td><b>Tablet</b></td><td>768–1024px</td><td>折叠 64px 图标</td><td>2 列</td><td>2 列</td><td>标准</td></tr>
+        <tr><td><b>Desktop</b></td><td>1024–1440px</td><td>展开 240px</td><td>3 列</td><td>4 列</td><td>标准</td></tr>
+        <tr><td><b>Wide</b></td><td>&gt;1440px</td><td>展开 240px</td><td>4 列</td><td>4 列</td><td>标准</td></tr>
+      </table>
+      <p class="note" style="margin-top:var(--space-lg);">移动端适配要点：① 侧边栏 &lt;768px 隐藏，显示底部导航（模拟面试 / 报告 / 看板 / 我的）4 入口；② 按钮最小点击区 44×44px；③ 输入框最小高度 44px；④ 内容内边距 48→24px；⑤ 表格横向滚动；⑥ 弹窗改全屏底部抽屉。图标规范：导航 20px、内容 16px、按钮 14px，线宽 1.5px，outline 风格，禁止混用图标库。</p>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

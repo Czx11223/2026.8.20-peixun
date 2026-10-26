@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面知 · AI 面试陪练工具 PRD</title>
+<style>
+  :root{
+    --bg:#F5F5F7; --card:#FFFFFF; --border:#E5E5EA;
+    --text:#1D1D1F; --text2:#6E6E73; --text3:#AEAEB2;
+    --primary:#007AFF; --primary-light:rgba(0,122,255,.08);
+    --success:#34C759; --warning:#FF9500; --error:#FF3B30;
+    --code-bg:#F5F5F7;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",-apple-system,"SF Pro SC","Helvetica Neue",sans-serif;font-size:14px;line-height:1.7;padding:32px 16px 64px;-webkit-font-smoothing:antialiased}
+  .doc{max-width:880px;margin:0 auto}
+  /* 封面 */
+  .cover{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:40px 44px;margin-bottom:20px}
+  .cover .logo{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--primary);border:1px solid var(--primary);border-radius:6px;padding:4px 12px;margin-bottom:20px}
+  .cover h1{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.3;margin-bottom:8px}
+  .cover .sub{font-size:16px;color:var(--text2);margin-bottom:24px}
+  .cover table{width:100%;border-collapse:collapse;font-size:13px}
+  .cover table td{border:none;border-bottom:1px solid var(--border);padding:8px 4px;color:var(--text2)}
+  .cover table td:first-child{width:110px;color:var(--text);font-weight:600}
+  .cover table tr:last-child td{border-bottom:none}
+  /* 内容卡 */
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:36px 44px;margin-bottom:16px}
+  h2{font-size:20px;font-weight:600;letter-spacing:-.01em;margin:8px 0 16px;padding-bottom:10px;border-bottom:2px solid var(--primary);display:inline-block;color:var(--text)}
+  h3{font-size:16px;font-weight:600;margin:24px 0 12px;color:var(--text)}
+  h4{font-size:14px;font-weight:600;margin:18px 0 8px;color:var(--text)}
+  p{margin:8px 0;color:var(--text)}
+  strong{font-weight:600;color:var(--text)}
+  em{color:var(--text2)}
+  ul,ol{margin:8px 0 8px 22px;color:var(--text)}
+  li{margin:4px 0}
+  a{color:var(--primary);text-decoration:none}
+  /* 表格 */
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+  th{background:var(--primary-light);color:var(--text);font-weight:600;text-align:left;padding:9px 12px;border:1px solid var(--border)}
+  td{padding:9px 12px;border:1px solid var(--border);color:var(--text);vertical-align:top}
+  tr:nth-child(even) td{background:#FAFAFC}
+  /* 代码块 */
+  pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto;margin:12px 0;font-size:12.5px;line-height:1.6}
+  code{font-family:"SF Mono","JetBrains Mono",Consolas,monospace;font-size:12.5px;background:var(--code-bg);border-radius:4px;padding:1px 5px}
+  pre code{background:none;padding:0}
+  /* Mermaid */
+  .mermaid-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px;margin:12px 0;text-align:center}
+  .mermaid{display:inline-block}
+  /* 引用 */
+  blockquote{border-left:3px solid var(--primary);background:var(--primary-light);padding:8px 14px;margin:12px 0;border-radius:0 8px 8px 0;color:var(--text2)}
+  blockquote p{color:var(--text2)}
+  /* 封面 badge */
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .badge{font-size:12px;color:var(--text2);border:1px solid var(--border);border-radius:6px;padding:2px 10px;background:#fff}
+  .badge.blue{color:var(--primary);border-color:var(--primary);background:var(--primary-light)}
+  .badge.green{color:var(--success);border-color:var(--success);background:rgba(52,199,89,.08)}
+  /* TOC */
+  .toc{font-size:13px;color:var(--text2)}
+  .toc a{display:inline-block;margin:3px 0;margin-right:14px;color:var(--text2)}
+  .toc a:hover{color:var(--primary)}
+  hr{border:none;border-top:1px dashed var(--border);margin:20px 0}
+  @media (max-width:768px){
+    .doc{padding:0}
+    body{padding:16px 10px 48px}
+    .card,.cover{padding:24px 20px}
+    table{font-size:12px}
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+  <div class="cover">
+    <span class="logo">面知 · AI 面试陪练</span>
+    <h1>面知 · AI 面试陪练工具 PRD</h1>
+    <div class="sub">产品需求文档 · V1.0（MVP） · 面向高校应届生的 AI 面试模拟陪练平台</div>
+    <div class="badges">
+      <span class="badge blue">Web 端响应式</span>
+      <span class="badge">Vue3 + FastAPI + SQLite + ChromaDB</span>
+      <span class="badge">大模型 API + 语音识别 SDK</span>
+      <span class="badge green">MVP 10 大功能</span>
+    </div>
+    <table>
+      <tr><td>产品名称</td><td>面知 - AI 面试陪练工具</td></tr>
+      <tr><td>文档版本</td><td>V1.0（MVP）</td></tr>
+      <tr><td>目标用户</td><td>高校应届生（校招求职）</td></tr>
+      <tr><td>更新日期</td><td>2026-08-20</td></tr>
+    </table>
+    <div class="toc" id="toc"></div>
+  </div>
+  <div class="card" id="content">
+    <h1>面知 · AI 面试陪练工具 — 产品需求文档（PRD）</h1>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品名称</td>
+<td>面知 - AI 面试陪练工具</td>
+</tr>
+<tr>
+<td>文档版本</td>
+<td>V1.0（MVP）</td>
+</tr>
+<tr>
+<td>产品形态</td>
+<td>Web 端应用（响应式，桌面优先）</td>
+</tr>
+<tr>
+<td>目标用户</td>
+<td>高校应届生（校招求职）</td>
+</tr>
+<tr>
+<td>技术栈</td>
+<td>Vue3 + FastAPI + SQLite + ChromaDB + 大模型 API + 语音识别 SDK</td>
+</tr>
+<tr>
+<td>更新日期</td>
+<td>2026-08-20</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>一、产品背景与目标</h2>
+<h3>1.1 产品背景</h3>
+<p>高校应届生求职竞争日益激烈，校招面试是决定求职成败的关键环节，但应届生普遍面临四大核心痛点：</p>
+<table>
+<thead>
+<tr>
+<th>痛点</th>
+<th>具体表现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>缺实战</strong></td>
+<td>身边缺少能扮演 HR 的模拟面试对象，真实面试经验几乎为零</td>
+</tr>
+<tr>
+<td><strong>怕开口</strong></td>
+<td>紧张、怯场、临场忘词，不敢开口表达</td>
+</tr>
+<tr>
+<td><strong>不知好坏</strong></td>
+<td>练习后无人点评，不知道答得好不好、差在哪</td>
+</tr>
+<tr>
+<td><strong>难坚持</strong></td>
+<td>缺乏即时反馈与成长激励，练习难以持续</td>
+</tr>
+</tbody></table>
+<h3>1.2 产品定位</h3>
+<p>面知 是一款面向高校应届生的 <strong>AI 面试模拟陪练平台</strong>，专注校招面试备考。通过<strong>全真岗位面试模拟、AI 智能点评打分、面试问题复盘、能力数据可视化</strong>，帮助应届生快速熟悉面试流程、规范答题逻辑、改掉面试陋习，高效提升校招面试通过率。</p>
+<h3>1.3 产品目标</h3>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>目标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品目标（MVP）</td>
+<td>数周内上线可演示、可自用的 MVP，跑通「练 → 评 → 改 → 长」核心闭环，覆盖 10 大 MVP 功能</td>
+</tr>
+<tr>
+<td>用户价值</td>
+<td>面试流程熟悉度提升、答题逻辑规范化、面试陋习可视化纠正、面试能力可量化成长</td>
+</tr>
+<tr>
+<td>平台价值</td>
+<td>沉淀答题数据资产，积累题库与答题模板内容库，形成数据飞轮</td>
+</tr>
+</tbody></table>
+<h3>1.4 核心指标（北极星与关键指标）</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>定义</th>
+<th>目标值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>面试练习次数（北极星）</td>
+<td>周人均完成面试场次</td>
+<td>≥ 2 次/周</td>
+</tr>
+<tr>
+<td>面试完成率</td>
+<td>开启面试后完成全部流程的比例</td>
+<td>≥ 80%</td>
+</tr>
+<tr>
+<td>错题复练率</td>
+<td>错题回看后发起专项复练的比例</td>
+<td>≥ 30%</td>
+</tr>
+<tr>
+<td>点评有用性</td>
+<td>用户对 AI 点评「有用」评价占比</td>
+<td>≥ 85%</td>
+</tr>
+<tr>
+<td>次周留存率</td>
+<td>首次使用后第 7 天仍在使用的比例</td>
+<td>≥ 25%</td>
+</tr>
+</tbody></table>
+<h3>1.5 三大业务主流程</h3>
+<ol>
+<li><strong>全真面试模拟</strong>：选择岗位题型 → 开启 AI 面试 → 实时答题作答 → AI 实时点评打分</li>
+<li><strong>面试复盘分析</strong>：结束面试 → 生成完整报告 → 短板知识点汇总 → 针对性优化建议</li>
+<li><strong>AI 问答辅导</strong>：面试疑问提问 → 流式 AI 答疑 → 答题模板一键收藏复用</li>
+</ol>
+<hr>
+<h2>二、目标用户画像</h2>
+<h3>2.1 核心用户群</h3>
+<ul>
+<li><strong>人群</strong>：高校应届生（大三/大四本科生、研二/研三硕士生）</li>
+<li><strong>时机</strong>：校招季（秋招 8–11 月、春招 2–5 月）集中备考</li>
+<li><strong>行业</strong>：互联网、国企、文职、制造业等多行业求职者</li>
+<li><strong>设备</strong>：以 PC 为主（Web 端），移动端轻量访问</li>
+</ul>
+<h3>2.2 典型用户画像</h3>
+<table>
+<thead>
+<tr>
+<th>画像</th>
+<th>背景</th>
+<th>核心痛点</th>
+<th>典型使用方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>校招小白 · 小林</strong></td>
+<td>大四应届，第一次参加校招，无面试经验</td>
+<td>不知道面试问什么、怎么答，紧张忘词</td>
+<td>从岗位题库起步，普通模式练习，依赖标准答案与结构化模板</td>
+</tr>
+<tr>
+<td><strong>临阵突击 · 小陈</strong></td>
+<td>已收到面试通知，时间紧迫</td>
+<td>想快速了解目标岗位高频题与面试节奏</td>
+<td>用意向岗位题库集中突击，重点用压力面模拟 + 复盘报告</td>
+</tr>
+<tr>
+<td><strong>进阶提升 · 小王</strong></td>
+<td>已有数轮面试经历，能力不稳定</td>
+<td>表达逻辑差、口头禅多、得分波动大</td>
+<td>看数据看板与弱项诊断，做专项训练，收藏模板复用</td>
+</tr>
+</tbody></table>
+<h3>2.3 核心使用场景</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>触发时机</th>
+<th>用户行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>日常备战</td>
+<td>秋招/春招备考期</td>
+<td>每日 20–30 分钟随机练习 + 查看成长曲线</td>
+</tr>
+<tr>
+<td>考前突击</td>
+<td>收到面试邀约后 1–3 天</td>
+<td>目标岗位高频题集中模拟、压力面演练</td>
+</tr>
+<tr>
+<td>复盘提升</td>
+<td>每次面试结束后</td>
+<td>查看报告、错题回看、专项复练</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>三、业务核心逻辑（Mermaid 流程图）</h2>
+<p>面知 业务以「<strong>练 → 评 → 改 → 长</strong>」能力螺旋为核心闭环，三大流程（全真面试模拟、面试复盘分析、AI 问答辅导）均汇入该闭环：</p>
+<pre><code class="language-mermaid">flowchart TD
+    U[&quot;👤 学生用户&quot;]
+    U --&gt;|&quot;全真面试模拟&quot;| A[&quot;选择岗位 / 题型&quot;]
+    A --&gt; B[&quot;开启 AI 面试&lt;br/&gt;普通 / 压力模式&quot;]
+    B --&gt; C[&quot;实时答题作答&lt;br/&gt;语音 / 文字&quot;]
+    C --&gt; D[&quot;AI 实时点评打分&lt;br/&gt;多维评分 + 评级&quot;]
+    D --&gt; E{&quot;面试结束?&quot;}
+    E --&gt;|&quot;否&quot;| C
+    E --&gt;|&quot;是&quot;| F[&quot;生成面试报告&quot;]
+    F --&gt; G[&quot;短板知识点汇总&quot;]
+    G --&gt; H[&quot;针对性优化建议&quot;]
+    H --&gt; I[&quot;错题专项复练 / 模板收藏&quot;]
+    I --&gt; B
+    U --&gt;|&quot;AI 问答辅导&quot;| J[&quot;面试疑问提问&quot;]
+    J --&gt; K[&quot;流式 AI 答疑&quot;]
+    K --&gt; L[&quot;答题模板一键收藏复用&quot;]
+    L --&gt; C
+</code></pre>
+<hr>
+<h2>四、功能流程描述（Mermaid 流程图）</h2>
+<h3>4.1 流程一：全真面试模拟</h3>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant 用户
+    participant 前端
+    participant 后端
+    participant AI引擎
+    participant 题库系统
+    用户-&gt;&gt;前端: 选择岗位 / 题型 / 模式
+    前端-&gt;&gt;后端: 请求匹配题库
+    后端-&gt;&gt;题库系统: 语义检索意向岗位题目
+    题库系统--&gt;&gt;后端: 返回题目列表
+    后端--&gt;&gt;前端: 返回本场题目
+    前端-&gt;&gt;用户: 展示题目与计时器
+    loop 逐题作答
+        用户-&gt;&gt;前端: 语音 / 文字作答
+        前端-&gt;&gt;后端: 提交作答内容
+        后端-&gt;&gt;AI引擎: 实时点评打分
+        AI引擎--&gt;&gt;后端: 点评 + 分维度分数
+        后端--&gt;&gt;前端: 返回点评结果
+        前端-&gt;&gt;用户: 展示评分评级与点评
+    end
+    用户-&gt;&gt;前端: 结束面试
+    前端-&gt;&gt;后端: 请求生成报告
+    后端--&gt;&gt;前端: 返回完整报告
+</code></pre>
+<h3>4.2 流程二：面试复盘分析</h3>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant 用户
+    participant 前端
+    participant 后端
+    participant AI引擎
+    用户-&gt;&gt;前端: 结束面试 / 进入记录
+    前端-&gt;&gt;后端: 请求生成评估报告
+    后端-&gt;&gt;AI引擎: 汇总全场作答分析
+    AI引擎--&gt;&gt;后端: 报告内容(得分/评级/点评)
+    后端--&gt;&gt;前端: 返回完整报告
+    前端-&gt;&gt;用户: 展示报告(评分/评级/逐字稿)
+    用户-&gt;&gt;前端: 查看错题回看
+    前端-&gt;&gt;后端: 获取薄弱题型列表
+    后端--&gt;&gt;前端: 返回短板知识点汇总
+    前端-&gt;&gt;用户: 展示短板与优化建议
+    用户-&gt;&gt;前端: 发起专项复练
+    前端-&gt;&gt;后端: 按薄弱题型抽题
+    后端--&gt;&gt;前端: 返回专项题目
+</code></pre>
+<h3>4.3 流程三：AI 问答辅导</h3>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant 用户
+    participant 前端
+    participant 后端
+    participant AI引擎
+    用户-&gt;&gt;前端: 输入面试疑问
+    前端-&gt;&gt;后端: 发起答疑请求
+    后端-&gt;&gt;AI引擎: 流式生成回答
+    AI引擎--&gt;&gt;后端: 流式返回内容
+    后端--&gt;&gt;前端: 流式输出(SSE)
+    前端-&gt;&gt;用户: 打字机效果实时展示
+    用户-&gt;&gt;前端: 收藏答题模板
+    前端-&gt;&gt;后端: 保存模板收藏
+    后端--&gt;&gt;前端: 收藏成功提示
+</code></pre>
+<hr>
+<h2>五、功能需求详情</h2>
+<h3>5.1 MVP 功能清单总览</h3>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>功能模块</th>
+<th>优先级</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FR-01</td>
+<td>岗位题库分类</td>
+<td>P0</td>
+<td>多行业岗位题库浏览、筛选、检索</td>
+</tr>
+<tr>
+<td>FR-02</td>
+<td>全真面试模拟</td>
+<td>P0</td>
+<td>普通 / 压力两种模式，AI 扮演 HR 连续提问</td>
+</tr>
+<tr>
+<td>FR-03</td>
+<td>语音 / 文字答题</td>
+<td>P0</td>
+<td>双模式作答，语音实时转写</td>
+</tr>
+<tr>
+<td>FR-04</td>
+<td>实时 AI 点评</td>
+<td>P0</td>
+<td>分维度打分 + 等级评定 + 建议</td>
+</tr>
+<tr>
+<td>FR-05</td>
+<td>面试报告生成</td>
+<td>P0</td>
+<td>结束后自动生成完整评估报告</td>
+</tr>
+<tr>
+<td>FR-06</td>
+<td>面试记录复盘</td>
+<td>P0</td>
+<td>历史记录存档、错题回看、专项复练</td>
+</tr>
+<tr>
+<td>FR-07</td>
+<td>能力数据看板</td>
+<td>P1</td>
+<td>成长曲线、能力维度统计</td>
+</tr>
+<tr>
+<td>FR-08</td>
+<td>答题模板库</td>
+<td>P1</td>
+<td>结构化模板推荐、收藏复用</td>
+</tr>
+<tr>
+<td>FR-09</td>
+<td>AI 面试答疑</td>
+<td>P1</td>
+<td>面试疑问流式 AI 解答</td>
+</tr>
+<tr>
+<td>FR-10</td>
+<td>帮助中心</td>
+<td>P2</td>
+<td>使用指引、FAQ、反馈入口</td>
+</tr>
+</tbody></table>
+<h3>5.2 功能需求详情</h3>
+<h4>FR-01 岗位题库分类（P0）</h4>
+<ul>
+<li><strong>功能描述</strong>：按行业（互联网 / 国企 / 文职 / 制造业）与具体岗位分类浏览题库，支持关键词搜索与难度筛选。</li>
+<li><strong>用户故事</strong>：作为应届生，我希望按目标行业/岗位筛选题库，以便精准练习与意向岗位匹配。</li>
+<li><strong>详细需求</strong>：<ul>
+<li>题库列表：岗位名称、所属行业、题型构成（行为 / 专业 / 情景）、难度等级</li>
+<li>筛选能力：行业筛选 + 岗位关键词搜索 + 难度筛选</li>
+<li>题库卡片：显示题目数量、平均面试时长、高频题标识</li>
+<li>意向岗位题库自动匹配（结合用户预设目标岗位）</li>
+</ul>
+</li>
+<li><strong>验收要点</strong>：至少 4 大行业题库可浏览；筛选/搜索可用；题库与岗位语义匹配正确。</li>
+</ul>
+<h4>FR-02 全真面试模拟（P0）</h4>
+<ul>
+<li><strong>功能描述</strong>：用户配置岗位、题型、时长、答题方式后开启 AI 面试；AI 扮演 HR 一对一连续提问，模拟真实面试节奏。</li>
+<li><strong>用户故事</strong>：作为应届生，我希望体验真实面试节奏，以便提前适应并降低紧张感。</li>
+<li><strong>详细需求</strong>：<ul>
+<li><strong>普通模式</strong>：常规提问节奏，题目难度适中，时长可配置（10 / 15 / 20 分钟）</li>
+<li><strong>压力模式</strong>：AI 追问打断、节奏加快、增加刁钻问题，训练抗压与临场应变</li>
+<li><strong>面试配置项</strong>：岗位、题型、面试时长、答题方式（语音 / 文字）</li>
+<li><strong>面试进行</strong>：顶部计时组件、题目进度（第 N / 总题数）、暂停 / 换题 / 跳过 / 结束</li>
+<li><strong>结尾环节</strong>：确认结束 → 触发报告生成</li>
+</ul>
+</li>
+<li><strong>验收要点</strong>：两种模式均可正常开启；提问节奏符合模式设定；计时准确；可随时结束。</li>
+</ul>
+<h4>FR-03 语音 / 文字答题（P0）</h4>
+<ul>
+<li><strong>功能描述</strong>：支持语音与文字双模式作答；语音答题实时转写为文字并纳入 AI 点评。</li>
+<li><strong>用户故事</strong>：作为应届生，我希望用语音答题贴近真实面试，也能用文字答题方便组织思路。</li>
+<li><strong>详细需求</strong>：<ul>
+<li>文字模式：多行输入框、字数统计、提交 / 重答</li>
+<li>语音模式：录音按钮、录制波形动画、实时转写、转写结果可编辑</li>
+<li>作答过程：显示剩余答题时间，可提前提交</li>
+<li>转写文本进入 AI 点评流程，与文字作答等价</li>
+</ul>
+</li>
+<li><strong>验收要点</strong>：两种模式可自由切换；语音转写准确率 ≥ 90%；转写响应 &lt; 3s。</li>
+</ul>
+<h4>FR-04 实时 AI 点评（P0）</h4>
+<ul>
+<li><strong>功能描述</strong>：每次答题后 AI 实时点评并打分，多维度评分 + 等级评定 + 改进建议。</li>
+<li><strong>用户故事</strong>：作为应届生，我希望答题后立刻知道好坏，以便当场改进。</li>
+<li><strong>详细需求</strong>：<ul>
+<li><strong>评分维度</strong>：内容完整性、逻辑性、表达流畅度、岗位匹配度、抗压能力（5 维）</li>
+<li><strong>综合得分</strong>：0–100 分 + 等级（S / A / B / C / D）</li>
+<li><strong>点评内容</strong>：亮点 + 存在问题 + 改进建议三段式</li>
+<li><strong>附加检测</strong>：语速检测（字/分）、口头禅识别（频次提示）</li>
+<li><strong>模板推荐</strong>：根据题型智能推荐结构化模板（STAR / 金字塔 / PREP）</li>
+</ul>
+</li>
+<li><strong>验收要点</strong>：点评生成 &lt; 3s；评分附带可解释理由；语速/口头禅检测数据正确。</li>
+</ul>
+<h4>FR-05 面试报告生成（P0）</h4>
+<ul>
+<li><strong>功能描述</strong>：面试结束后自动生成完整评估报告并持久化存档。</li>
+<li><strong>用户故事</strong>：作为应届生，我希望面试后拿到完整报告，全面了解本场表现。</li>
+<li><strong>详细需求</strong>：<ul>
+<li>报告内容：综合得分、等级、5 维分项得分、完整 AI 点评、答题逐字稿、错题列表、优化建议</li>
+<li>逐字稿：支持按题回看语音转写 / 文字作答内容</li>
+<li>报告导出：支持打印 / 保存（PDF 导出预留）</li>
+</ul>
+</li>
+<li><strong>验收要点</strong>：报告内容完整、数据与面试过程一致；逐字稿可查看。</li>
+</ul>
+<h4>FR-06 面试记录复盘（P0）</h4>
+<ul>
+<li><strong>功能描述</strong>：保存每次面试记录，支持历史回看、薄弱题型标记与错题专项复练。</li>
+<li><strong>用户故事</strong>：作为应届生，我希望回看历史面试记录、找出薄弱题型反复练习。</li>
+<li><strong>详细需求</strong>：<ul>
+<li>记录列表：日期、岗位、得分、等级、模式、状态（已复盘 / 未复盘）</li>
+<li>记录详情：完整报告回看 + 逐字稿</li>
+<li>错题本：自动标记薄弱题型，错题列表 + 薄弱知识点汇总</li>
+<li>专项复练：按薄弱题型一键重新抽题练习</li>
+</ul>
+</li>
+<li><strong>验收要点</strong>：记录完整保存可回看；错题可一键专项复练；支持千条以上记录存储。</li>
+</ul>
+<h4>FR-07 能力数据看板（P1）</h4>
+<ul>
+<li><strong>功能描述</strong>：可视化展示个人面试能力成长趋势与维度分布。</li>
+<li><strong>用户故事</strong>：作为应届生，我希望看到能力成长曲线，增强信心与坚持动力。</li>
+<li><strong>详细需求</strong>：<ul>
+<li>成长折线图：综合 / 表达 / 逻辑多维度趋势（随场次更新）</li>
+<li>能力维度统计：5 维能力横条（最新一场）</li>
+<li>历史面试汇总表：日期 / 岗位 / 得分 / 等级 / 模式 / 状态</li>
+</ul>
+</li>
+<li><strong>验收要点</strong>：图表数据与面试记录一致；每场面试后实时更新。</li>
+</ul>
+<h4>FR-08 答题模板库（P1）</h4>
+<ul>
+<li><strong>功能描述</strong>：提供结构化答题模板（STAR / 金字塔 / PREP 等），支持面试中智能推荐与收藏复用。</li>
+<li><strong>用户故事</strong>：作为应届生，我希望按模板规范答题逻辑，并收藏好用的模板随时复用。</li>
+<li><strong>详细需求</strong>：<ul>
+<li>模板列表：模板名称、适用题型、结构说明</li>
+<li>模板详情：结构拆解 + 示例 + 应用场景</li>
+<li>面试中推荐：按当前题型推荐对应模板</li>
+<li>收藏复用：一键收藏进「我的模板」，作答时可参考</li>
+</ul>
+</li>
+<li><strong>验收要点</strong>：模板与题型匹配正确；收藏后可在作答区复用。</li>
+</ul>
+<h4>FR-09 AI 面试答疑（P1）</h4>
+<ul>
+<li><strong>功能描述</strong>：面试疑问随时提问，AI 流式答疑，回答可收藏为答题模板。</li>
+<li><strong>用户故事</strong>：作为应届生，我希望遇到面试疑问时能随时获得解答并沉淀复用。</li>
+<li><strong>详细需求</strong>：<ul>
+<li>答疑入口：独立答疑页 + 面试进行中快捷提问</li>
+<li>流式输出：打字机效果逐字展示（SSE）</li>
+<li>模板沉淀：回答可一键收藏为答题模板</li>
+</ul>
+</li>
+<li><strong>验收要点</strong>：流式输出流畅无卡顿；回答可收藏并在模板库可见。</li>
+</ul>
+<h4>FR-10 帮助中心（P2）</h4>
+<ul>
+<li><strong>功能描述</strong>：产品使用指引、FAQ 常见问题与意见反馈入口。</li>
+<li><strong>用户故事</strong>：作为应届生，我希望快速了解产品怎么用、遇到问题能自助解决。</li>
+<li><strong>详细需求</strong>：<ul>
+<li>三步上手指引（选岗位 → 开面试 → 看报告）</li>
+<li>FAQ 列表（支持关键词搜索）</li>
+<li>意见反馈入口（提交反馈表单）</li>
+</ul>
+</li>
+<li><strong>验收要点</strong>：指引清晰完整；FAQ 覆盖核心使用问题。</li>
+</ul>
+<hr>
+<h2>六、非功能需求</h2>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>需求描述</th>
+<th>指标要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>性能</td>
+<td>API 接口响应时间</td>
+<td>平均 &lt; 500ms</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>AI 点评 / 语音转写生成时间</td>
+<td>&lt; 3s（约 2–3s 内返回）</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>首屏加载时间</td>
+<td>&lt; 2s</td>
+</tr>
+<tr>
+<td>容量</td>
+<td>面试记录存储</td>
+<td>单用户支持千条以上记录，查询不卡顿</td>
+</tr>
+<tr>
+<td>缓存</td>
+<td>本地数据缓存</td>
+<td>题库、模板、用户设置本地缓存，弱网可用</td>
+</tr>
+<tr>
+<td>兼容性</td>
+<td>浏览器支持</td>
+<td>Chrome / Edge / Firefox / Safari 近两个主流版本</td>
+</tr>
+<tr>
+<td>响应式</td>
+<td>布局适配</td>
+<td>Web 端响应式：桌面（≥1024px）优先，适配平板（768–1024px）</td>
+</tr>
+<tr>
+<td>安全</td>
+<td>数据安全</td>
+<td>用户数据加密存储、不外泄；大模型请求不泄露敏感信息</td>
+</tr>
+<tr>
+<td>可靠性</td>
+<td>服务可用性</td>
+<td>MVP 阶段可用性 ≥ 99.5%</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>异常兜底</td>
+<td>语音识别失败可切换文字；大模型超时可重试；面试中断可续接</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>七、验收标准</h2>
+<h3>7.1 功能验收标准（对应 MVP 功能）</h3>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>验收项</th>
+<th>验收标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AC-01</td>
+<td>岗位题库分类</td>
+<td>至少 4 大行业题库；行业/难度筛选、关键词搜索均可用；意向岗位题库匹配正确</td>
+</tr>
+<tr>
+<td>AC-02</td>
+<td>全真面试模拟</td>
+<td>普通 / 压力模式均可开启；计时与进度准确；AI 连续提问符合真实节奏</td>
+</tr>
+<tr>
+<td>AC-03</td>
+<td>语音 / 文字答题</td>
+<td>双模式均可作答并提交；语音转写准确率 ≥ 90%；转写响应 &lt; 3s</td>
+</tr>
+<tr>
+<td>AC-04</td>
+<td>实时 AI 点评</td>
+<td>每道题均返回评分 + 等级 + 三段式点评；语速/口头禅数据正确</td>
+</tr>
+<tr>
+<td>AC-05</td>
+<td>面试报告生成</td>
+<td>结束后自动生成报告；得分、评级、逐字稿与过程一致</td>
+</tr>
+<tr>
+<td>AC-06</td>
+<td>面试记录复盘</td>
+<td>历史记录完整可回看；薄弱题型标记正确；错题可一键专项复练</td>
+</tr>
+<tr>
+<td>AC-07</td>
+<td>能力数据看板</td>
+<td>成长曲线与维度统计随练习实时正确更新</td>
+</tr>
+<tr>
+<td>AC-08</td>
+<td>答题模板库</td>
+<td>模板可按题型推荐；收藏、复用流程可用</td>
+</tr>
+<tr>
+<td>AC-09</td>
+<td>AI 面试答疑</td>
+<td>提问有流式回答；回答可收藏并同步至模板库</td>
+</tr>
+<tr>
+<td>AC-10</td>
+<td>帮助中心</td>
+<td>使用指引与 FAQ 可访问；FAQ 覆盖核心问题</td>
+</tr>
+</tbody></table>
+<h3>7.2 非功能验收标准</h3>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>验收项</th>
+<th>验收标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AC-11</td>
+<td>性能</td>
+<td>API P95 响应 &lt; 500ms；AI 点评/转写 &lt; 3s；首屏 &lt; 2s（4G 网络）</td>
+</tr>
+<tr>
+<td>AC-12</td>
+<td>容量</td>
+<td>单用户千条面试记录列表与详情查询无明显卡顿</td>
+</tr>
+<tr>
+<td>AC-13</td>
+<td>兼容性</td>
+<td>主流浏览器最新两版无功能性错误、布局不破版</td>
+</tr>
+<tr>
+<td>AC-14</td>
+<td>响应式</td>
+<td>桌面 / 平板断点布局正常，核心流程可用</td>
+</tr>
+<tr>
+<td>AC-15</td>
+<td>异常兜底</td>
+<td>ASR 失败可切换文字作答；面试中断可恢复续接；大模型超时自动重试</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>八、技术方案概要</h2>
+<h3>8.1 总体架构</h3>
+<p>前后端分离 SPA 架构，单机可部署、低成本运行：</p>
+<pre><code class="language-mermaid">flowchart TD
+    B[&quot;浏览器&lt;br/&gt;Vue 3 + TypeScript + Vite + Tailwind CSS&quot;]
+    B --&gt;|&quot;HTTP / JSON (REST)&quot;| A[&quot;FastAPI 后端 (Uvicorn)&quot;]
+    A --&gt;|&quot;读写业务 / 历史存档&quot;| DB[(&quot;SQLite&quot;)]
+    A --&gt;|&quot;语义检索 / 题库匹配&quot;| VDB[(&quot;ChromaDB&quot;)]
+    A --&gt;|&quot;推理调用&quot;| LLM[&quot;大模型 API&lt;br/&gt;DeepSeek (抽题·点评·答疑)&quot;]
+    A --&gt;|&quot;语音转写&quot;| ASR[&quot;语音识别 SDK&lt;br/&gt;(ASR 服务)&quot;]
+    A --&gt;|&quot;扩展: OCR 识别&quot;| OCR[&quot;PaddleOCR-VL&lt;br/&gt;(题目 / 简历图片)&quot;]
+    A --&gt;|&quot;扩展: 报告导出&quot;| PDF[&quot;ReportLab&lt;br/&gt;(PDF 生成)&quot;]
+</code></pre>
+<h3>8.2 技术选型</h3>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>选型</th>
+<th>选择理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>前端</td>
+<td>Vue 3 + TypeScript + Vite + Tailwind CSS</td>
+<td>上手快、生态成熟、开发效率高</td>
+</tr>
+<tr>
+<td>后端</td>
+<td>FastAPI + Uvicorn</td>
+<td>Python 异步高性能、自动文档、易维护</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>SQLite</td>
+<td>零运维、文件型存储，MVP 阶段成本最低</td>
+</tr>
+<tr>
+<td>向量数据库</td>
+<td>ChromaDB</td>
+<td>本地轻量，支撑题库语义检索与岗位匹配</td>
+</tr>
+<tr>
+<td>大模型 API</td>
+<td>DeepSeek API</td>
+<td>成本低、中文能力强，承担抽题/点评/答疑</td>
+</tr>
+<tr>
+<td>语音识别</td>
+<td>语音识别 SDK（腾讯云 / 讯飞 ASR）</td>
+<td>语音答题实时转写</td>
+</tr>
+<tr>
+<td>OCR（扩展）</td>
+<td>PaddleOCR-VL</td>
+<td>题目/简历图片文字识别</td>
+</tr>
+<tr>
+<td>PDF（扩展）</td>
+<td>ReportLab</td>
+<td>面试报告导出 PDF</td>
+</tr>
+</tbody></table>
+<h3>8.3 关键设计要点</h3>
+<table>
+<thead>
+<tr>
+<th>要点</th>
+<th>设计说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>接口风格</td>
+<td>REST API；AI 点评 / 答疑采用 SSE 流式输出，提升实时体验</td>
+</tr>
+<tr>
+<td>题库匹配</td>
+<td>题目入库 + ChromaDB 向量化，按意向岗位做语义匹配随机抽题</td>
+</tr>
+<tr>
+<td>语音链路</td>
+<td>前端录音 → 上传后端 → 调 ASR 转写 → 转写文本进入点评与存档</td>
+</tr>
+<tr>
+<td>面试状态机</td>
+<td>配置 → 提问 → 作答 → 点评 → 下一题 →（结束）→ 报告生成，中断可恢复</td>
+</tr>
+<tr>
+<td>本地缓存</td>
+<td>题库元数据、模板、设置本地缓存，弱网可用</td>
+</tr>
+<tr>
+<td>部署</td>
+<td>MVP 单机部署（Docker 可选），SQLite 文件存储，成本可控</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>附录：MVP 范围界定</h2>
+<table>
+<thead>
+<tr>
+<th>范围</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>✅ MVP 内</td>
+<td>FR-01 ~ FR-06（P0 六项）+ FR-07 / 08 / 09（P1 三项，看板与模板为差异化亮点）</td>
+</tr>
+<tr>
+<td>⏸ MVP 后可迭代</td>
+<td>FR-10 帮助中心完善、PDF 报告导出、摄像头形象面、连续打卡成就、面试日历提醒</td>
+</tr>
+<tr>
+<td>🚫 明确不做（MVP）</td>
+<td>移动端 App、多人/班级模式、付费题库、企业端 HR 后台</td>
+</tr>
+</tbody></table>
+
+  </div>
+  <p style="text-align:center;color:var(--text3);font-size:12px;margin-top:8px">面知 · AI 面试陪练工具 PRD V1.0 — 生成于 2026-08-20</p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  // 目录生成
+  (function(){
+    var toc = document.getElementById('toc');
+    var h2s = document.querySelectorAll('#content h2');
+    if(!h2s.length){toc.style.display='none';return}
+    var html = '';
+    h2s.forEach(function(h,i){
+      var id = 'sec-'+i;
+      h.id = id;
+      html += '<a href="#'+id+'">'+h.textContent+'</a>';
+    });
+    toc.innerHTML = '目录：' + html;
+  })();
+  // Mermaid 渲染
+  (function(){
+    if(typeof mermaid === 'undefined') return;
+    mermaid.initialize({startOnLoad:false,theme:'neutral',securityLevel:'loose'});
+    var codes = document.querySelectorAll('pre code.language-mermaid');
+    codes.forEach(function(code, i){
+      var pre = code.parentNode;
+      var wrap = document.createElement('div');
+      wrap.className = 'mermaid-wrap';
+      var div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = code.textContent;
+      wrap.appendChild(div);
+      pre.parentNode.replaceChild(wrap, pre);
+    });
+    mermaid.run({querySelector:'.mermaid'}).catch(function(){});
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面知 · 系统测试报告</title>
+<style>
+:root{
+  --primary:#007AFF;--primary-light:#E6F1FB;--bg-page:#F5F5F7;--bg-card:#fff;
+  --text-primary:#1D1D1F;--text-secondary:#6E6E73;--text-tertiary:#AEAEB2;
+  --border:#E5E5EA;--border-hover:#D1D1D6;--success:#34C759;--warning:#FF9500;--error:#FF3B30;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'PingFang SC','SF Pro Text',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg-page);color:var(--text-primary);font-size:14px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;padding:32px 16px 80px;}
+.wrap{max-width:960px;margin:0 auto;background:var(--bg-card);border:1px solid var(--border);
+  border-radius:12px;padding:40px 44px;overflow:hidden;}
+h1{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin-bottom:8px;}
+h2{font-size:20px;font-weight:600;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+h3{font-size:16px;font-weight:600;margin:20px 0 8px;}
+p{margin:10px 0;color:var(--text-primary);}
+a{color:var(--primary);text-decoration:none;}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:13px;}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top;}
+th{background:var(--primary-light);color:var(--primary);font-weight:600;}
+tr:nth-child(even) td{background:#FAFAFC;}
+code{font-family:'SF Mono','Fira Code',monospace;font-size:12px;background:#F0F7FF;color:#0055B3;
+  padding:1px 5px;border-radius:4px;}
+pre{background:#F5F5F7;border:1px solid var(--border);border-radius:8px;padding:12px;overflow:auto;margin:12px 0;}
+pre code{background:none;color:var(--text-primary);padding:0;}
+blockquote{border-left:3px solid var(--primary);background:var(--primary-light);padding:10px 14px;
+  border-radius:0 8px 8px 0;color:var(--text-secondary);margin:12px 0;}
+ul,ol{padding-left:22px;margin:10px 0;}
+li{margin:4px 0;}
+.sev-crit{color:var(--error);font-weight:600;}
+.sev-major{color:var(--warning);font-weight:600;}
+.sev-opt{color:var(--success);font-weight:600;}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0;font-size:13px;}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>面知 · AI 面试陪练工具 — 系统测试报告</h1>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品名称</td>
+<td>面知 - AI 面试陪练工具（Web 端）</td>
+</tr>
+<tr>
+<td>测试类型</td>
+<td>文档一致性测试 + 静态代码/原型审查 + AI 功能规格评审</td>
+</tr>
+<tr>
+<td>测试对象</td>
+<td>PRD V1.0、UI Design System、开发规划、线框原型（黑白/Axure）、页面模板、面知-ui-generator 技能</td>
+</tr>
+<tr>
+<td>测试日期</td>
+<td>2026-08-20</td>
+</tr>
+<tr>
+<td>测试结论</td>
+<td><strong>通过（有条件）</strong>：文档与原型阶段未阻断 MVP；发现 2 项一般缺陷需在开发前解决，7 项优化项建议迭代纳入</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>一、测试范围与说明</h2>
+<h3>1.1 测试基线（测试依据）</h3>
+<ul>
+<li><strong>需求基线</strong>：<code>面知-PRD.md</code>（8 章节，FR-01<del>10，AC-01</del>15，NFR）</li>
+<li><strong>设计基线</strong>：<code>面知-design-system.html</code>（极简蓝调 Apple 变体，7 大规范）</li>
+<li><strong>工程基线</strong>：<code>面知-dev-plan.md</code>（8 章节，API 契约，依赖树，里程碑）</li>
+<li><strong>原型基线</strong>：<code>wireframe-0X-*.svg</code>、<code>wireframe-axure-0X-*.svg</code>、<code>page-template.html</code></li>
+</ul>
+<h3>1.2 测试覆盖矩阵</h3>
+<table>
+<thead>
+<tr>
+<th>测试维度</th>
+<th>是否可执行</th>
+<th>测试方式</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>① 功能是否符合需求</td>
+<td>部分</td>
+<td>需求追溯（PRD→API 契约）静态比对</td>
+<td>覆盖完整</td>
+</tr>
+<tr>
+<td>② 页面交互是否正常</td>
+<td>否（无业务代码）</td>
+<td>模板/原型 JS 与结构静态审查</td>
+<td>模板桩，交互未实现</td>
+</tr>
+<tr>
+<td>③ 页面布局与响应式</td>
+<td>是</td>
+<td>审查 CSS 断点与栅格</td>
+<td>发现 2 处缺陷</td>
+</tr>
+<tr>
+<td>④ 异常情况（空/错/失败）</td>
+<td>部分</td>
+<td>审查空/错误态设计</td>
+<td>未实现，列优化项</td>
+</tr>
+<tr>
+<td>⑤ AI 功能输出预期</td>
+<td>评审</td>
+<td>规格合理性审查</td>
+<td>容错前置不足</td>
+</tr>
+</tbody></table>
+<h3>1.3 测试限制（重要）</h3>
+<blockquote>
+<p>当前<strong>无实际可运行的应用代码</strong>（Vue/FastAPI 仅为规划与模板桩）。因此本报告<strong>不包含</strong>：真实功能冒烟、AI 实际输出质量、端到端交互、性能压测。这些需在 MVP 代码落地后做第二轮系统测试。本报告聚焦&quot;交付物内部一致性 + 原型/模板可执行性 + AI 规格合理性&quot;。</p>
+</blockquote>
+<hr>
+<h2>二、测试结果概要</h2>
+<h3>2.1 通过项（Positive）</h3>
+<ul>
+<li>✅ <strong>需求追溯完整</strong>：PRD 10 项 MVP 功能（FR-01~10）在开发规划 API 契约中均有对应端点（/questions、/interview、/answer、/asr、/report、/interviews、/growth、/templates、/qa、帮助中心），无遗漏。</li>
+<li>✅ <strong>设计令牌统一</strong>：Design System 与 <code>page-template.html</code> 的 <code>:root</code> 令牌完全一致（主色 #007AFF、背景 #F5F5F7、边框 #E5E5EA、四级圆角、双字重 400/600、无 box-shadow）。</li>
+<li>✅ <strong>Mermaid 语法已校验</strong>：PRD（5 图）+ 开发规划（3 图）均通过 mermaid v11 官方解析器校验，无语法错误。</li>
+<li>✅ <strong>评分语义色一致</strong>：S/A=成功绿 #34C759、B=警告橙 #FF9500、C/D=错误红 #FF3B30，与设计系统语义色令牌匹配。</li>
+<li>✅ <strong>响应式断点体系完整</strong>：Mobile(&lt;768) / Tablet(768–1024) / Desktop(1024–1440) / Wide(&gt;1440) 四档定义清晰。</li>
+</ul>
+<h3>2.2 缺陷统计</h3>
+<table>
+<thead>
+<tr>
+<th>严重程度</th>
+<th>数量</th>
+<th>编号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>严重</td>
+<td>0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>一般</td>
+<td>4</td>
+<td>T-01、T-02、T-03、T-06</td>
+</tr>
+<tr>
+<td>优化</td>
+<td>7</td>
+<td>T-04、T-05、T-07、T-08、T-09、T-10、T-11</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>三、发现的问题与修改建议</h2>
+<h3>T-01 ｜ 移动端底部导航缺失「能力看板」「帮助」 【一般】</h3>
+<ul>
+<li><strong>现象</strong>：<code>page-template.html</code> 移动端底部导航仅 4 项（面试/题库/报告/我的），而桌面端顶部导航为 5 项（模拟面试/题库管理/面试报告/能力看板/帮助）。「能力看板」与「帮助」在移动端无任何入口。</li>
+<li><strong>影响</strong>：手机端用户无法访问能力看板（FR-07）与帮助中心（FR-10），功能不可达。</li>
+<li><strong>证据</strong>：<code>page-template.html</code> 第 154–160 行（顶部导航 5 项）、第 197–202 行（底部导航 4 项）。</li>
+<li><strong>修改建议</strong>：统一移动端导航与桌面端语义。二选一：① 底部导航增为 5 项（面试/题库/报告/看板/我的），帮助并入「我的」二级页；② 底部导航保持 4 项，但「我的」页内聚合能力看板与帮助入口。开发规划 M5 需显式验收此覆盖。</li>
+</ul>
+<h3>T-02 ｜ 两套导航模型冲突（同一产品两种 IA） 【一般】</h3>
+<ul>
+<li><strong>现象</strong>：早期《Web 信息架构》采用 4 项扁平导航（开始练习 / 面试记录 / 能力成长 / 我的），模拟面试作为「开始练习」内全屏向导；而后续 Axure 线框与 <code>page-template.html</code> 采用 5 项功能导航（模拟面试 / 题库管理 / 面试报告 / 能力看板 / 帮助），模拟面试为常驻一级入口。</li>
+<li><strong>影响</strong>：开发缺乏唯一权威 IA，易致页面路由、路由守卫、面包屑、底部导航实现分歧。</li>
+<li><strong>证据</strong>：<code>AI面试陪练_信息架构.html</code>（4 项）vs <code>page-template.html</code>（5 项）。</li>
+<li><strong>修改建议</strong>：在开发规划中明确<strong>唯一权威导航模型</strong>（推荐 5 项功能导航，更贴合 Axure 终稿与页面模板），并反向修订信息架构文档，消除双轨。此项应在 M1 脚手架前敲定。</li>
+</ul>
+<h3>T-03 ｜ 平板断点侧边栏文字溢出 【一般】</h3>
+<ul>
+<li><strong>现象</strong>：<code>@media (min-width:768px)</code> 将 <code>.app-sidebar</code> 设为 64px（折叠态），但侧边项 <code>&lt;span&gt;</code> 文本未隐藏；64px 宽减去内边距(24px) 后仅 40px，图标(18px)+间距(10px) 已占 28px，文本「普通模拟/压力面模拟/互联网…」被裁切或溢出。</li>
+<li><strong>影响</strong>：768–1023px（平板/小窗）侧边栏显示异常，文字残缺，可读性差。</li>
+<li><strong>证据</strong>：<code>page-template.html</code> 第 118–123 行（min-width:768 设 width:64px，未隐藏 span）。</li>
+<li><strong>修改建议</strong>：在折叠态（768–1023px）对 <code>.side-item span</code> 设 <code>display:none</code>，仅留图标；或将该断点侧边栏宽度提升到能容纳文本的最小宽度（如 160px）。推荐前者（图标导航更简洁）。</li>
+</ul>
+<h3>T-04 ｜ 字体规范遗漏「钉钉进步体」回退 【优化】</h3>
+<ul>
+<li><strong>现象</strong>：用户原始设计需求明确要求 <code>PingFang SC（回退钉钉进步体）</code>，但实际 <code>--font-sans</code> 为 <code>&#39;PingFang SC&#39;,&#39;SF Pro Text&#39;,-apple-system,BlinkMacSystemFont,&#39;Segoe UI&#39;,sans-serif</code>，未包含钉钉进步体。</li>
+<li><strong>影响</strong>：规范未落实用户明确要求；且钉钉进步体非 Web 标准字体，即使加入也需提供 @font-face 与字体文件，否则无效。</li>
+<li><strong>证据</strong>：<code>面知-design-system.html</code> 第 34 行；用户设计需求原文。</li>
+<li><strong>修改建议</strong>：若确需钉钉进步体，应在 Design System 增加 <code>@font-face</code>（自托管 woff2，符合&quot;零成本&quot;）并加入回退链；否则在规范中明确&quot;因字体可用性，回退链以系统字体为主&quot;，并同步修订原始需求措辞，避免歧义。</li>
+</ul>
+<h3>T-05 ｜ 非功能需求表述歧义 【一般】</h3>
+<ul>
+<li><strong>现象</strong>：原始 NFR「API响应&lt;500ms，&lt;2&lt;3s，首屏加载&lt;2s」中 <code>&lt;2&lt;3s</code> 语义不清。PRD 已自行解读为&quot;AI 点评/转写 2–3s&quot;，但来源需求未澄清，存在验收口径分歧风险。</li>
+<li><strong>影响</strong>：性能验收标准可能被理解为&quot;所有接口&lt;3s&quot;或&quot;AI 接口&lt;3s、普通接口&lt;500ms&quot;，直接影响 AC 设计与压测。</li>
+<li><strong>证据</strong>：<code>面知-PRD.md</code> NFR 章节；用户原始需求。</li>
+<li><strong>修改建议</strong>：将 NFR 显式拆为三档并写入 PRD 验收表：① 普通 CRUD 接口 P95 &lt; 500ms；② AI 点评/语音转写 P95 &lt; 3s（流式首字 &lt; 1.5s）；③ 首屏 LCP &lt; 2s。消除歧义。</li>
+</ul>
+<h3>T-06 ｜ AI 语音容错前置不足 【一般】</h3>
+<ul>
+<li><strong>现象</strong>：M2（核心链路）即引入 ASR 语音识别作为 headline 功能，但&quot;ASR 失败降级文字作答&quot;仅在 M5 规划。M2 阶段若遇断网/麦克风拒绝/识别失败，语音作答链路无降级，可能卡死或静默失败。</li>
+<li><strong>影响</strong>：核心卖点功能在弱网/异常环境不可用且无兜底，演示与自用风险高。</li>
+<li><strong>证据</strong>：<code>面知-dev-plan.md</code> 里程碑 M2（引入 ASR）vs M5（异常兜底）。</li>
+<li><strong>修改建议</strong>：将 ASR 降级逻辑（失败→自动切换文字作答 + 友好提示）<strong>前移至 M2</strong>，作为语音功能的&quot;必带容错&quot;而非 M5 打磨项；并在 PRD FR-03 验收标准中明确&quot;语音不可用时可无缝降级文字&quot;。</li>
+</ul>
+<h3>T-07 ｜ 文档依赖外部 CDN（mermaid） 【优化】</h3>
+<ul>
+<li><strong>现象</strong>：<code>面知-PRD.html</code> 与 <code>面知-dev-plan.html</code> 通过 <code>https://cdn.jsdelivr.net/npm/mermaid@10</code> 渲染流程图，离线/内网环境无法渲染（源码以 <code>&lt;pre&gt;&lt;code&gt;</code> 保留，可读但不可视）。</li>
+<li><strong>影响</strong>：与产品&quot;零/极低费用、本地缓存&quot;理念略有冲突；内网评审或离线时流程图不可见。</li>
+<li><strong>证据</strong>：<code>面知-PRD.html</code> 第 847 行。</li>
+<li><strong>修改建议</strong>：① 文档交付同时附 Markdown 源（已具备，源码即流程图文本）；② 或构建时本地打包 mermaid（npm i mermaid 本地引入），去除 CDN 依赖。优先级低，仅文档体验优化。</li>
+</ul>
+<h3>T-08 ｜ 空/异常态未实现 【优化】</h3>
+<ul>
+<li><strong>现象</strong>：<code>page-template.html</code> 对&quot;无面试记录&quot;&quot;错题本为空&quot;&quot;加载失败&quot;&quot;AI 超时&quot;等空/错误态仅有 TODO 注释，原型未演示对应 UI。</li>
+<li><strong>影响</strong>：学生首次使用（零数据）易遇空白页，焦虑感上升；异常态缺失降低健壮性观感。</li>
+<li><strong>证据</strong>：<code>page-template.html</code> 第 143、210 行 TODO。</li>
+<li><strong>修改建议</strong>：在 Design System 增加 <code>AppEmpty</code>（空状态）与 <code>AppError</code>/<code>AppLoading</code> 组件规范（骨架屏 + 重试按钮），并在 M5 全页面补齐；首页/记录页必须含有数据空态示例。</li>
+</ul>
+<h3>T-09 ｜ 压力面模式未确认为一等参数 【优化】</h3>
+<ul>
+<li><strong>现象</strong>：PRD 将&quot;压力面模拟&quot;列为重要差异化能力，但开发规划 API 契约/面试状态机未显式列出 <code>mode=pressure</code> 字段，存在实现时遗漏风险。</li>
+<li><strong>影响</strong>：压力面可能与普通面共用逻辑，缺少难度/追问/语气差异化参数，导致功能名不副实。</li>
+<li><strong>证据</strong>：<code>面知-dev-plan.md</code> API 契约（需确认 interview 创建体是否含 mode）。</li>
+<li><strong>修改建议</strong>：在 <code>/interview/start</code> 请求体显式定义 <code>mode: normal | pressure</code>，并在状态机/提示词模板中区分两类面试的追问策略与评分宽松度；PRD FR-02 验收补充&quot;压力面应呈现明显更高追问密度与压迫语气&quot;。</li>
+</ul>
+<h3>T-10 ｜ 无障碍细节缺失 【优化】</h3>
+<ul>
+<li><strong>现象</strong>：SVG 图标与底部导航项缺 <code>aria-label</code>；折叠态侧栏仅靠图标无文本替代；seg 已加 <code>aria-selected</code> 但 nav/bottom-nav 无 <code>aria-current</code>。</li>
+<li><strong>影响</strong>：屏幕阅读器用户（含视障考生）无法感知导航与图标含义，不符合基础 a11y。</li>
+<li><strong>证据</strong>：<code>page-template.html</code> 第 198–202 行等。</li>
+<li><strong>修改建议</strong>：为所有图标按钮、导航项补充 <code>aria-label</code>/<code>title</code>；当前页用 <code>aria-current=&quot;page&quot;</code>；折叠侧栏图标加 <code>aria-label</code>。属低成本高收益项，建议 M5 一并纳入。</li>
+</ul>
+<h3>T-11 ｜ 评分等级色彩映射建议固化到组件 【优化】</h3>
+<ul>
+<li><strong>现象</strong>：S/A 绿、B 橙、C/D 红 目前仅为文字约定，组件规范中虽有 badge-success/warning/error，但未显式规定&quot;等级→badge 色&quot;的映射示例。</li>
+<li><strong>影响</strong>：跨页面（报告页/看板/记录列表）评分色若由各页自行实现，易不一致（P0 缺陷红线）。</li>
+<li><strong>证据</strong>：<code>面知-design-system.html</code> 语义色章节 vs <code>component-specs.md</code>。</li>
+<li><strong>修改建议</strong>：在 <code>component-specs.md</code> 增加「评分等级→色彩」映射表与 <code>AppGradeBadge</code> 组件（输入 S/A/B/C/D 自动着色），强制所有页面复用，杜绝跨页不一致。</li>
+</ul>
+<hr>
+<h2>四、缺陷严重程度定义</h2>
+<table>
+<thead>
+<tr>
+<th>等级</th>
+<th>定义</th>
+<th>本轮数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>严重</td>
+<td>阻断 MVP 主链路、数据丢失、安全漏洞、核心功能不可用</td>
+<td>0</td>
+</tr>
+<tr>
+<td>一般</td>
+<td>功能/导航不可达、布局错乱、规格歧义、容错缺失，需在对应里程碑前修复</td>
+<td>4</td>
+</tr>
+<tr>
+<td>优化</td>
+<td>体验增益、规范完善、a11y、文档依赖等，可迭代纳入</td>
+<td>7</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注：文档与原型阶段未出现&quot;严重&quot;级缺陷属预期（无执行代码）。<strong>T-01/T-02/T-03/T-06 须在 M1/M2 启动前或当里程碑内闭环</strong>，否则将放大为开发返工。</p>
+</blockquote>
+<hr>
+<h2>五、下一步测试建议（第二轮）</h2>
+<ol>
+<li><strong>MVP 代码落地后</strong>：对 M2 面试会话链路做端到端冒烟（开启→作答→实时点评→报告）。</li>
+<li><strong>AI 输出质量测试</strong>：抽样 30 道面试题，人工评估点评相关性、评分一致性、标准答案正确性（需 rubric）。</li>
+<li><strong>异常注入测试</strong>：断网、麦克风拒绝、ASR 超时、LLM 超时/限流、SQLite 写入失败，验证 T-06/T-08 兜底。</li>
+<li><strong>响应式真机测试</strong>：375/768/1024/1440 四档截图比对，闭环 T-03。</li>
+<li><strong>跨页面数值一致性</strong>：同一场面试的得分在报告页/看板/记录列表必须完全一致（PRD 质量红线）。</li>
+</ol>
+
+<div class="legend">
+  <span><i class="dot" style="background:var(--error)"></i>严重：阻断 MVP 主链路</span>
+  <span><i class="dot" style="background:var(--warning)"></i>一般：功能/导航/布局/规格，需当里程碑闭环</span>
+  <span><i class="dot" style="background:var(--success)"></i>优化：体验/规范/a11y，可迭代</span>
+</div>
+</div>
+</body>
+</html>

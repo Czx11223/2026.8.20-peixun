@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>面知 · 系统测试报告 v2（复测结果）</title>
+<style>
+  :root{
+    --primary:#007AFF;--page:#F5F5F7;--card:#FFFFFF;--border:#E5E5EA;
+    --text-primary:#1D1D1F;--text-secondary:#6E6E73;--text-tertiary:#AEAEB2;
+    --success:#34C759;--success-light:#E8F8EC;--warning:#FF9500;--warning-light:#FFF4E6;
+    --danger:#FF3B30;--danger-light:#FFEBE8;--subject:#3B82F6;--subject-light:#EBF3FF;
+    --analysis:#10B981;--analysis-light:#E8F8F0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--text-primary);font-family:'PingFang SC','SF Pro Text',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 20px 80px}
+  h1{font-size:26px;font-weight:600;letter-spacing:-0.02em;margin:8px 0 4px}
+  h2{font-size:20px;font-weight:600;margin:36px 0 14px;padding-left:10px;border-left:4px solid var(--primary)}
+  h3{font-size:16px;font-weight:600;margin:24px 0 10px}
+  p{margin:8px 0}
+  a{color:var(--primary);text-decoration:none}
+  blockquote{margin:12px 0;padding:10px 14px;background:var(--subject-light);border-left:3px solid var(--subject);border-radius:0 6px 6px 0;color:var(--text-secondary)}
+  code{background:var(--page);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:12.5px;font-family:'SF Mono',Consolas,monospace}
+  pre{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto}
+  pre code{background:none;border:none;padding:0}
+  table{border-collapse:collapse;width:100%;margin:14px 0;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:13px}
+  th{background:var(--page);font-weight:600;text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);white-space:nowrap}
+  td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  ul,ol{padding-left:22px;margin:8px 0}
+  li{margin:4px 0}
+  strong{font-weight:600}
+  .badge{display:inline-block;padding:1px 8px;border-radius:6px;font-size:12px;font-weight:600}
+  .b-green{background:var(--success-light);color:var(--success)}
+  .b-red{background:var(--danger-light);color:var(--danger)}
+  .b-orange{background:var(--warning-light);color:var(--warning)}
+  .b-blue{background:var(--subject-light);color:var(--subject)}
+  .meta{color:var(--text-tertiary);font-size:13px}
+  .banner{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:28px}
+  .banner h1{margin-top:0}
+  hr{border:none;border-top:1px solid var(--border);margin:28px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="banner">
+    <h1>面知 · AI 面试陪练工具</h1>
+    <p style="font-size:15px;margin:2px 0">系统测试报告 v2（复测结果）</p>
+    <p class="meta">代码级实测 · 2026-08-20 · 资深软件测试工程师</p>
+    <p style="margin-top:10px">
+      <span class="badge b-green">构建通过</span>
+      <span class="badge b-green">严重 0</span>
+      <span class="badge b-green">一般 0</span>
+      <span class="badge b-orange">遗留优化 2</span>
+      <span class="badge b-blue">复测结论：通过</span>
+    </p>
+  </div>
+  <h1>面知 · AI 面试陪练工具 — 系统测试报告 v2（复测结果）</h1>
+<blockquote>
+<p>测试对象：<strong>面知 完整 Web 产品源码</strong>（Vue3 + TS + Vite + Tailwind 前端 / FastAPI 后端）
+测试方式：<strong>代码级实测</strong> —— 源码审查 + <code>vue-tsc</code> 类型检查构建 + preview 冒烟 + 后端语法校验
+测试日期：2026-08-20 · 测试人：资深软件测试工程师</p>
+</blockquote>
+<hr>
+<h2>1. 测试结果总览</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>修复前</th>
+<th>修复后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>前端构建（<code>npm run build</code> 含 vue-tsc）</td>
+<td>❌ 失败（2 处 TS 错误）</td>
+<td>✅ 通过（70 modules，0 error）</td>
+</tr>
+<tr>
+<td>页面可访问性（5 个路由）</td>
+<td>—</td>
+<td>✅ 全部 HTTP 200</td>
+</tr>
+<tr>
+<td>严重缺陷</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>一般缺陷</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>优化项</td>
+<td>4</td>
+<td>2（非阻断，已注明）</td>
+</tr>
+</tbody></table>
+<p><strong>复测结论：通过 ✅</strong> —— 阻断发布的问题已全部修复并回归验证，产品可正常构建、运行与演示。</p>
+<hr>
+<h2>2. 严重缺陷（修复前构建失败，已修复）</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>问题描述</th>
+<th>影响</th>
+<th>严重度</th>
+<th>修复动作</th>
+<th>验证</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>B-01</strong></td>
+<td><code>DashboardView.vue</code> 使用 <code>computed</code> 组合式 API，但 <code>import { ref, onMounted } from &#39;vue&#39;</code> 未导入 <code>computed</code> → <code>vue-tsc</code> 报 <code>TS2304: Cannot find name &#39;computed&#39;</code></td>
+<td>能力看板页运行时抛 ReferenceError，页面白屏；<strong>生产构建失败</strong></td>
+<td><strong>严重</strong></td>
+<td>补全导入：<code>import { ref, computed, onMounted } from &#39;vue&#39;</code></td>
+<td><code>vue-tsc</code> 通过，构建产物正常</td>
+</tr>
+<tr>
+<td><strong>B-02</strong></td>
+<td><code>vite.config.ts</code> 引用 <code>node:url</code>，但 <code>@types/node</code> 未安装 → <code>vue-tsc</code> 报 <code>TS2307: Cannot find module &#39;node:url&#39;</code></td>
+<td>前端工程<strong>无法构建</strong>，开发/CI 全阻断</td>
+<td><strong>严重</strong></td>
+<td><code>package.json</code> devDependencies 增加 <code>@types/node@^20.14.0</code> 并安装</td>
+<td>构建通过</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>说明：此前 <code>npx vite build</code>（不含类型检查）可编译通过，掩盖了 B-01/B-02；本轮以真实构建脚本 <code>npm run build</code>（<code>vue-tsc -b &amp;&amp; vite build</code>）复测即暴露。<strong>两处均已修复，构建回归通过。</strong></p>
+</blockquote>
+<hr>
+<h2>3. 一般缺陷（功能逻辑，已修复）</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>问题描述</th>
+<th>影响</th>
+<th>严重度</th>
+<th>修复动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>B-03</strong></td>
+<td><code>HomeView</code> 左侧导航 <code>onSelect</code>：行业分组「全部行业」key 为 <code>&#39;all&#39;</code>，与模式分组 <code>&#39;all&#39;</code> 冲突。用户点击「全部行业」时实际执行的是「重置面试模式」，行业筛选无法清除</td>
+<td>岗位筛选交互逻辑错误，分类结果不可预期</td>
+<td>一般</td>
+<td>行业「全部行业」key 改为 <code>&#39;industry-all&#39;</code>，<code>onSelect</code> 内显式区分两个命名空间</td>
+</tr>
+<tr>
+<td><strong>B-04</strong></td>
+<td><code>InterviewView</code> 顶部倒计时组件未传 <code>auto-start</code>，挂载后<strong>不自动走秒</strong>；且切换题目不重置计时器，首题倒计时归零后整场不再计时</td>
+<td>「面试计时」核心功能形同虚设，无临场压力感</td>
+<td>一般</td>
+<td><code>&lt;AppTimer :auto-start=&quot;true&quot; ref=&quot;timerRef&quot;&gt;</code>；新增 <code>watch(current)</code> 在每题切换时 <code>reset()</code> + <code>start()</code> 重启倒计时</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>4. 优化项（体验与异常态，已修复 2 项）</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>问题描述</th>
+<th>修复动作</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>B-05</strong></td>
+<td>数据加载无错误态：<code>Home/Dashboard/Report</code> 在 API 失败时会永久停留在「加载中」或误显示空态「未找到配置」</td>
+<td>三个视图增加 <code>error</code> 状态 + 重试按钮，失败时明确提示并可一键重载</td>
+<td>✅ 已修复</td>
+</tr>
+<tr>
+<td><strong>B-06</strong></td>
+<td>移动端（&lt;768px）<code>AppSideBar</code> 整体隐藏，面试模式 / 行业分类筛选在手机上完全不可达</td>
+<td><code>HomeView</code> 增加 <code>md:hidden</code> 移动端筛选下拉（模式 + 行业），与桌面侧栏数据同源</td>
+<td>✅ 已修复</td>
+</tr>
+<tr>
+<td><strong>B-07</strong></td>
+<td><code>Dashboard</code> 历史记录「用时」仅显示整数分钟（如「14 分」），信息精度不足</td>
+<td>新增 <code>fmtDur</code> 显示「X 分 Y 秒」</td>
+<td>✅ 已修复</td>
+</tr>
+<tr>
+<td><strong>B-08</strong></td>
+<td>设置页「连接测试」仅判断 <code>apiKey</code> 是否非空，未发起真实请求（演示模式局限）</td>
+<td>保持演示行为，已备注：接入后端后应调用 <code>/user/settings/test</code> 做真实连通性验证</td>
+<td>⏳ 遗留（非阻断）</td>
+</tr>
+<tr>
+<td><strong>B-09</strong></td>
+<td>无障碍（a11y）：顶部通知按钮等图标按钮缺 <code>aria-label</code>（延续上轮 T-10）</td>
+<td>建议后续统一补齐 <code>aria-label</code> 与键盘焦点样式</td>
+<td>⏳ 遗留（非阻断）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5. 复测验证记录</h2>
+<table>
+<thead>
+<tr>
+<th>验证项</th>
+<th>命令 / 方法</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>前端类型检查 + 构建</td>
+<td><code>npm run build</code>（<code>vue-tsc -b &amp;&amp; vite build</code>）</td>
+<td>✅ 70 modules，0 error</td>
+</tr>
+<tr>
+<td>生产产物预览</td>
+<td><code>vite preview --port 4173</code></td>
+<td>✅ 启动正常</td>
+</tr>
+<tr>
+<td>首页访问</td>
+<td><code>curl http://localhost:4173/</code></td>
+<td>✅ HTTP 200</td>
+</tr>
+<tr>
+<td>5 个路由入口（SPA fallback）</td>
+<td><code>/</code> <code>/interview</code> <code>/report</code> <code>/dashboard</code> <code>/settings</code> <code>/help</code></td>
+<td>✅ 全部 HTTP 200</td>
+</tr>
+<tr>
+<td>静态资源加载</td>
+<td>抽样 <code>dist/assets/*.js</code></td>
+<td>✅ 全部 HTTP 200</td>
+</tr>
+<tr>
+<td>后端语法校验</td>
+<td><code>python -m py_compile app/*.py app/routers/*.py</code></td>
+<td>✅ 通过</td>
+</tr>
+<tr>
+<td>构建产物抽查</td>
+<td><code>DashboardView-*.js</code> 存在且含图表逻辑</td>
+<td>✅ 正常</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>6. 需求符合性复核（功能 ↔ 实现）</h2>
+<table>
+<thead>
+<tr>
+<th>PRD / 需求项</th>
+<th>实现位置</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>岗位题库分类 / 筛选（模式 + 行业 + 关键词）</td>
+<td><code>HomeView</code> + <code>AppSideBar</code> + 移动端筛选</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>面试配置卡片（岗位/行业/时长/题型/语音文字切换）</td>
+<td><code>HomeView</code> 卡片列表（<code>jobConfigs</code> mock + 后端 <code>/questions/jobs</code>）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>面试倒计时 / 进度</td>
+<td><code>InterviewView</code> 顶部 <code>AppTimer</code>（自动走秒 + 每题重置）</td>
+<td>✅ 修复后</td>
+</tr>
+<tr>
+<td>AI 提问 + 文字/语音双模式答题</td>
+<td><code>InterviewView</code> 中栏（Segmented 切换 + 录音模拟 + 文字域）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>实时点评 / 实时评分 / 语速 / 口头禅 / 模板推荐</td>
+<td><code>InterviewView</code> 右栏分析面板</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>面试报告：总分 / 评级 / 综合评价</td>
+<td><code>ReportView</code> 上区（<code>AppScoreRing</code> + 维度条）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>错题回看 / AI 完整点评 / 优化建议 / 标准答案</td>
+<td><code>ReportView</code> 答题记录列表（薄弱标记 + 展开详情）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>能力看板：KPI / 成长折线 / 维度雷达 / 历史汇总</td>
+<td><code>DashboardView</code>（<code>AppLineChart</code> + <code>AppRadarChart</code>）</td>
+<td>✅ 修复后</td>
+</tr>
+<tr>
+<td>API 模型设置（模型名/密钥/BaseURL/参数）</td>
+<td><code>SettingsView</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>帮助文档</td>
+<td><code>HelpView</code>（快速开始 / 核心功能 / FAQ）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>报告导出 PDF</td>
+<td><code>ReportView</code> 导出按钮（后端 <code>/report/{id}/pdf</code> 或浏览器打印兜底）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>AI 点评降级（无 Key 走 mock）</td>
+<td><code>backend/app/services/llm.py</code> <code>comment()</code> try/except 兜底</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>7. 遗留建议（下一轮迭代）</h2>
+<ol>
+<li><strong>错误边界</strong>：为全局请求增加统一拦截（toast + 重试），而非逐页 try/catch。</li>
+<li><strong>AI 输出鲁棒性</strong>：生产 LLM 返回未含 <code>dimensions</code> / <code>referenceAnswer</code> / <code>template</code> 时，<code>answer</code> 路由应补齐默认值，避免报告页字段缺失。</li>
+<li><strong>状态持久化</strong>：面试进行中应支持中途退出恢复（当前为内存态，刷新即丢）。</li>
+<li><strong>移动端</strong>：<code>AppTimer</code> 在窄屏下建议缩小字号；录音区波形交互后续接入真实 ASR 时重做。</li>
+<li><strong>a11y</strong>：全站图标按钮补 <code>aria-label</code>，表单控件补 <code>label</code> 关联。</li>
+<li><strong>自动化测试</strong>：建议引入 Vitest + Vue Test Utils 对 <code>onSelect</code> 筛选、计时器重置、错误态做单元测试，防止回归。</li>
+</ol>
+<hr>
+<h2>8. 复测结论</h2>
+<ul>
+<li><strong>功能符合性</strong>：PRD 核心功能（抽题 / 双模式答题 / 实时点评 / 评分评级 / 错题回看 / 计时 / 模板 / 报告 / 看板 / 设置 / 帮助）与页面实现一一对应，无缺失。</li>
+<li><strong>交互与异常</strong>：筛选冲突、计时器失效、加载失败白屏等关键交互缺陷已全部修复并回归通过。</li>
+<li><strong>构建质量</strong>：真实构建脚本回归通过，产品具备可演示、可交付条件。</li>
+<li><strong>结论：✅ 通过（有条件）</strong> —— 遗留项均为非阻断优化，建议在正式联调后端 API 与接入真实 LLM/ASR 前按第 7 节清单补齐。</li>
+</ul>
+
+</div>
+</body>
+</html>

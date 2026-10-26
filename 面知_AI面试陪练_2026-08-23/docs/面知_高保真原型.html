@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面知 · AI 面试陪练 · 高保真原型</title>
+<style>
+:root{
+  --primary:#007AFF; --primary-hover:#0066D6; --primary-active:#0055B3;
+  --primary-light:#E6F1FB; --primary-lighter:#F0F7FF;
+  --bg-page:#F5F5F7; --bg-card:#FFFFFF; --bg-hover:#F5F5F7; --bg-active:#EBEBED;
+  --text-primary:#1D1D1F; --text-secondary:#6E6E73; --text-tertiary:#AEAEB2; --text-inverse:#FFFFFF;
+  --border:#E5E5EA; --border-hover:#D1D1D6;
+  --success:#34C759; --success-light:#E8F8EC;
+  --warning:#FF9500; --warning-light:#FFF4E6;
+  --error:#FF3B30; --error-light:#FFEBE8;
+  --subject:#3B82F6; --subject-light:#EBF3FF;
+  --analysis:#10B981; --analysis-light:#E8F8F0;
+  --radius-sm:6px; --radius-md:8px; --radius-lg:12px; --radius-full:9999px;
+  --font-sans:'PingFang SC','SF Pro Text',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --sidebar-w:248px; --topbar-h:56px;
+  --shadow-focus:0 0 0 3px rgba(0,122,255,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{font-family:var(--font-sans);background:var(--bg-page);color:var(--text-primary);
+  line-height:1.5;-webkit-font-smoothing:antialiased;font-size:14px;}
+.tabular-nums{font-variant-numeric:tabular-nums;}
+.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+/* ===== Top App Bar ===== */
+.appbar{position:sticky;top:0;z-index:100;height:var(--topbar-h);background:var(--bg-card);
+  border-bottom:1px solid var(--border);display:flex;align-items:center;gap:24px;
+  padding:0 24px;}
+.appbar .logo{font-size:18px;font-weight:600;color:var(--text-primary);display:flex;align-items:center;gap:8px;}
+.appbar .logo .mark{width:28px;height:28px;border-radius:8px;background:var(--primary);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;}
+.appbar .logo b{color:var(--primary);}
+.appbar nav{display:flex;gap:4px;margin-left:8px;}
+.appbar nav a{font-size:14px;color:var(--text-secondary);text-decoration:none;padding:8px 14px;
+  border-radius:var(--radius-md);transition:all .15s ease;cursor:pointer;}
+.appbar nav a:hover{background:var(--bg-hover);color:var(--text-primary);}
+.appbar nav a.active{color:var(--primary);background:var(--primary-light);font-weight:600;}
+.appbar .right{margin-left:auto;display:flex;align-items:center;gap:12px;}
+.appbar .avatar{width:32px;height:32px;border-radius:var(--radius-full);background:var(--primary-light);
+  color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;}
+
+/* ===== Prototype banner ===== */
+.proto-banner{background:#1D1D1F;color:#fff;font-size:12px;padding:6px 24px;display:flex;
+  align-items:center;gap:10px;}
+.proto-banner .dot{width:7px;height:7px;border-radius:50%;background:#34C759;}
+.proto-banner b{color:#5AC8FA;font-weight:600;}
+
+/* ===== Layout ===== */
+.page{display:none;max-width:1240px;margin:0 auto;padding:28px 24px 64px;}
+.page.active{display:block;}
+
+/* ===== Buttons ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;cursor:pointer;
+  font-family:var(--font-sans);transition:all .15s ease;text-decoration:none;font-size:14px;
+  border-radius:var(--radius-md);padding:9px 16px;min-height:36px;}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+.btn-primary{background:var(--primary);color:#fff;}
+.btn-primary:hover:not(:disabled){background:var(--primary-hover);}
+.btn-primary:active:not(:disabled){background:var(--primary-active);}
+.btn-secondary{background:var(--bg-card);color:var(--primary);border:1px solid var(--primary);}
+.btn-secondary:hover:not(:disabled){background:var(--primary-lighter);}
+.btn-ghost{background:transparent;color:var(--primary);}
+.btn-ghost:hover:not(:disabled){background:var(--primary-lighter);}
+.btn-neutral{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border);}
+.btn-neutral:hover:not(:disabled){background:var(--bg-hover);}
+.btn-danger{background:var(--error);color:#fff;}
+.btn-block{width:100%;}
+.btn-sm{padding:6px 12px;font-size:13px;min-height:32px;}
+.btn-lg{padding:11px 24px;font-size:15px;min-height:44px;}
+
+/* ===== Card ===== */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;}
+.card-title{font-size:16px;font-weight:600;}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.head-row{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;}
+
+/* ===== Tags ===== */
+.tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:var(--radius-sm);
+  font-size:12px;font-weight:500;line-height:1;white-space:nowrap;}
+.tag-blue{background:var(--primary-light);color:var(--primary);}
+.tag-green{background:var(--success-light);color:var(--success);}
+.tag-orange{background:var(--warning-light);color:var(--warning);}
+.tag-red{background:var(--error-light);color:var(--error);}
+.tag-gray{background:var(--bg-page);color:var(--text-secondary);}
+.tag-subject{background:var(--subject-light);color:var(--subject);}
+.tag-analysis{background:var(--analysis-light);color:var(--analysis);}
+
+/* ===== Input ===== */
+.input{padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-md);font-size:14px;
+  font-family:var(--font-sans);background:var(--bg-card);color:var(--text-primary);outline:none;width:100%;}
+.input::placeholder{color:var(--text-tertiary);}
+.input:focus{border-color:var(--primary);box-shadow:var(--shadow-focus);}
+.search-wrap{position:relative;flex:1;min-width:220px;}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-tertiary);}
+.search-wrap .input{padding-left:36px;height:44px;}
+
+/* ===== Progress ===== */
+.progress{height:6px;background:var(--bg-page);border-radius:var(--radius-full);overflow:hidden;}
+.progress-bar{height:100%;background:var(--primary);border-radius:var(--radius-full);transition:width .3s ease;}
+
+/* ===== Score Grade badge ===== */
+.grade{display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);
+  font-weight:600;color:#fff;font-size:12px;width:24px;height:22px;}
+.grade-lg{width:46px;height:42px;font-size:22px;border-radius:8px;}
+.grade-A{background:var(--success);}
+.grade-B{background:var(--primary);}
+.grade-C{background:var(--warning);}
+.grade-D{background:var(--error);}
+
+/* ===== Sidebar (Home) ===== */
+.home-layout{display:flex;gap:24px;align-items:flex-start;}
+.sidenav{width:var(--sidebar-w);flex-shrink:0;background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:16px;position:sticky;top:calc(var(--topbar-h) + 20px);}
+.sidenav .group-label{font-size:12px;font-weight:600;color:var(--text-tertiary);margin:6px 8px 8px;
+  text-transform:uppercase;letter-spacing:.04em;}
+.sidenav .nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--radius-md);
+  font-size:14px;color:var(--text-secondary);cursor:pointer;transition:all .15s ease;margin-bottom:2px;}
+.sidenav .nav-item:hover{background:var(--bg-hover);color:var(--text-primary);}
+.sidenav .nav-item.active{background:var(--primary-light);color:var(--primary);font-weight:600;}
+.sidenav .nav-item svg{width:18px;height:18px;flex-shrink:0;}
+.sidenav .nav-item .cnt{margin-left:auto;font-size:12px;color:var(--text-tertiary);font-variant-numeric:tabular-nums;}
+.sidenav .nav-item.active .cnt{color:var(--primary);}
+.sidenav .divider{height:1px;background:var(--border);margin:14px 8px;}
+
+/* ===== Job Cards grid ===== */
+.job-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.job-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;
+  display:flex;flex-direction:column;transition:all .15s ease;}
+.job-card:hover{border-color:var(--border-hover);box-shadow:0 2px 12px rgba(0,0,0,.05);}
+.job-card h3{font-size:16px;font-weight:600;}
+.job-card .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.job-card dl{margin-top:14px;display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--text-secondary);}
+.job-card dl .row{display:flex;justify-content:space-between;}
+.job-card dl .row dd{color:var(--text-primary);}
+.job-card dl .types{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.job-card dl .types span{display:inline-flex;height:22px;padding:0 8px;align-items:center;border-radius:var(--radius-sm);
+  background:var(--bg-page);border:1px solid var(--border);font-size:11px;color:var(--text-secondary);}
+.job-card .btn{margin-top:16px;}
+
+/* ===== Interview layout ===== */
+.interview-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:24px;}
+.interview-top .left{display:flex;align-items:center;gap:12px;min-width:0;}
+.interview-top h1{font-size:20px;font-weight:600;}
+.interview-top .sub{font-size:12px;color:var(--text-secondary);margin-top:4px;}
+.timer{display:flex;align-items:center;gap:8px;background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:8px 14px;}
+.timer .ring{width:34px;height:34px;}
+.timer .tval{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;}
+.timer .tlabel{font-size:11px;color:var(--text-tertiary);}
+.iv-grid{display:grid;grid-template-columns:320px 1fr 320px;gap:16px;align-items:start;}
+.ai-avatar{width:40px;height:40px;border-radius:var(--radius-full);background:var(--primary-light);
+  color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0;}
+.bubble{background:var(--subject-light);border:1px solid var(--subject);border-radius:var(--radius-md);
+  padding:16px;font-size:14px;line-height:1.7;color:var(--text-primary);}
+.iv-nav{display:flex;gap:8px;margin-top:14px;}
+.segmented{display:inline-flex;background:var(--bg-page);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:2px;}
+.segmented button{border:none;background:transparent;font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);
+  padding:6px 16px;border-radius:6px;cursor:pointer;transition:all .15s;}
+.segmented button.active{background:var(--bg-card);color:var(--text-primary);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.06);}
+.answer-box{min-height:160px;width:100%;padding:12px;border:1px solid var(--border);border-radius:var(--radius-md);
+  font-family:var(--font-sans);font-size:14px;line-height:1.7;color:var(--text-primary);resize:vertical;outline:none;}
+.answer-box:focus{border-color:var(--primary);box-shadow:var(--shadow-focus);}
+.save-hint{font-size:12px;color:var(--text-tertiary);}
+.voice-box{min-height:160px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-page);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;}
+.wave{display:flex;align-items:flex-end;gap:4px;height:48px;}
+.wave span{width:4px;border-radius:4px;background:var(--primary);}
+.iv-foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;}
+.ai-comment{margin-top:16px;border-top:1px solid var(--border);padding-top:16px;}
+.ai-comment .head{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.ai-comment p{font-size:13px;color:var(--text-secondary);line-height:1.6;}
+
+/* ===== Score ring ===== */
+.score-ring{position:relative;width:140px;height:140px;flex-shrink:0;}
+.score-ring .grade-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.score-ring .grade-center .g{font-size:34px;font-weight:600;line-height:1;}
+.score-ring .grade-center .s{font-size:12px;color:var(--text-tertiary);margin-top:4px;}
+
+/* ===== Report list ===== */
+.report-item{border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;margin-bottom:12px;}
+.report-item.weak{border-left:4px solid var(--error);}
+.report-item .bar{width:100%;display:flex;align-items:center;gap:12px;padding:16px;text-align:left;
+  background:var(--bg-card);border:none;cursor:pointer;font-family:var(--font-sans);}
+.report-item .bar:hover{background:var(--bg-hover);}
+.report-item .qnum{font-size:12px;color:var(--text-tertiary);width:32px;flex-shrink:0;}
+.report-item .qtext{flex:1;min-width:0;font-size:14px;color:var(--text-primary);}
+.report-item .detail{padding:0 16px 16px;border-top:1px solid var(--border);}
+.detail-block{margin-top:14px;}
+.detail-block .lab{font-size:12px;color:var(--text-tertiary);margin-bottom:4px;}
+.detail-block .val{font-size:14px;color:var(--text-primary);line-height:1.6;}
+.advice{background:var(--analysis-light);border:1px solid var(--analysis);border-radius:var(--radius-md);padding:12px;margin-top:12px;}
+.advice .lab{color:var(--analysis);font-weight:600;font-size:12px;margin-bottom:4px;}
+.ref{background:var(--subject-light);border:1px solid var(--subject);border-radius:var(--radius-md);padding:12px;margin-top:12px;}
+.ref .lab{color:var(--subject);font-weight:600;font-size:12px;margin-bottom:4px;}
+
+/* ===== Dashboard ===== */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px;}
+.kpi{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;}
+.kpi .lab{font-size:12px;color:var(--text-secondary);}
+.kpi .val{font-size:28px;font-weight:600;margin-top:8px;font-variant-numeric:tabular-nums;letter-spacing:-.02em;}
+.kpi .val.warn{color:var(--warning);}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.dim-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.dim-row .nm{font-size:12px;color:var(--text-secondary);width:80px;flex-shrink:0;}
+.dim-row .v{font-size:12px;color:var(--text-primary);width:32px;text-align:right;font-variant-numeric:tabular-nums;}
+table.data{width:100%;border-collapse:collapse;font-size:14px;}
+table.data th{text-align:left;font-size:12px;color:var(--text-tertiary);font-weight:500;padding:10px 16px;border-bottom:1px solid var(--border);}
+table.data td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text-secondary);}
+table.data td.primary{color:var(--text-primary);}
+table.data tr:last-child td{border-bottom:none;}
+table.data .link{color:var(--primary);background:none;border:none;cursor:pointer;font-family:var(--font-sans);font-size:13px;}
+
+.empty{text-align:center;padding:48px 0;color:var(--text-tertiary);font-size:14px;}
+
+h1.h1{font-size:28px;font-weight:600;letter-spacing:-.02em;}
+.lead{font-size:14px;color:var(--text-secondary);margin-top:6px;}
+.mb-6{margin-bottom:24px;}
+.flex{display:flex;}
+.gap-3{gap:12px;}
+.items-center{align-items:center;}
+.flex-wrap{flex-wrap:wrap;}
+.mt-1{margin-top:4px;}
+
+@media (max-width:1080px){
+  .iv-grid{grid-template-columns:1fr;}
+  .chart-grid{grid-template-columns:1fr;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- Prototype banner -->
+<div class="proto-banner">
+  <span class="dot"></span>
+  <b>高保真交互原型</b> · 面知 AI 面试陪练 — 点击顶部导航或卡片可切换页面与题目，模拟真实使用流程
+</div>
+
+<!-- Top App Bar -->
+<header class="appbar">
+  <div class="logo"><span class="mark">L</span>面知<b>.</b></div>
+  <nav id="topnav">
+    <a data-page="home" class="active">模拟面试</a>
+    <a data-page="report">面试报告</a>
+    <a data-page="dashboard">能力看板</a>
+  </nav>
+  <div class="right">
+    <span class="tag tag-blue">应届生 · 校招</span>
+    <div class="avatar">校</div>
+  </div>
+</header>
+
+<!-- =================== PAGE: HOME / 模拟面试 =================== -->
+<section class="page active" id="page-home">
+  <div class="mb-6">
+    <h1 class="h1">模拟面试</h1>
+    <p class="lead">选择岗位与面试模式，开启全真 AI 模拟面试，实时点评帮你快速提升。</p>
+  </div>
+
+  <div class="home-layout">
+    <!-- Sidebar -->
+    <aside class="sidenav">
+      <div class="group-label">面试模式</div>
+      <div class="nav-item active" data-group="mode" data-key="all">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        全部模拟 <span class="cnt" id="cnt-mode-all">104</span>
+      </div>
+      <div class="nav-item" data-group="mode" data-key="normal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg>
+        普通模拟 <span class="cnt" id="cnt-mode-normal">69</span>
+      </div>
+      <div class="nav-item" data-group="mode" data-key="pressure">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
+        压力面模拟 <span class="cnt" id="cnt-mode-pressure">35</span>
+      </div>
+
+      <div class="divider"></div>
+      <div class="group-label">岗位题库</div>
+      <div class="nav-item active" data-group="industry" data-key="industry-all">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h18"/></svg>
+        全部行业 <span class="cnt" id="cnt-ind-all">104</span>
+      </div>
+      <div class="nav-item" data-group="industry" data-key="互联网"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/></svg>互联网 <span class="cnt">50</span></div>
+      <div class="nav-item" data-group="industry" data-key="国企"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 21V5h16v16"/></svg>国企 <span class="cnt">20</span></div>
+      <div class="nav-item" data-group="industry" data-key="外企"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 3 14 0 18M12 3c-3 4-3 14 0 18"/></svg>外企 <span class="cnt">13</span></div>
+      <div class="nav-item" data-group="industry" data-key="制造业"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5M4 19h16M4 12l4-4 3 3 5-6 4 4"/></svg>制造业 <span class="cnt">13</span></div>
+      <div class="nav-item" data-group="industry" data-key="快消"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h14v16H5z"/></svg>快消 <span class="cnt">4</span></div>
+      <div class="nav-item" data-group="industry" data-key="医药"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21v-6m0-6V3M3 21v-6m18 6v-6"/></svg>医药 <span class="cnt">2</span></div>
+      <div class="nav-item" data-group="industry" data-key="文职"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h14v16H5z"/></svg>文职 <span class="cnt">2</span></div>
+    </aside>
+
+    <!-- Main -->
+    <div style="flex:1;min-width:0;">
+      <div class="flex flex-wrap items-center gap-3 mb-6">
+        <div class="search-wrap">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+          <input class="input" id="jobSearch" placeholder="搜索岗位 / 企业 / 行业">
+        </div>
+        <button class="btn btn-secondary" onclick="goPage('dashboard')">历史记录</button>
+      </div>
+
+      <div class="job-grid" id="jobGrid"></div>
+      <div class="empty" id="jobEmpty" style="display:none;">未找到匹配的岗位配置，试试调整筛选条件。</div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== PAGE: INTERVIEW / 模拟面试作答 =================== -->
+<section class="page" id="page-interview">
+  <div class="interview-top">
+    <div class="left">
+      <button class="btn btn-ghost btn-sm" onclick="goPage('home')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        返回
+      </button>
+      <div style="min-width:0;">
+        <h1 id="ivJobName">腾讯 AI全栈工程师 · 普通面模拟</h1>
+        <div class="sub" id="ivProgress">第 1 / 8 题</div>
+      </div>
+    </div>
+    <div class="timer">
+      <svg class="ring" viewBox="0 0 36 36">
+        <circle cx="18" cy="18" r="15.5" fill="none" stroke="#E5E5EA" stroke-width="3"/>
+        <circle id="timerArc" cx="18" cy="18" r="15.5" fill="none" stroke="#007AFF" stroke-width="3"
+          stroke-linecap="round" stroke-dasharray="97.4" stroke-dashoffset="97.4" transform="rotate(-90 18 18)"/>
+      </svg>
+      <div>
+        <div class="tval" id="timerVal">02:00</div>
+        <div class="tlabel">本題倒计时</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="iv-grid">
+    <!-- Left: AI 面试官 -->
+    <div class="card">
+      <div class="card-head"><span class="card-title">AI 面试官</span></div>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="ai-avatar">AI</div>
+        <div>
+          <p style="font-weight:600;">HR · 小la</p>
+          <p style="font-size:12px;color:var(--text-tertiary);" id="ivModeLabel">模拟面试官</p>
+        </div>
+      </div>
+      <div class="bubble" id="ivQuestion">请自我介绍，并说明为什么选择我们这个岗位？</div>
+      <div class="iv-nav">
+        <button class="btn btn-ghost btn-sm" id="btnPrev" onclick="prevQ()">上一题</button>
+        <button class="btn btn-ghost btn-sm" id="btnNext" onclick="nextQ()">下一题</button>
+      </div>
+    </div>
+
+    <!-- Middle: 作答区 -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title" id="answerTitle">文字作答</span>
+        <div class="segmented" id="answerSeg">
+          <button class="active" data-mode="text" onclick="setAnswerMode('text')">文字</button>
+          <button data-mode="voice" onclick="setAnswerMode('voice')">语音</button>
+        </div>
+      </div>
+      <div class="flex items-center justify-content" style="justify-content:space-between;margin-bottom:12px;">
+        <span></span>
+        <span class="save-hint" id="saveHint"></span>
+      </div>
+
+      <textarea class="answer-box" id="answerText" placeholder="在此输入你的回答，建议使用 STAR 结构组织内容（作答将自动保存并评分）…"></textarea>
+      <div class="voice-box" id="voiceBox" style="display:none;">
+        <div class="wave" id="wave"></div>
+        <p class="save-hint" id="voiceHint">点击下方按钮开始录音，结束后自动转写并评分</p>
+        <button class="btn btn-primary" id="recBtn" onclick="toggleRecord()">开始录音</button>
+      </div>
+
+      <div class="iv-foot">
+        <span class="save-hint" id="ivFootHint">作答自动保存并评分，点击「下一题」继续</span>
+        <button class="btn btn-primary" id="btnComplete" style="display:none;" onclick="complete()">完成提交</button>
+      </div>
+
+      <div class="ai-comment" id="aiComment" style="display:none;">
+        <div class="head">
+          <span class="grade" id="cmtGrade">B</span>
+          <span style="font-weight:600;" id="cmtScore">82 分</span>
+          <span style="font-size:12px;color:var(--text-secondary);">本题 AI 点评</span>
+        </div>
+        <p id="cmtText"></p>
+      </div>
+    </div>
+
+    <!-- Right: 实时分析面板 -->
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="card">
+        <div class="card-head"><span class="card-title">实时得分评级</span></div>
+        <div class="flex items-center gap-3">
+          <span class="grade grade-lg" id="rtGrade">B</span>
+          <div>
+            <p style="font-size:28px;font-weight:600;font-variant-numeric:tabular-nums;" id="rtScore">82</p>
+            <p style="font-size:12px;color:var(--text-tertiary);">实时综合评分</p>
+          </div>
+        </div>
+        <div class="progress" style="margin-top:12px;"><div class="progress-bar" id="rtBar" style="width:82%"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-title">语速检测</span></div>
+        <div class="flex items-center gap-2">
+          <span style="font-size:28px;font-weight:600;font-variant-numeric:tabular-nums;" id="rtRate">138</span>
+          <span style="font-size:12px;color:var(--text-secondary);">字/分钟</span>
+          <span class="tag tag-green" id="rtRateTag" style="margin-left:auto;">适中</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-title">口头禅识别</span></div>
+        <p class="save-hint" id="rtFiller">暂未检测到明显口头禅，表达干净。</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-title">结构化答题模板</span></div>
+        <div style="background:var(--analysis-light);border:1px solid var(--analysis);border-radius:var(--radius-md);padding:12px;font-size:14px;color:var(--text-primary);">
+          STAR：情境 → 任务 → 行动 → 结果
+        </div>
+        <p class="save-hint" style="margin-top:8px;">按此模板组织回答，逻辑更清晰、得分更高。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== PAGE: REPORT / 面试报告 =================== -->
+<section class="page" id="page-report">
+  <div class="mb-6">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+      <button class="btn btn-ghost btn-sm" onclick="goPage('dashboard')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        返回能力看板
+      </button>
+    </div>
+    <h1 class="h1">面试报告</h1>
+    <p class="lead">本次模拟面试的得分、能力维度与逐题点评。</p>
+  </div>
+
+  <div class="grid" style="display:grid;grid-template-columns:auto 1fr;gap:16px;margin-bottom:16px;">
+    <div class="card" style="display:flex;align-items:center;gap:24px;">
+      <div class="score-ring" id="reportRing">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <circle cx="70" cy="70" r="60" fill="none" stroke="#E5E5EA" stroke-width="10"/>
+          <circle id="reportArc" cx="70" cy="70" r="60" fill="none" stroke="#FF9500" stroke-width="10"
+            stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="83" transform="rotate(-90 70 70)"/>
+        </svg>
+        <div class="grade-center"><span class="g" id="reportGrade" style="color:#FF9500;">C</span><span class="s">等级</span></div>
+      </div>
+      <div>
+        <h1 style="font-size:24px;font-weight:600;" id="reportJob">腾讯 AI全栈工程师</h1>
+        <div class="flex items-center gap-2 mt-1">
+          <span class="tag tag-gray">普通面</span>
+          <span style="font-size:12px;color:var(--text-secondary);">2026-08-17</span>
+          <span style="font-size:12px;color:var(--text-secondary);">· 用时 18 分 32 秒</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="card-title">综合评价</span></div>
+      <p style="font-size:14px;color:var(--text-primary);line-height:1.7;">整体表现中等偏上，技术基础扎实，自我介绍结构清晰、与岗位匹配度高。建议在项目复盘中加入更多量化结果与个人贡献说明，压力题作答时保持冷静、给出可落地的应对思路，可进一步提升抗压维度得分。</p>
+      <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;" id="reportDims"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <span class="card-title">答题记录 / 错题回看</span>
+      <div class="flex items-center gap-2">
+        <button class="btn btn-secondary btn-sm" id="weakToggle" onclick="toggleWeak()">只看错题</button>
+        <button class="btn btn-ghost btn-sm" onclick="window.print()">导出 PDF</button>
+        <button class="btn btn-primary btn-sm" onclick="goPage('home')">再次面试</button>
+      </div>
+    </div>
+    <div id="reportList"></div>
+    <div class="empty" id="reportEmpty" style="display:none;">没有薄弱题目，表现很棒！</div>
+  </div>
+</section>
+
+<!-- =================== PAGE: DASHBOARD / 能力看板 =================== -->
+<section class="page" id="page-dashboard">
+  <div class="mb-6">
+    <h1 class="h1">能力看板</h1>
+    <p class="lead">追踪你的面试能力成长曲线，定位薄弱项，针对性提升。</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="lab">面试总场次</div><div class="val">12</div></div>
+    <div class="kpi"><div class="lab">平均得分</div><div class="val">76</div></div>
+    <div class="kpi"><div class="lab">薄弱能力项</div><div class="val warn">抗压能力</div></div>
+    <div class="kpi"><div class="lab">练习总时长</div><div class="val" style="font-size:22px;">6 小时 20 分</div></div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="card">
+      <div class="card-head"><span class="card-title">面试能力成长曲线</span></div>
+      <svg id="lineChart" viewBox="0 0 560 240" style="width:100%;height:auto;"></svg>
+      <div class="flex items-center gap-3" style="margin-top:8px;font-size:12px;color:var(--text-secondary);">
+        <span class="flex items-center gap-1"><span style="width:10px;height:3px;background:#007AFF;display:inline-block;border-radius:2px;"></span>综合</span>
+        <span class="flex items-center gap-1"><span style="width:10px;height:3px;background:#34C759;display:inline-block;border-radius:2px;"></span>表达</span>
+        <span class="flex items-center gap-1"><span style="width:10px;height:3px;background:#FF9500;display:inline-block;border-radius:2px;"></span>逻辑</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">各维度能力雷达</span></div>
+      <svg id="radarChart" viewBox="0 0 260 260" style="width:100%;max-width:280px;height:auto;margin:0 auto;display:block;"></svg>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-title">历史面试汇总</span></div>
+    <div style="overflow-x:auto;">
+      <table class="data">
+        <thead><tr>
+          <th>日期</th><th>岗位</th><th>模式</th><th>得分</th><th>等级</th><th>用时</th><th>操作</th>
+        </tr></thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ===================== Data ===================== */
+const JOBS = [
+  {id:1,name:"AI全栈工程师",company:"腾讯",industry:"互联网",mode:"normal",duration:20,qtypes:["自我介绍","行为","技术","专业"]},
+  {id:2,name:"后端开发工程师",company:"腾讯",industry:"互联网",mode:"normal",duration:20,qtypes:["自我介绍","行为","技术","压力"]},
+  {id:3,name:"前端开发工程师",company:"腾讯",industry:"互联网",mode:"normal",duration:20,qtypes:["自我介绍","行为","技术"]},
+  {id:4,name:"产品经理",company:"腾讯",industry:"互联网",mode:"normal",duration:20,qtypes:["自我介绍","行为","综合"]},
+  {id:5,name:"游戏策划",company:"腾讯",industry:"互联网",mode:"pressure",duration:25,qtypes:["自我介绍","行为","专业","压力"]},
+  {id:6,name:"云产品经理",company:"腾讯",industry:"互联网",mode:"normal",duration:20,qtypes:["自我介绍","行为","综合"]},
+  {id:7,name:"后端开发工程师",company:"字节跳动",industry:"互联网",mode:"normal",duration:20,qtypes:["自我介绍","技术","压力"]},
+  {id:8,name:"算法工程师",company:"字节跳动",industry:"互联网",mode:"normal",duration:22,qtypes:["自我介绍","技术","专业"]},
+  {id:9,name:"前端开发工程师",company:"字节跳动",industry:"互联网",mode:"normal",duration:20,qtypes:["自我介绍","技术"]},
+  {id:10,name:"测试开发工程师",company:"字节跳动",industry:"互联网",mode:"normal",duration:18,qtypes:["自我介绍","技术","行为"]},
+  {id:11,name:"Java开发工程师",company:"阿里巴巴",industry:"互联网",mode:"normal",duration:20,qtypes:["自我介绍","技术","压力"]},
+  {id:12,name:"数据分析师",company:"阿里巴巴",industry:"互联网",mode:"normal",duration:18,qtypes:["自我介绍","行为","专业"]},
+  {id:13,name:"产品经理",company:"美团",industry:"互联网",mode:"normal",duration:20,qtypes:["自我介绍","行为","综合"]},
+  {id:14,name:"客户端开发工程师",company:"网易",industry:"互联网",mode:"normal",duration:20,qtypes:["自我介绍","技术"]},
+  {id:15,name:"内容运营",company:"小红书",industry:"互联网",mode:"normal",duration:16,qtypes:["自我介绍","行为","综合"]},
+  {id:16,name:"后端开发工程师",company:"国家电网",industry:"国企",mode:"normal",duration:20,qtypes:["自我介绍","行为","技术"]},
+  {id:17,name:"财务管培生",company:"中国移动",industry:"国企",mode:"normal",duration:18,qtypes:["自我介绍","行为","综合"]},
+  {id:18,name:"软件工程师",company:"中国工商银行",industry:"国企",mode:"normal",duration:20,qtypes:["自我介绍","技术","行为"]},
+  {id:19,name:"机械工程师",company:"比亚迪",industry:"制造业",mode:"normal",duration:20,qtypes:["自我介绍","技术","专业"]},
+  {id:20,name:"硬件工程师",company:"华为",industry:"制造业",mode:"normal",duration:22,qtypes:["自我介绍","技术","专业"]},
+  {id:21,name:"市场专员",company:"宝洁",industry:"快消",mode:"normal",duration:16,qtypes:["自我介绍","行为","综合"]},
+  {id:22,name:"临床研究员",company:"药明康德",industry:"医药",mode:"normal",duration:20,qtypes:["自我介绍","专业","行为"]},
+  {id:23,name:"行政专员",company:"通用行政",industry:"文职",mode:"normal",duration:15,qtypes:["自我介绍","行为","综合"]},
+  {id:24,name:"前端开发工程师",company:"苹果中国",industry:"外企",mode:"normal",duration:20,qtypes:["自我介绍","技术","行为"]},
+  {id:25,name:"数据分析师",company:"微软中国",industry:"外企",mode:"normal",duration:18,qtypes:["自我介绍","专业","行为"]}
+];
+
+/* Interview questions — 自我介绍强制置顶第一题 */
+const QUESTIONS = [
+  {title:"请自我介绍，并说明为什么选择我们这个岗位？",type:"行为面试 STAR",diff:"简单",
+   sample:"您好，我是XX大学计算机专业的应届生。在校期间我主导了一个基于大模型的校园问答项目，负责后端工程化与前端联调，最终服务覆盖了3个院系。我选择贵司AI全栈岗位，是因为贵司在模型落地与工程化上有完整闭环，与我希望把AI能力真正交付到用户手中的目标高度契合。",
+   comment:"自我介绍结构清晰，专业与岗位匹配度高，并给出了量化项目成果。建议在结尾补充一段对岗位具体业务的了解，进一步体现诚意。",
+   score:82,grade:"B"},
+  {title:"说说你遇到过最难的技术问题，是如何解决的？",type:"技术深挖",diff:"中等",comment:"回答体现了系统性排查思路，但缺少对根因的复盘。建议补充定位过程的关键指标与验证手段。",score:78,grade:"B"},
+  {title:"讲一个你处理并发或性能问题的例子，如何定位与解决？",type:"技术深挖",diff:"中等",comment:"方案可行，建议补充压测数据与优化前后对比，增强说服力。",score:80,grade:"B"},
+  {title:"项目中途需求变更且时间很紧，你会如何应对？",type:"行为面试 STAR",diff:"中等",comment:"沟通意识好，建议明确优先级排序方法与干系人对齐动作。",score:75,grade:"C"},
+  {title:"面试官当场质疑你项目中的数据造假，你如何回应？",type:"压力测试",diff:"困难",comment:"情绪控制尚可，但应对偏防御。建议以数据证据平和回应，并展示复盘改进。",score:62,grade:"D"},
+  {title:"如果你的方案被领导否定，你会怎么办？",type:"行为面试 STAR",diff:"中等",comment:"态度开放，建议补充一次具体接纳反馈并调整的经历。",score:76,grade:"C"},
+  {title:"如何看待加班与服从组织安排？",type:"综合素养",diff:"简单",comment:"表达成熟，建议结合岗位节奏给出更具体的平衡思路。",score:84,grade:"B"},
+  {title:"谈谈你对 AI 全栈（大模型+工程化落地）的理解，以及它未来 3 年的趋势。",type:"专业认知",diff:"中等",comment:"视野开阔，建议补充一两个你亲自实践过的落地案例。",score:79,grade:"B"}
+];
+
+/* Report answers (mirrors QUESTIONS, with weak flag + suggestion/reference) */
+const REPORT = {
+  jobName:"腾讯 AI全栈工程师", mode:"普通面", date:"2026-08-17", durationSec:1112,
+  totalScore:78, grade:"C",
+  summary:"整体表现中等偏上，技术基础扎实，自我介绍结构清晰、与岗位匹配度高。建议在项目复盘中加入更多量化结果与个人贡献说明，压力题作答时保持冷静、给出可落地的应对思路，可进一步提升抗压维度得分。",
+  dimensions:[
+    {name:"逻辑思维",score:80},{name:"表达能力",score:78},{name:"专业深度",score:74},
+    {name:"结构化",score:82},{name:"应变能力",score:70},{name:"抗压能力",score:60}
+  ],
+  answers:[
+    {q:"请自我介绍，并说明为什么选择我们这个岗位？",grade:"B",score:82,isWeak:false,
+     answer:"您好，我是XX大学计算机专业的应届生。在校期间我主导了一个基于大模型的校园问答项目……",
+     comment:"结构清晰，专业与岗位匹配度高。建议结尾补充对岗位具体业务的了解。",
+     suggestion:"在结尾加一句对贵司该业务线的理解，例如'我关注到贵司在xx场景的落地'，体现诚意。",
+     reference:"STAR 结构：背景(专业/项目)→ 目标(为什么选岗)→ 行动(做了什么)→ 结果(量化成果)，并落到岗位匹配。",template:"STAR"},
+    {q:"说说你遇到过最难的技术问题，是如何解决的？",grade:"B",score:78,isWeak:false,
+     answer:"我在做实时推荐时遇到过接口超时……",
+     comment:"体现系统性排查，但缺根因复盘。",
+     suggestion:"补充定位关键指标（如 P99 延迟）与验证手段，形成闭环。",
+     reference:"按'现象→假设→验证→根因→修复→复盘'六步陈述，强调数据证据。",template:"根因分析法"},
+    {q:"讲一个你处理并发或性能问题的例子。",grade:"B",score:80,isWeak:false,
+     answer:"通过缓存与异步削峰优化……",
+     comment:"方案可行，建议补压测数据。",
+     suggestion:"给出优化前后 QPS/延迟对比，增强说服力。",
+     reference:"先定位瓶颈(监控/火焰图)，再分层优化(缓存/连接池/异步)，最后压测验证。",template:"性能优化漏斗"},
+    {q:"项目中途需求变更且时间很紧，你会如何应对？",grade:"C",score:75,isWeak:false,
+     answer:"我会先评估影响再排期……",
+     comment:"沟通意识好，建议明确优先级方法。",
+     suggestion:"使用 MoSCoW 法排序，并同步干系人预期。",
+     reference:"评估影响→优先级排序(MoSCoW)→对齐干系人→最小可用交付→复盘。",template:"变更管理"},
+    {q:"面试官当场质疑你项目中的数据造假，你如何回应？",grade:"D",score:62,isWeak:true,
+     answer:"我有点慌，就说没有造假……",
+     comment:"情绪控制尚可但偏防御，缺乏证据支撑。",
+     suggestion:"以平和语气出示数据来源与复盘记录，化被动为主动。",
+     reference:"保持冷静→以证据回应(日志/报表)→承认不足并展示改进→把质疑转为展示专业度。",template:"压力应对"},
+    {q:"如果你的方案被领导否定，你会怎么办？",grade:"C",score:76,isWeak:false,
+     answer:"我会再想想……",
+     comment:"态度开放，建议补具体经历。",
+     suggestion:"讲一次采纳反馈后方案更优的真实案例。",
+     reference:"倾听→确认分歧点→补充数据/视角→迭代方案→达成共识。",template:"反馈闭环"},
+    {q:"如何看待加班与服从组织安排？",grade:"B",score:84,isWeak:false,
+     answer:"我认为关键节点投入是必要的……",
+     comment:"表达成熟，建议更具体。",
+     suggestion:"结合岗位节奏给出平衡思路，体现可持续性。",
+     reference:"区分常态与冲刺，强调效率优先与结果导向，避免无条件承诺。",template:"价值观表达"},
+    {q:"谈谈你对 AI 全栈的理解与未来趋势。",grade:"B",score:79,isWeak:false,
+     answer:"AI 全栈是模型+工程化落地……",
+     comment:"视野开阔，建议补实践案例。",
+     suggestion:"加一两个你亲自落地的案例，让观点落地。",
+     reference:"从'模型能力→工程化(RAG/微调/推理优化)→业务闭环'三层展开，并给趋势判断。",template:"TAM 框架"}
+  ]
+};
+
+const HISTORY = [
+  {date:"2026-08-17",job:"腾讯 AI全栈工程师",mode:"普通面",score:78,grade:"C",dur:1112},
+  {date:"2026-08-13",job:"字节 算法工程师",mode:"普通面",score:81,grade:"B",dur:1304},
+  {date:"2026-08-09",job:"阿里 Java开发",mode:"压力面",score:68,grade:"D",dur:1180},
+  {date:"2026-08-05",job:"腾讯 产品经理",mode:"普通面",score:85,grade:"B",dur:1200},
+  {date:"2026-08-01",job:"美团 产品经理",mode:"普通面",score:79,grade:"B",dur:1140},
+  {date:"2026-07-28",job:"字节 前端开发",mode:"压力面",score:72,grade:"C",dur:1080},
+  {date:"2026-07-25",job:"网易 客户端开发",mode:"普通面",score:74,grade:"C",dur:990}
+];
+
+/* ===================== Page navigation ===================== */
+function goPage(p){
+  document.querySelectorAll('.page').forEach(s=>s.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('#topnav a').forEach(a=>a.classList.toggle('active',a.dataset.page===p));
+  window.scrollTo(0,0);
+  if(p==='report') renderReport();
+  if(p==='dashboard') renderDashboard();
+}
+document.querySelectorAll('#topnav a').forEach(a=>a.addEventListener('click',()=>goPage(a.dataset.page)));
+
+/* ===================== Home: render job cards ===================== */
+const modeState={mode:'all',industry:'all',kw:''};
+function renderJobs(){
+  const grid=document.getElementById('jobGrid');
+  const kw=modeState.kw.trim();
+  const list=JOBS.filter(j=>{
+    if(modeState.mode!=='all'&&j.mode!==modeState.mode)return false;
+    if(modeState.industry!=='all'&&j.industry!==modeState.industry)return false;
+    if(kw&&!(j.name.includes(kw)||j.company.includes(kw)||j.industry.includes(kw)))return false;
+    return true;
+  });
+  grid.innerHTML = list.map(j=>`
+    <div class="job-card">
+      <div>
+        <h3>${j.name}</h3>
+        <div class="meta">
+          ${j.company?`<span class="tag tag-analysis">${j.company}</span>`:''}
+          <span class="tag tag-subject">${j.industry}</span>
+          <span class="tag ${j.mode==='pressure'?'tag-red':'tag-gray'}">${j.mode==='pressure'?'压力面':'普通面'}</span>
+          <span class="tag tag-gray">文字答题</span>
+        </div>
+      </div>
+      <dl>
+        <div class="row"><dt>面试时长</dt><dd>${j.duration} 分钟</dd></div>
+        <div class="row"><dt>题目数量</dt><dd>8 题</dd></div>
+        <div><dt style="margin-bottom:4px;">题型范围</dt><dd class="types">${j.qtypes.map(t=>`<span>${t}</span>`).join('')}</dd></div>
+      </dl>
+      <button class="btn btn-primary btn-block" onclick="startInterview(${j.id})">开始面试</button>
+    </div>`).join('');
+  document.getElementById('jobEmpty').style.display = list.length?'none':'block';
+}
+document.querySelectorAll('.sidenav .nav-item').forEach(it=>{
+  it.addEventListener('click',()=>{
+    const g=it.dataset.group, k=it.dataset.key;
+    if(g==='mode'){ modeState.mode=(k==='industry-all'?'all':k); }
+    else { modeState.industry=(k==='industry-all'?'all':k); }
+    // toggle active within group
+    document.querySelectorAll(`.sidenav .nav-item[data-group="${g}"]`).forEach(x=>x.classList.remove('active'));
+    it.classList.add('active');
+    renderJobs();
+  });
+});
+document.getElementById('jobSearch').addEventListener('input',e=>{modeState.kw=e.target.value;renderJobs();});
+renderJobs();
+
+/* ===================== Interview ===================== */
+let curJob=null, curQ=0, answerMode='text', recording=false, recTimer=null, recSec=0, saveTimer=null, startTime=0;
+const answersMap={}; // qIndex -> {answer, comment, score, grade}
+
+function startInterview(jobId){
+  const j=JOBS.find(x=>x.id===jobId)||JOBS[0];
+  curJob=j; curQ=0; answerMode='text'; recording=false; recSec=0;
+  document.getElementById('ivJobName').textContent=`${j.company} ${j.name} · ${j.mode==='pressure'?'压力面':'普通面'}模拟`;
+  document.getElementById('ivModeLabel').textContent=j.mode==='pressure'?'压力面试官':'模拟面试官';
+  // preset Q1 saved answer+comment to demonstrate auto-save/AI scoring
+  answersMap[0]={answer:QUESTIONS[0].sample,comment:QUESTIONS[0].comment,score:QUESTIONS[0].score,grade:QUESTIONS[0].grade};
+  goPage('interview');
+  loadQ();
+  startTime=Date.now();
+  startTimer();
+}
+function loadQ(){
+  const q=QUESTIONS[curQ];
+  document.getElementById('ivQuestion').textContent=q.title;
+  document.getElementById('ivProgress').textContent=`第 ${curQ+1} / ${QUESTIONS.length} 题`;
+  // answer box independent per question
+  const rec=answersMap[curQ];
+  document.getElementById('answerText').value=rec?rec.answer:'';
+  // prev/next visibility
+  document.getElementById('btnPrev').style.visibility = curQ===0?'hidden':'visible';
+  const isLast=curQ===QUESTIONS.length-1;
+  document.getElementById('btnNext').style.display = isLast?'none':'inline-flex';
+  document.getElementById('btnComplete').style.display = isLast?'inline-flex':'none';
+  document.getElementById('ivFootHint').textContent = isLast?'最后一题，完成提交后生成面试报告':'作答自动保存并评分，点击「下一题」继续';
+  // show saved comment if any
+  renderComment(rec);
+  updateRealtime();
+  resetTimer();
+}
+function setAnswerMode(m){
+  answerMode=m;
+  document.querySelectorAll('#answerSeg button').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));
+  document.getElementById('answerTitle').textContent = m==='voice'?'语音作答':'文字作答';
+  document.getElementById('answerText').style.display = m==='voice'?'none':'block';
+  document.getElementById('voiceBox').style.display = m==='voice'?'flex':'none';
+}
+function scheduleSave(){
+  if(saveTimer)clearTimeout(saveTimer);
+  saveTimer=setTimeout(saveCurrent,1200);
+}
+function saveCurrent(){
+  const content=document.getElementById('answerText').value.trim();
+  if(!content){document.getElementById('saveHint').textContent='';return;}
+  const prev=answersMap[curQ];
+  if(prev&&prev.answer===content){return;}
+  // simulate AI scoring based on length & fillers
+  const chars=content.replace(/\s/g,'').length;
+  const fillers=(content.match(/然后|那个|就是说|嗯|其实/g)||[]).length;
+  const score=Math.max(40,Math.min(95,55+Math.floor(chars/10)-fillers*3));
+  const grade=score>=85?'A':score>=75?'B':score>=65?'C':'D';
+  const comment=chars<30?'回答偏短，建议补充具体事例与量化结果。':(fillers?'注意减少口头禅，表达更干净。':'回答结构清晰，建议补充量化结果与个人贡献。');
+  answersMap[curQ]={answer:content,comment,score,grade};
+  document.getElementById('saveHint').textContent='已自动保存';
+  renderComment(answersMap[curQ]);
+  updateRealtime();
+}
+function renderComment(rec){
+  const box=document.getElementById('aiComment');
+  if(!rec||!rec.answer){box.style.display='none';return;}
+  box.style.display='block';
+  const g=document.getElementById('cmtGrade'); g.textContent=rec.grade; g.className='grade grade-'+rec.grade;
+  document.getElementById('cmtScore').textContent=rec.score+' 分';
+  document.getElementById('cmtText').textContent=rec.comment;
+}
+function updateRealtime(){
+  const rec=answersMap[curQ];
+  const score=rec?rec.score:Math.max(40,Math.min(95,68));
+  const grade=rec?rec.grade:(score>=85?'A':score>=75?'B':score>=65?'C':'D');
+  document.getElementById('rtScore').textContent=score;
+  document.getElementById('rtGrade').textContent=grade;
+  document.getElementById('rtGrade').className='grade grade-lg grade-'+grade;
+  document.getElementById('rtBar').style.width=score+'%';
+  // filler detection from current text
+  const text=document.getElementById('answerText').value;
+  const fillers=(text.match(/然后|那个|就是说|嗯|其实/g)||[]).length;
+  document.getElementById('rtFiller').innerHTML = fillers
+    ? `检测到口头禅 <span class="tag tag-orange">${fillers} 处</span> <span style="margin-left:auto;color:var(--text-tertiary);">建议精简</span>`
+    : '暂未检测到明显口头禅，表达干净。';
+}
+// 切换题目：先保存当前题（此刻 curQ 仍是当前题），再切换；新题无作答直接清空，各题答题框独立互不干扰
+function prevQ(){ if(curQ>0){ saveCurrent(); curQ--; } loadQ(); }
+function nextQ(){ if(curQ<QUESTIONS.length-1){ saveCurrent(); curQ++; } loadQ(); }
+function complete(){
+  saveCurrent();
+  goPage('report');
+}
+function toggleRecord(){
+  recording=!recording;
+  const btn=document.getElementById('recBtn');
+  if(recording){
+    recSec=0; btn.textContent='停止录音'; btn.className='btn btn-danger';
+    document.getElementById('voiceHint').textContent='录音中 0s';
+    recTimer=setInterval(()=>{recSec++;document.getElementById('voiceHint').textContent=`录音中 ${recSec}s`;},1000);
+    buildWave(true);
+  }else{
+    clearInterval(recTimer);
+    btn.textContent='开始录音'; btn.className='btn btn-primary';
+    document.getElementById('voiceHint').textContent='转写完成，已自动评分';
+    buildWave(false);
+    document.getElementById('answerText').value='我觉得这个岗位挺好的，然后我学过相关技术，然后做过类似项目，就是说比较有经验。';
+    saveCurrent();
+  }
+}
+function buildWave(active){
+  const w=document.getElementById('wave'); w.innerHTML='';
+  for(let i=0;i<11;i++){
+    const s=document.createElement('span');
+    s.style.height = active ? (8+((i*7+recSec*3)%32))+'px' : '8px';
+    s.style.opacity = active?1:0.3;
+    w.appendChild(s);
+  }
+}
+document.getElementById('answerText').addEventListener('input',()=>{scheduleSave();updateRealtime();});
+
+/* Timer */
+let timerInt=null, timerLeft=120;
+function fmtTime(s){const m=Math.floor(s/60);return String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function startTimer(){ if(timerInt)clearInterval(timerInt); timerLeft=120; updateTimerUI(); timerInt=setInterval(()=>{ if(timerLeft>0)timerLeft--; updateTimerUI(); },1000); }
+function resetTimer(){ timerLeft=120; updateTimerUI(); }
+function updateTimerUI(){
+  document.getElementById('timerVal').textContent=fmtTime(timerLeft);
+  const total=97.4; const off=total*(1-timerLeft/120);
+  document.getElementById('timerArc').setAttribute('stroke-dashoffset',off.toFixed(1));
+}
+
+/* ===================== Report ===================== */
+let onlyWeak=false;
+function toggleWeak(){ onlyWeak=!onlyWeak; document.getElementById('weakToggle').textContent=onlyWeak?'显示全部':'只看错题'; renderReport(); }
+function renderReport(){
+  // ring
+  const arc=document.getElementById('reportArc');
+  const C=377; const off=C*(1-REPORT.totalScore/100);
+  arc.setAttribute('stroke-dashoffset',off.toFixed(1));
+  const col = REPORT.grade==='A'?'#34C759':REPORT.grade==='B'?'#007AFF':REPORT.grade==='C'?'#FF9500':'#FF3B30';
+  arc.setAttribute('stroke',col);
+  document.getElementById('reportGrade').textContent=REPORT.grade;
+  document.getElementById('reportGrade').style.color=col;
+  document.getElementById('reportJob').textContent=REPORT.jobName;
+  // dims
+  document.getElementById('reportDims').innerHTML=REPORT.dimensions.map(d=>`
+    <div class="dim-row"><span class="nm">${d.name}</span>
+      <div class="progress" style="flex:1;"><div class="progress-bar" style="width:${d.score}%"></div></div>
+      <span class="v">${d.score}</span></div>`).join('');
+  // list
+  const list=REPORT.answers.filter(a=>!onlyWeak||a.isWeak);
+  document.getElementById('reportList').innerHTML=list.map((a,i)=>`
+    <div class="report-item ${a.isWeak?'weak':''}" data-i="${i}">
+      <button class="bar" onclick="toggleItem(${i})">
+        <span class="qnum">Q${i+1}</span>
+        <span class="qtext truncate">${a.q}</span>
+        ${a.isWeak?'<span class="tag tag-red">薄弱</span>':''}
+        <span class="grade grade-${a.grade}">${a.grade}</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#AEAEB2" stroke-width="1.5" style="transition:transform .2s;" data-arrow="${i}"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="detail" id="detail-${i}" style="display:none;">
+        <div class="detail-block"><div class="lab">你的回答</div><div class="val">${a.answer}</div></div>
+        <div class="detail-block"><div class="lab">AI 完整点评</div><div class="val">${a.comment}</div></div>
+        <div class="advice"><div class="lab">优化建议</div><div class="val" style="color:var(--text-primary);">${a.suggestion}</div></div>
+        <div class="ref"><div class="lab">标准答案参考</div><div class="val" style="color:var(--text-primary);">${a.reference}</div><div class="lab" style="margin-top:8px;color:var(--subject);">推荐模板：${a.template}</div></div>
+      </div>
+    </div>`).join('');
+  document.getElementById('reportEmpty').style.display=list.length?'none':'block';
+}
+function toggleItem(i){
+  const d=document.getElementById('detail-'+i);
+  const open=d.style.display==='none';
+  d.style.display=open?'block':'none';
+  const arr=document.querySelector(`[data-arrow="${i}"]`);
+  if(arr)arr.style.transform=open?'rotate(180deg)':'rotate(0deg)';
+}
+
+/* ===================== Dashboard ===================== */
+function renderDashboard(){
+  // history
+  document.getElementById('historyBody').innerHTML=HISTORY.map(h=>`
+    <tr>
+      <td>${h.date}</td>
+      <td class="primary">${h.job}</td>
+      <td><span style="color:${h.mode==='压力面'?'var(--error)':'var(--text-secondary)'};font-size:13px;">${h.mode}</span></td>
+      <td class="primary">${h.score}</td>
+      <td><span class="grade grade-${h.grade}">${h.grade}</span></td>
+      <td>${Math.floor(h.dur/60)} 分 ${h.dur%60} 秒</td>
+      <td><button class="link" onclick="goPage('report')">查看报告</button></td>
+    </tr>`).join('');
+  drawLineChart();
+  drawRadar();
+}
+function drawLineChart(){
+  const svg=document.getElementById('lineChart');
+  const W=560,H=240,padL=40,padR=20,padT=20,padB=30;
+  const dates=["07-25","07-28","08-01","08-05","08-09","08-13","08-17"];
+  const series={
+    '综合':[74,72,79,68,85,81,78],
+    '表达':[70,68,76,66,82,80,78],
+    '逻辑':[72,70,78,65,83,79,80]
+  };
+  const colors={'综合':'#007AFF','表达':'#34C759','逻辑':'#FF9500'};
+  const max=100,min=50;
+  const x=i=>padL+(W-padL-padR)*(i/(dates.length-1));
+  const y=v=>padT+(H-padT-padB)*(1-(v-min)/(max-min));
+  let s=`<line x1="${padL}" y1="${H-padB}" x2="${W-padR}" y2="${H-padB}" stroke="#E5E5EA"/>`;
+  // y grid
+  [50,60,70,80,90,100].forEach(v=>{
+    s+=`<line x1="${padL}" y1="${y(v)}" x2="${W-padR}" y2="${y(v)}" stroke="#F0F0F2"/>`;
+    s+=`<text x="${padL-8}" y="${y(v)+4}" text-anchor="end" font-size="10" fill="#AEAEB2">${v}</text>`;
+  });
+  dates.forEach((d,i)=>{ s+=`<text x="${x(i)}" y="${H-padB+18}" text-anchor="middle" font-size="10" fill="#AEAEB2">${d}</text>`; });
+  Object.entries(series).forEach(([name,data])=>{
+    const pts=data.map((v,i)=>`${x(i)},${y(v)}`).join(' ');
+    s+=`<polyline points="${pts}" fill="none" stroke="${colors[name]}" stroke-width="2.5" stroke-linejoin="round"/>`;
+    data.forEach((v,i)=>{ s+=`<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="${colors[name]}"/>`; });
+  });
+  svg.innerHTML=s;
+}
+function drawRadar(){
+  const svg=document.getElementById('radarChart');
+  const cx=130,cy=130,R=92;
+  const dims=REPORT.dimensions;
+  const n=dims.length;
+  const ang=i=>(-90+i*360/n)*Math.PI/180;
+  const pt=(i,r)=>[cx+r*Math.cos(ang(i)),cy+r*Math.sin(ang(i))];
+  let s='';
+  // rings
+  [0.25,0.5,0.75,1].forEach(f=>{
+    const p=[];for(let i=0;i<n;i++){const[x,y]=pt(i,R*f);p.push(`${x},${y}`);}
+    s+=`<polygon points="${p.join(' ')}" fill="none" stroke="#ECECEC"/>`;
+  });
+  // axes + labels
+  dims.forEach((d,i)=>{
+    const[x,y]=pt(i,R); s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#ECECEC"/>`;
+    const[lx,ly]=pt(i,R+18); s+=`<text x="${lx}" y="${ly+4}" text-anchor="middle" font-size="11" fill="#6E6E73">${d.name}</text>`;
+  });
+  // data polygon
+  const dp=[];dims.forEach((d,i)=>{const[x,y]=pt(i,R*d.score/100);dp.push(`${x},${y}`);});
+  s+=`<polygon points="${dp.join(' ')}" fill="rgba(0,122,255,.15)" stroke="#007AFF" stroke-width="2"/>`;
+  dims.forEach((d,i)=>{const[x,y]=pt(i,R*d.score/100);s+=`<circle cx="${x}" cy="${y}" r="3" fill="#007AFF"/>`;});
+  svg.innerHTML=s;
+}
+</script>
+</body>
+</html>

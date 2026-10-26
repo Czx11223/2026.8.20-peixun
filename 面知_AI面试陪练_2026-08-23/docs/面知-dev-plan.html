@@ -1,0 +1,816 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>面知 · 开发规划文档</title><style>:root{--bg:#F5F5F7;--card:#FFFFFF;--border:#E5E5EA;--text:#1D1D1F;--text2:#6E6E73;--text3:#AEAEB2;--primary:#007AFF;--primary-light:rgba(0,122,255,.08);--success:#34C759;--warning:#FF9500;--error:#FF3B30}*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",-apple-system,"SF Pro SC",sans-serif;font-size:14px;line-height:1.7;padding:32px 16px 64px;-webkit-font-smoothing:antialiased}.doc{max-width:880px;margin:0 auto}.cover{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:40px 44px;margin-bottom:20px}.cover .logo{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--primary);border:1px solid var(--primary);border-radius:6px;padding:4px 12px;margin-bottom:20px}.cover h1{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.3;margin-bottom:8px}.cover .sub{font-size:16px;color:var(--text2);margin-bottom:24px}.cover table{width:100%;border-collapse:collapse;font-size:13px}.cover table td{border:none;border-bottom:1px solid var(--border);padding:8px 4px;color:var(--text2)}.cover table td:first-child{width:110px;color:var(--text);font-weight:600}.cover table tr:last-child td{border-bottom:none}.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:36px 44px;margin-bottom:16px}h2{font-size:20px;font-weight:600;letter-spacing:-.01em;margin:8px 0 16px;padding-bottom:10px;border-bottom:2px solid var(--primary);display:inline-block;color:var(--text)}h3{font-size:16px;font-weight:600;margin:24px 0 12px;color:var(--text)}h4{font-size:14px;font-weight:600;margin:18px 0 8px;color:var(--text)}p{margin:8px 0;color:var(--text)}strong{font-weight:600;color:var(--text)}ul,ol{margin:8px 0 8px 22px;color:var(--text)}li{margin:4px 0}a{color:var(--primary);text-decoration:none}table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}th{background:var(--primary-light);color:var(--text);font-weight:600;text-align:left;padding:9px 12px;border:1px solid var(--border)}td{padding:9px 12px;border:1px solid var(--border);color:var(--text);vertical-align:top}tr:nth-child(even) td{background:#FAFAFC}pre{background:#F5F5F7;border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto;margin:12px 0;font-size:12.5px;line-height:1.6}code{font-family:"SF Mono","JetBrains Mono",Consolas,monospace;font-size:12.5px;background:#F5F5F7;border-radius:4px;padding:1px 5px}pre code{background:none;padding:0}.mermaid-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px;margin:12px 0;text-align:center;overflow-x:auto}.mermaid{display:inline-block}.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}.badge{font-size:12px;color:var(--text2);border:1px solid var(--border);border-radius:6px;padding:2px 10px;background:#fff}.badge.blue{color:var(--primary);border-color:var(--primary);background:var(--primary-light)}.badge.green{color:var(--success);border-color:var(--success);background:rgba(52,199,89,.08)}.badge.warn{color:var(--warning);border-color:var(--warning);background:rgba(255,149,0,.08)}.toc{font-size:13px;color:var(--text2);margin-top:8px}.toc a{display:inline-block;margin:3px 14px 3px 0;color:var(--text2)}.toc a:hover{color:var(--primary)}@media (max-width:768px){body{padding:16px 10px 48px}.card,.cover{padding:24px 20px}table{font-size:12px}}</style></head><body><div class="doc"><div class="cover"><span class="logo">面知 · 开发规划</span><h1>面知 · AI 面试陪练工具<br>开发规划文档</h1><div class="sub">基于 PRD V1.0 + UI/UX Design System · 个人开发者 · 5 周 MVP</div><div class="badges"><span class="badge blue">8 大章节</span><span class="badge">5 里程碑</span><span class="badge">17 API 契约</span><span class="badge warn">9 项风险</span><span class="badge green">AC-01~15</span></div><table><tr><td>文档类型</td><td>开发规划</td></tr><tr><td>技术栈</td><td>Vue3 + FastAPI + SQLite + ChromaDB + DeepSeek + ASR</td></tr><tr><td>更新日期</td><td>2026-08-20</td></tr></table><div class="toc" id="toc"></div></div><div class="card" id="content"><h1>面知 · AI 面试陪练工具 — 开发规划文档</h1>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品名称</td>
+<td>面知 - AI 面试陪练工具</td>
+</tr>
+<tr>
+<td>文档类型</td>
+<td>开发规划（基于 PRD V1.0 + UI/UX Design System）</td>
+</tr>
+<tr>
+<td>适用对象</td>
+<td>个人/小团队开发者（低成本、数周可演示 MVP）</td>
+</tr>
+<tr>
+<td>技术栈</td>
+<td>Vue3 + TS + Vite + Tailwind / FastAPI + Uvicorn / SQLite / ChromaDB / DeepSeek API / 语音识别 SDK</td>
+</tr>
+<tr>
+<td>更新日期</td>
+<td>2026-08-20</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>一、开发总纲</h2>
+<h3>1.1 项目定位与原则</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>约定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>形态</td>
+<td>Web 端 SPA（桌面优先，响应式至平板/移动）</td>
+</tr>
+<tr>
+<td>核心目标</td>
+<td>数周内交付可演示、可自用的 MVP，跑通「练 → 评 → 改 → 长」闭环</td>
+</tr>
+<tr>
+<td>成本控制</td>
+<td>全部选型零/极低费用：SQLite 文件库、ChromaDB 本地向量库、DeepSeek 按量计费、开源 ASR</td>
+</tr>
+<tr>
+<td>个人开发者适配</td>
+<td>前后端分离但单机可跑；优先复用成熟库，避免自研算法；UI 复用 Design System 组件</td>
+</tr>
+<tr>
+<td>质量底线</td>
+<td>不符合 UI 规范（无阴影/双字重/令牌色）的页面一律回炉；跨页面数值不一致为 P0 缺陷</td>
+</tr>
+</tbody></table>
+<h3>1.2 MVP 范围边界</h3>
+<ul>
+<li><strong>MVP 内（必做）</strong>：FR-01 岗位题库分类、FR-02 全真面试模拟、FR-03 语音/文字答题、FR-04 实时 AI 点评、FR-05 面试报告、FR-06 记录复盘、FR-07 数据看板、FR-08 模板库、FR-09 AI 答疑</li>
+<li><strong>MVP 内（低优）</strong>：FR-10 帮助中心</li>
+<li><strong>MVP 后迭代</strong>：PDF 报告导出、OCR 题目识别、摄像头形象面、打卡成就、面试日历、企业端</li>
+<li><strong>明确不做</strong>：移动端 App、多人/班级模式、付费题库、HR 后台</li>
+</ul>
+<h3>1.3 代码组织约定</h3>
+<pre><code>面知/
+├── frontend/                 # Vue3 + Vite
+│   ├── src/
+│   │   ├── design/tokens.css # 设计令牌（取自 Design System）
+│   │   ├── components/       # App 前缀组件（见第三章）
+│   │   ├── views/            # 5 大页面
+│   │   ├── api/              # 接口封装（fetch + SSE）
+│   │   ├── stores/           # 状态（Pinia）
+│   │   └── utils/            # 计时器/格式化
+│   └── index.html
+├── backend/                  # FastAPI
+│   ├── app/
+│   │   ├── routers/          # 路由分层
+│   │   ├── services/         # llm/asr/vector/analysis
+│   │   ├── models.py         # SQLAlchemy / SQLite
+│   │   ├── schemas.py        # Pydantic
+│   │   └── db.py             # SQLite + ChromaDB 客户端
+│   └── main.py
+└── data/                     # SQLite 文件 + ChromaDB 持久化
+</code></pre>
+<hr>
+<h2>二、里程碑与任务分解</h2>
+<blockquote>
+<p>个人开发者节奏：约 <strong>5 周</strong>（每周 1 里程碑），关键路径为 M2 面试会话链路。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>里程碑</th>
+<th>周期</th>
+<th>目标</th>
+<th>关联功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>M1 基础骨架 &amp; 题库</strong></td>
+<td>第 1 周</td>
+<td>项目脚手架、设计系统落地、题库分类可浏览筛选</td>
+<td>FR-01, FR-10 骨架</td>
+</tr>
+<tr>
+<td><strong>M2 全真面试核心链路</strong></td>
+<td>第 2 周</td>
+<td>面试会话状态机、语音/文字答题、AI 实时点评</td>
+<td>FR-02, FR-03, FR-04</td>
+</tr>
+<tr>
+<td><strong>M3 报告 &amp; 复盘</strong></td>
+<td>第 3 周</td>
+<td>报告生成、记录存档、错题本与专项复练</td>
+<td>FR-05, FR-06</td>
+</tr>
+<tr>
+<td><strong>M4 数据 &amp; 辅导</strong></td>
+<td>第 4 周</td>
+<td>能力看板、模板库、AI 答疑</td>
+<td>FR-07, FR-08, FR-09</td>
+</tr>
+<tr>
+<td><strong>M5 打磨 &amp; 演示</strong></td>
+<td>第 5 周</td>
+<td>帮助中心、响应式、性能、联调、演示版</td>
+<td>FR-10, 非功能</td>
+</tr>
+</tbody></table>
+<h3>2.1 各里程碑任务分解</h3>
+<p><strong>M1｜基础骨架 &amp; 题库</strong></p>
+<ul>
+<li>前端：脚手架（Vite+Vue+TS+Tailwind）、<code>tokens.css</code> 落地、App Shell（顶栏 56/侧栏 240）、面试主页（岗位筛选+卡片列表）、题库分类</li>
+<li>后端：<code>/questions</code> 列表与筛选、SQLite 题库表与种子数据、ChromaDB 建库与向量化（4 行业）</li>
+<li>联调：题库浏览、筛选、搜索</li>
+</ul>
+<p><strong>M2｜全真面试核心链路（关键路径）</strong></p>
+<ul>
+<li>前端：面试进行页（顶栏+计时条+三栏）、计时器、文字/语音 seg、录音波形、实时分析面板</li>
+<li>后端：面试会话状态机、<code>/interview/start</code>、<code>/asr</code> 语音转写、<code>/answer</code> 提交、点评 SSE 流式接口（调 DeepSeek）</li>
+<li>联调：开启面试→逐题作答→实时点评全链路</li>
+</ul>
+<p><strong>M3｜报告 &amp; 复盘</strong></p>
+<ul>
+<li>前端：报告页（得分环+分项+错题卡+点评+建议）、记录列表、错题本、专项复练入口</li>
+<li>后端：<code>/report</code> 生成与查询、<code>/interviews</code> 列表、薄弱题型标记与专项抽题</li>
+<li>联调：结束→报告→复盘→复练闭环</li>
+</ul>
+<p><strong>M4｜数据 &amp; 辅导</strong></p>
+<ul>
+<li>前端：能力看板（KPI+成长折线+维度条+历史表）、模板库、AI 答疑页（流式）</li>
+<li>后端：<code>/growth</code> 聚合、<code>/templates</code> 推荐与收藏、答疑 SSE 接口</li>
+<li>联调：看板数据自洽、模板收藏、答疑流式</li>
+</ul>
+<p><strong>M5｜打磨 &amp; 演示</strong></p>
+<ul>
+<li>前端：帮助中心、移动端底部导航与响应式适配、空状态、加载态</li>
+<li>后端：本地缓存策略、异常兜底（ASR 失败降级文字/大模型超时重试）、性能优化（接口 &lt;500ms）</li>
+<li>收尾：跨页面数值一致性校验、演示数据、部署脚本</li>
+</ul>
+<hr>
+<h2>三、组件 / 模块依赖树</h2>
+<h3>3.1 前端模块依赖树</h3>
+<pre><code class="language-mermaid">flowchart TD
+    subgraph shell[&quot;App Shell（顶栏/侧栏/底部导航）&quot;]
+      TOP[&quot;TopBar · 顶栏 56px&quot;]
+      SIDE[&quot;SideBar · 侧栏 240px&quot;]
+      BNAV[&quot;BottomNav · 移动端&quot;]
+    end
+    subgraph pages[&quot;5 大页面（views）&quot;]
+      P1[&quot;面试主页&quot;]
+      P2[&quot;面试进行页&quot;]
+      P3[&quot;面试报告页&quot;]
+      P4[&quot;能力看板页&quot;]
+      P5[&quot;题库管理页&quot;]
+    end
+    subgraph base[&quot;基础组件（基于 tokens.css）&quot;]
+      BTN[&quot;AppButton&quot;] &amp; CARD[&quot;AppCard/AppStatCard&quot;] &amp; INPUT[&quot;AppInput&quot;] &amp; TAG[&quot;AppTag&quot;]
+      PROG[&quot;AppProgress&quot;] &amp; TABS[&quot;AppTabs&quot;] &amp; RING[&quot;AppScoreRing&quot;] &amp; TIMER[&quot;AppTimer&quot;]
+      VOICE[&quot;AppVoiceZone&quot;] &amp; ANAL[&quot;AppAnalysisPanel&quot;] &amp; BUB[&quot;AppBubble&quot;] &amp; CHART[&quot;AppLineChart&quot;]
+      TBL[&quot;AppTable&quot;] &amp; SEG[&quot;AppSegmented&quot;] &amp; EMPTY[&quot;AppEmpty&quot;]
+    end
+    shell --&gt; pages
+    pages --&gt; base
+    P2 --&gt; TIMER &amp; VOICE &amp; BUB &amp; ANAL &amp; SEG
+    P3 --&gt; RING &amp; CARD &amp; TAG &amp; BUB &amp; EMPTY
+    P4 --&gt; CHART &amp; CARD &amp; TBL &amp; PROG
+    P1 --&gt; CARD &amp; INPUT &amp; SEG &amp; TBL
+    P5 --&gt; TBL &amp; INPUT &amp; TAG
+    base -. &quot;统一引用&quot; .-&gt; TOK[&quot;tokens.css&lt;br/&gt;极简蓝调设计令牌&quot;]
+</code></pre>
+<h3>3.2 后端模块依赖树</h3>
+<pre><code class="language-mermaid">flowchart TD
+    subgraph api[&quot;API 路由层 routers/&quot;]
+      R_Q[&quot;questions 题库&quot;] &amp; R_I[&quot;interview 面试会话&quot;]
+      R_R[&quot;report 报告&quot;] &amp; R_G[&quot;growth 看板&quot;]
+      R_T[&quot;templates 模板&quot;] &amp; R_QA[&quot;qa 答疑&quot;]
+      R_U[&quot;user 用户/设置&quot;] &amp; R_ASR[&quot;asr 语音转写&quot;]
+    end
+    subgraph svc[&quot;服务层 services/&quot;]
+      S_LLM[&quot;llm_service\n(DeepSeek 抽题/点评/答疑)&quot;]
+      S_ASR[&quot;asr_service\n(语音识别 SDK)&quot;]
+      S_VEC[&quot;vector_service\n(ChromaDB 语义匹配)&quot;]
+      S_ANA[&quot;analysis_service\n(评分/等级/短板)&quot;]
+      S_AUTH[&quot;user_service\n(设置/意图岗位)&quot;]
+    end
+    subgraph data[&quot;数据层&quot;]
+      DB[(&quot;SQLite\nSQLAlchemy Models&quot;)]
+      VDB[(&quot;ChromaDB\n向量集合&quot;)]
+    end
+    EXT[&quot;DeepSeek API&quot;] &amp; ASREXT[&quot;语音识别 SDK&quot;]
+    api --&gt; svc
+    S_LLM --&gt; EXT
+    S_ASR --&gt; ASREXT
+    svc --&gt; data
+</code></pre>
+<h3>3.3 关键数据流依赖</h3>
+<ul>
+<li><strong>面试进行页</strong> 依赖：<code>interview/start</code> → <code>asr</code>（语音）→ <code>answer</code> → 点评 SSE；右侧实时分析面板依赖 SSE 增量更新</li>
+<li><strong>报告页 / 看板页 / 历史表</strong> 同源：均读 <code>interview_reports</code> + <code>interview_answers</code>，必须保证圆环分=等级=分项均值=历史得分一致（见 PRD 内容一致性铁律）</li>
+<li><strong>成长折线</strong> 终点值 = 最新一场 <code>composite_score</code></li>
+</ul>
+<hr>
+<h2>四、API 契约</h2>
+<blockquote>
+<p>基础约定：前缀 <code>/api/v1</code>；REST 用 JSON；流式（点评/答疑）用 <strong>SSE</strong>（<code>text/event-stream</code>）；统一响应 <code>{code, msg, data}</code>；错误码 <code>4xx/5xx</code> 带 <code>detail</code>。</p>
+</blockquote>
+<h3>4.1 题库与用户</h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>路径</th>
+<th>说明</th>
+<th>关键入参 / 出参</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td><code>/questions</code></td>
+<td>题库列表/筛选</td>
+<td><code>?industry=&amp;position=&amp;type=&amp;difficulty=&amp;q=&amp;page=</code> → <code>{items[], total}</code></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/questions/{id}</code></td>
+<td>题目详情</td>
+<td>→ <code>{id, text, type, difficulty, refAnswer, points[], tags[]}</code></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/user/settings</code></td>
+<td>取用户设置</td>
+<td>→ <code>{intentIndustry, intentPosition, preferences}</code></td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/user/settings</code></td>
+<td>改设置</td>
+<td>body 同上 → <code>{ok}</code></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/user/intent</code></td>
+<td>设定意向岗位</td>
+<td>body <code>{industry, position}</code> → 触发题库语义匹配</td>
+</tr>
+</tbody></table>
+<h3>4.2 面试会话（核心链路）</h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>路径</th>
+<th>说明</th>
+<th>关键入参 / 出参</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>POST</td>
+<td><code>/interview/start</code></td>
+<td>开启面试</td>
+<td>body <code>{position, industry, mode, duration, answerMode}</code> → <code>{sessionId, questions[]}</code></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/asr</code></td>
+<td>语音转写</td>
+<td><code>multipart audio</code> → <code>{text}</code>（失败返回 <code>code:ASR_FAIL</code> 由前端降级文字）</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/interview/{sid}/answer</code></td>
+<td>提交作答</td>
+<td>body <code>{questionId, mode, text}</code> → <code>{answerId}</code></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/interview/{sid}/answer/{aid}/evaluate</code></td>
+<td><strong>SSE</strong> 实时点评</td>
+<td>→ <code>data:{score, dims{content,logic,expression,match,resilience}, grade, comment, speedWpm, fillers[], template}</code></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/interview/{sid}/end</code></td>
+<td>结束面试</td>
+<td>→ <code>{reportId}</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>评分维度固定 5 项：<code>content</code>(内容) / <code>logic</code>(逻辑) / <code>expression</code>(表达) / <code>match</code>(岗位匹配) / <code>resilience</code>(抗压)。等级：<code>S/A/B/C/D</code>。</p>
+</blockquote>
+<h3>4.3 报告、复盘与成长</h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>路径</th>
+<th>说明</th>
+<th>关键入参 / 出参</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td><code>/interview/{sid}/report</code></td>
+<td>完整报告</td>
+<td>→ <code>{composite, grade, dims, highlights[], weaknesses[], suggestions[], transcript[]}</code></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/interviews</code></td>
+<td>历史列表</td>
+<td><code>?page=&amp;status=</code> → <code>{items[{date,position,score,grade,mode,status}], total}</code></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/weakness</code></td>
+<td>薄弱题型</td>
+<td><code>?type=</code> → <code>{wrongItems[{questionId, type, score, note}]}</code></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/interview/{sid}/practice/weak</code></td>
+<td>专项复练抽题</td>
+<td>body <code>{type}</code> → <code>{questions[]}</code></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/growth</code></td>
+<td>能力看板</td>
+<td>→ <code>{trend[{date,composite,expression,logic}], dims{}, stats{avgScore,count,improve,topGrade}}</code></td>
+</tr>
+</tbody></table>
+<h3>4.4 模板与答疑</h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>路径</th>
+<th>说明</th>
+<th>关键入参 / 出参</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td><code>/templates</code></td>
+<td>模板列表</td>
+<td><code>?type=</code> → <code>{items[{id,name,structure,applicableTypes,example}]}</code></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/templates/{id}/collect</code></td>
+<td>收藏模板</td>
+<td>→ <code>{ok}</code></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/qa</code></td>
+<td><strong>SSE</strong> 面试答疑</td>
+<td>body <code>{question, history?}</code> → <code>data:{chunk}</code>（回答可收藏为模板）</td>
+</tr>
+</tbody></table>
+<h3>4.5 数据模型（SQLite 核心表）</h3>
+<pre><code>users(id, intent_industry, intent_position, created_at)
+questions(id, industry, position, type, difficulty, text, ref_answer, points, tags, source)
+interview_sessions(id, user_id, position, industry, mode, duration, total, status, created_at)
+interview_answers(id, session_id, question_id, type, mode, answer_text, asr_text,
+                  score, dims_json, grade, comment, speed_wpm, fillers_json, template)
+interview_reports(id, session_id, composite, grade, dims_json, highlights_json,
+                  weaknesses_json, suggestions_json, transcript_json, created_at)
+templates(id, name, structure, applicable_types, example)
+user_templates(user_id, template_id, collected_at)
+</code></pre>
+<hr>
+<h2>五、开发规范</h2>
+<h3>5.1 前端规范（对齐 UI Design System）</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>强制规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>设计令牌</td>
+<td>所有颜色/间距/圆角取值来自 <code>tokens.css</code>（主色 <code>#007AFF</code>、背景 <code>#F5F5F7</code>、边框 <code>#E5E5EA</code>、文字三级），<strong>禁止硬编码色值</strong></td>
+</tr>
+<tr>
+<td>无阴影</td>
+<td>除输入框聚焦环 <code>0 0 0 3px rgba(0,122,255,.12)</code> 外，<strong>禁止任何 box-shadow</strong></td>
+</tr>
+<tr>
+<td>字重</td>
+<td>仅 <code>400</code> / <code>600</code>，禁止 <code>300</code> / <code>700</code></td>
+</tr>
+<tr>
+<td>圆角</td>
+<td>仅 6 / 8 / 12 / 9999（<code>--radius-sm/md/lg/full</code>）</td>
+</tr>
+<tr>
+<td>间距</td>
+<td>8px 栅格：<code>xs4 sm8 md12 lg16 xl24 2xl32 3xl48</code></td>
+</tr>
+<tr>
+<td>组件命名</td>
+<td>PascalCase + <code>App</code> 前缀（<code>AppButton</code>、<code>AppScoreRing</code>），单文件组件 SFC</td>
+</tr>
+<tr>
+<td>类型</td>
+<td>TypeScript <code>strict: true</code>，接口请求/响应定义 <code>interface</code> 并与后端 schema 对齐</td>
+</tr>
+<tr>
+<td>响应式</td>
+<td>桌面(≥1024)展开侧栏 / 平板(768–1024)64px 图标 / 移动(&lt;768)底部导航；断点参考 Design System</td>
+</tr>
+<tr>
+<td>图标</td>
+<td>线框 SVG（导航 20 / 内容 16 / 按钮 14，线宽 1.5），禁止混用图标库</td>
+</tr>
+<tr>
+<td>文案</td>
+<td>对学生鼓励、口语化；数值跨页一致（同场面试得分/等级/分项全局唯一）</td>
+</tr>
+</tbody></table>
+<h3>5.2 后端规范</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>强制规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>分层</td>
+<td><code>routers</code>（薄）→ <code>services</code>（业务）→ <code>models/schemas</code>（数据/校验）；禁止在路由写业务</td>
+</tr>
+<tr>
+<td>校验</td>
+<td>入参一律 Pydantic <code>BaseModel</code>；枚举限制 mode(普通/压力)、grade(S/A/B/C/D)</td>
+</tr>
+<tr>
+<td>异步</td>
+<td>I/O（DB、外部 API）一律 <code>async</code>，<code>await</code>；SQLite 用 <code>aiosqlite</code> 或同步池隔离</td>
+</tr>
+<tr>
+<td>统一响应</td>
+<td><code>{code:0, msg:&quot;ok&quot;, data:{}}</code>；业务异常映射错误码（ASR_FAIL / LLM_TIMEOUT / NOT_FOUND）</td>
+</tr>
+<tr>
+<td>流式</td>
+<td>点评/答疑用 <code>StreamingResponse</code> + SSE，单次生成超时设 3s 重试/兜底</td>
+</tr>
+<tr>
+<td>日志</td>
+<td>结构化日志（请求 id、耗时），接口 P95 &lt; 500ms 监控</td>
+</tr>
+<tr>
+<td>配置</td>
+<td>密钥（DeepSeek Key、ASR Key）走环境变量，禁止入库/硬编码</td>
+</tr>
+</tbody></table>
+<h3>5.3 工程规范</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>约定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>分支</td>
+<td><code>main</code>（可演示）/ <code>dev</code>（开发）/ <code>feature/*</code>（按功能），个人开发者可简化为 main + feature</td>
+</tr>
+<tr>
+<td>提交</td>
+<td><code>feat: / fix: / docs: / refactor: / style:</code> 前缀；关联里程碑</td>
+</tr>
+<tr>
+<td>联调</td>
+<td>前端 <code>npm run dev</code> 代理 <code>/api</code> 到 FastAPI；后端 <code>uvicorn</code> 热重载</td>
+</tr>
+<tr>
+<td>评审清单</td>
+<td>组件是否复用 Design System？有无非法 box-shadow？跨页数值一致？接口有 schema 校验？</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>六、风险矩阵</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>风险</th>
+<th>类别</th>
+<th>概率</th>
+<th>影响</th>
+<th>等级</th>
+<th>应对策略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R1</td>
+<td>DeepSeek 点评延迟/超时</td>
+<td>技术</td>
+<td>中</td>
+<td>高</td>
+<td>🔴 高</td>
+<td>设 3s 超时+重试+兜底模板点评；SSE 流式降低体感延迟；前端 loading 态</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>语音识别（ASR）准确率不足/失败</td>
+<td>技术</td>
+<td>中</td>
+<td>中</td>
+<td>🟠 中</td>
+<td>失败自动降级文字作答；转写结果可编辑；选稳定云 ASR SDK</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>ChromaDB 本地部署/向量检索偏差</td>
+<td>技术</td>
+<td>低</td>
+<td>中</td>
+<td>🟡 低</td>
+<td>种子数据小，先用 SQLite 关键词+简单向量双路；建库前回测匹配质量</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>跨页面数值不一致（报告/看板/历史）</td>
+<td>质量</td>
+<td>中</td>
+<td>高</td>
+<td>🔴 高</td>
+<td>唯一数据源 <code>interview_reports</code>；前端只读同源；加一致性单测</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>实时点评与前端面板更新不同步</td>
+<td>技术</td>
+<td>中</td>
+<td>中</td>
+<td>🟠 中</td>
+<td>SSE 增量协议明确字段；前端乐观更新+最终态对账</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>压力面追问逻辑生硬</td>
+<td>产品</td>
+<td>中</td>
+<td>中</td>
+<td>🟠 中</td>
+<td>预设追问模板库 + DeepSeek 条件触发；先规则后模型</td>
+</tr>
+<tr>
+<td>R7</td>
+<td>个人开发者时间/精力不足</td>
+<td>项目</td>
+<td>中</td>
+<td>高</td>
+<td>🔴 高</td>
+<td>MVP 聚焦 P0；非核心功能后置；复用 Design System 组件省 UI 时间</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>外部 API 成本/限流</td>
+<td>成本</td>
+<td>低</td>
+<td>中</td>
+<td>🟡 低</td>
+<td>DeepSeek 限频+缓存高频题点评；题库预生成点评降低实时调用</td>
+</tr>
+<tr>
+<td>R9</td>
+<td>移动端布局破版/触控区过小</td>
+<td>质量</td>
+<td>中</td>
+<td>中</td>
+<td>🟠 中</td>
+<td>按 Design System 响应式表；按钮/输入最小 44px；真机实测</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>等级：🔴 高（必须前置应对，纳入冲刺首条）、🟠 中（实现时规避）、🟡 低（监控即可）。</p>
+</blockquote>
+<hr>
+<h2>七、验收标准</h2>
+<h3>7.1 功能验收（承接 PRD AC-01~15）</h3>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>验收项</th>
+<th>标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AC-01</td>
+<td>岗位题库分类</td>
+<td>4 行业题库可浏览；行业/难度筛选、搜索可用；意向岗位匹配正确</td>
+</tr>
+<tr>
+<td>AC-02</td>
+<td>全真面试模拟</td>
+<td>普通/压力模式可开启；计时与进度准确；AI 连续提问符合节奏</td>
+</tr>
+<tr>
+<td>AC-03</td>
+<td>语音/文字答题</td>
+<td>双模式可答；语音转写准确率 ≥90%；转写响应 &lt;3s</td>
+</tr>
+<tr>
+<td>AC-04</td>
+<td>实时 AI 点评</td>
+<td>每题返回 5 维评分+等级+三段式点评；语速/口头禅正确</td>
+</tr>
+<tr>
+<td>AC-05</td>
+<td>面试报告生成</td>
+<td>结束自动生成；得分/评级/逐字稿与过程一致</td>
+</tr>
+<tr>
+<td>AC-06</td>
+<td>记录复盘</td>
+<td>记录可回看；薄弱题型标记正确；错题可专项复练</td>
+</tr>
+<tr>
+<td>AC-07</td>
+<td>能力数据看板</td>
+<td>成长曲线/维度统计随练习实时正确更新</td>
+</tr>
+<tr>
+<td>AC-08</td>
+<td>答题模板库</td>
+<td>模板按题型推荐；收藏复用可用</td>
+</tr>
+<tr>
+<td>AC-09</td>
+<td>AI 面试答疑</td>
+<td>提问有流式回答；可收藏至模板库</td>
+</tr>
+<tr>
+<td>AC-10</td>
+<td>帮助中心</td>
+<td>使用指引与 FAQ 可访问；覆盖核心问题</td>
+</tr>
+<tr>
+<td>AC-11</td>
+<td>性能</td>
+<td>API P95 &lt;500ms；点评/转写 &lt;3s；首屏 &lt;2s</td>
+</tr>
+<tr>
+<td>AC-12</td>
+<td>容量</td>
+<td>单用户千条记录查询无卡顿</td>
+</tr>
+<tr>
+<td>AC-13</td>
+<td>兼容性</td>
+<td>主流浏览器近两版无功能错误</td>
+</tr>
+<tr>
+<td>AC-14</td>
+<td>响应式</td>
+<td>桌面/平板/移动布局正常、核心流程可用</td>
+</tr>
+<tr>
+<td>AC-15</td>
+<td>异常兜底</td>
+<td>ASR 失败降级文字；中断可恢复；LLM 超时重试</td>
+</tr>
+</tbody></table>
+<h3>7.2 开发专项验收（代码质量）</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>UI 规范符合度</td>
+<td>零违规 box-shadow；色值 100% 取自令牌；字重仅 400/600；圆角仅四级</td>
+</tr>
+<tr>
+<td>组件复用</td>
+<td>5 大页面复用 <code>App*</code> 基础组件，无重复样式块</td>
+</tr>
+<tr>
+<td>API 契约</td>
+<td>所有接口与第四章契约一致；入参 Pydantic 校验；SSE 字段齐</td>
+</tr>
+<tr>
+<td>数据一致性</td>
+<td>同场面试综合分/等级/分项在报告、看板、历史三处完全一致（自动化校验通过）</td>
+</tr>
+<tr>
+<td>测试</td>
+<td>核心链路（start→answer→evaluate→report）E2E 通过；薄弱标记单测通过</td>
+</tr>
+<tr>
+<td>可演示</td>
+<td><code>npm run dev</code> + <code>uvicorn</code> 一键起；含演示数据；断网降级可用</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>八、开发节奏建议</h2>
+<h3>8.1 5 周排期（个人开发者）</h3>
+<pre><code class="language-mermaid">gantt
+    title 面知 MVP 开发节奏（周视图）
+    dateFormat  YYYY-MM-DD
+    axisFormat  %m/%d
+    section M1 基础&amp;题库
+    脚手架+设计系统        :w1a, 2026-08-24, 3d
+    题库分类+筛选联调       :w1b, after w1a, 4d
+    section M2 面试链路(关键)
+    面试会话状态机          :w2a, 2026-08-31, 2d
+    语音/文字答题+实时点评SSE :w2b, after w2a, 5d
+    section M3 报告&amp;复盘
+    报告生成+记录复盘        :w3a, 2026-09-07, 4d
+    错题本+专项复练          :w3b, after w3a, 3d
+    section M4 数据&amp;辅导
+    能力看板+模板库          :w4a, 2026-09-14, 4d
+    AI 答疑流式             :w4b, after w4a, 3d
+    section M5 打磨&amp;演示
+    帮助中心+响应式+性能      :w5a, 2026-09-21, 4d
+    联调+演示数据+部署        :w5b, after w5a, 3d
+</code></pre>
+<h3>8.2 每日节奏（建议）</h3>
+<ul>
+<li><strong>上午（专注开发）</strong>：攻克当日关键路径任务（如 SSE 点评、状态机）</li>
+<li><strong>下午（联调/UI）</strong>：前后端联调、按 Design System 落地页面组件</li>
+<li><strong>晚间（收尾）</strong>：单测/一致性校验、更新里程碑看板、记录风险</li>
+</ul>
+<h3>8.3 关键路径与并行建议</h3>
+<ul>
+<li><strong>关键路径</strong>：M2（面试会话+实时点评）决定主链路可用性，优先排满、不被其他任务阻塞</li>
+<li><strong>可并行</strong>：M1 题库种子数据（后端）与前端 App Shell 可同步；M4 看板前端可与 M3 复练后端并行</li>
+<li><strong>演示优先</strong>：每一里程碑结束都需「可点开看」；M2 结束即具备「开一场面试」演示能力</li>
+<li><strong>技术债控制</strong>：UI 违规（阴影/硬编码色）即时还，避免末期集中返工</li>
+</ul>
+<h3>8.4 演示准备清单</h3>
+<ul>
+<li><input disabled="" type="checkbox"> 演示账号含 3–5 场历史面试（支撑看板曲线）</li>
+<li><input disabled="" type="checkbox"> 4 行业题库各 ≥3 岗位，标注题型/难度</li>
+<li><input disabled="" type="checkbox"> 普通面 + 压力面各一段录屏脚本</li>
+<li><input disabled="" type="checkbox"> 弱网/ASR 失败降级演示</li>
+<li><input disabled="" type="checkbox"> 一键启动脚本（<code>start.sh</code>：起后端+前端+种库）</li>
+</ul>
+<hr>
+<h2>附录：源文档映射</h2>
+<table>
+<thead>
+<tr>
+<th>本文章节</th>
+<th>源文档依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一 开发总纲</td>
+<td>PRD §1 目标/§6 非功能；Design System 全局规范</td>
+</tr>
+<tr>
+<td>二 里程碑</td>
+<td>PRD §5.1 功能清单优先级 P0/P1/P2</td>
+</tr>
+<tr>
+<td>三 依赖树</td>
+<td>Design System §5–7 组件/布局/响应式；面知-ui-generator page-templates</td>
+</tr>
+<tr>
+<td>四 API 契约</td>
+<td>PRD §4 流程（start→answer→evaluate→report）/§8 架构；FR-01~10</td>
+</tr>
+<tr>
+<td>五 开发规范</td>
+<td>Design System 色彩/字体/间距/圆角/组件铁律</td>
+</tr>
+<tr>
+<td>六 风险矩阵</td>
+<td>PRD 非功能难点 + 个人开发者约束</td>
+</tr>
+<tr>
+<td>七 验收标准</td>
+<td>PRD §7 AC-01~15 直接继承并扩充代码质量项</td>
+</tr>
+<tr>
+<td>八 节奏建议</td>
+<td>PRD 北极星指标 + 低成本数周上线约束</td>
+</tr>
+</tbody></table>
+</div><p style="text-align:center;color:var(--text3);font-size:12px;margin-top:8px">面知 · 开发规划文档 — 生成于 2026-08-20</p></div><script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><script>(function(){var toc=document.getElementById('toc');var h2s=document.querySelectorAll('#content h2');if(!h2s.length){toc.style.display='none';return}var h='目录：';h2s.forEach(function(x,i){var id='sec-'+i;x.id=id;h+='<a href="#'+id+'">'+x.textContent+'</a>';});toc.innerHTML=h;})();(function(){if(typeof mermaid==='undefined')return;mermaid.initialize({startOnLoad:false,theme:'neutral',securityLevel:'loose'});var codes=document.querySelectorAll('pre code.language-mermaid');codes.forEach(function(code){var pre=code.parentNode;var wrap=document.createElement('div');wrap.className='mermaid-wrap';var div=document.createElement('div');div.className='mermaid';div.textContent=code.textContent;wrap.appendChild(div);pre.parentNode.replaceChild(wrap,pre);});mermaid.run({querySelector:'.mermaid'}).catch(function(){});})();</script></body></html>

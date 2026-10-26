@@ -1,0 +1,10 @@
+# 版本约束放宽：确保在 Python 3.13 下可直接使用预编译 wheel，无需源码编译。
+# 安装建议：pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir
+fastapi>=0.111,<1.0
+uvicorn>=0.30,<1.0
+sqlalchemy>=2.0,<3.0
+pydantic>=2.7,<3.0
+pydantic-settings>=2.2,<3.0
+python-multipart>=0.0.9
+requests>=2.32
+reportlab>=4.2,<5.0

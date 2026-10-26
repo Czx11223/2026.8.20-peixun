@@ -1,0 +1,1545 @@
+[
+ {
+  "id": "bytedance-01",
+  "name": "后端开发工程师",
+  "company": "字节跳动",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "项目经历"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "bytedance-02",
+  "name": "算法工程师",
+  "company": "字节跳动",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "项目经历"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "bytedance-03",
+  "name": "前端开发工程师",
+  "company": "字节跳动",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "项目经历"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "bytedance-04",
+  "name": "客户端开发工程师",
+  "company": "字节跳动",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "项目经历"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "bytedance-05",
+  "name": "测试开发工程师",
+  "company": "字节跳动",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "项目经历"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "bytedance-06",
+  "name": "大数据开发工程师",
+  "company": "字节跳动",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "项目经历"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "bytedance-07",
+  "name": "产品经理",
+  "company": "字节跳动",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "项目经历"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "bytedance-08",
+  "name": "数据分析师",
+  "company": "字节跳动",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "项目经历"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "tencent-01",
+  "name": "AI全栈工程师",
+  "company": "腾讯",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "产品分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "tencent-02",
+  "name": "后端开发工程师",
+  "company": "腾讯",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "产品分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "tencent-03",
+  "name": "前端开发工程师",
+  "company": "腾讯",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "产品分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "tencent-04",
+  "name": "产品经理",
+  "company": "腾讯",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "产品分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "tencent-05",
+  "name": "游戏策划",
+  "company": "腾讯",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "产品分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "tencent-06",
+  "name": "游戏客户端开发工程师",
+  "company": "腾讯",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "产品分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "tencent-07",
+  "name": "云产品经理",
+  "company": "腾讯",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "产品分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "tencent-08",
+  "name": "内容运营",
+  "company": "腾讯",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "产品分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "alibaba-01",
+  "name": "Java开发工程师",
+  "company": "阿里巴巴",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "电商运营",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "alibaba-02",
+  "name": "算法工程师",
+  "company": "阿里巴巴",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "电商运营",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "alibaba-03",
+  "name": "前端开发工程师",
+  "company": "阿里巴巴",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "电商运营",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "alibaba-04",
+  "name": "产品经理",
+  "company": "阿里巴巴",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "电商运营",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "alibaba-05",
+  "name": "电商运营",
+  "company": "阿里巴巴",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "电商运营",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "meituan-01",
+  "name": "后端开发工程师",
+  "company": "美团",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "meituan-02",
+  "name": "算法工程师",
+  "company": "美团",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "meituan-03",
+  "name": "产品经理",
+  "company": "美团",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "meituan-04",
+  "name": "配送运营专员",
+  "company": "美团",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖",
+   "行为面试 STAR",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "baidu-01",
+  "name": "算法工程师",
+  "company": "百度",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "算法题",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "baidu-02",
+  "name": "后端开发工程师",
+  "company": "百度",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "算法题",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "baidu-03",
+  "name": "自动驾驶工程师",
+  "company": "百度",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "算法题",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "jd-01",
+  "name": "Java开发工程师",
+  "company": "京东",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖",
+   "物流运营",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "jd-02",
+  "name": "产品经理",
+  "company": "京东",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖",
+   "物流运营",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "jd-03",
+  "name": "物流管培生",
+  "company": "京东",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖",
+   "物流运营",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "netease-01",
+  "name": "游戏策划",
+  "company": "网易",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "游戏策划",
+   "产品分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "netease-02",
+  "name": "游戏开发工程师",
+  "company": "网易",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "游戏策划",
+   "产品分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "netease-03",
+  "name": "产品经理",
+  "company": "网易",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "游戏策划",
+   "产品分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "pdd-01",
+  "name": "后端开发工程师",
+  "company": "拼多多",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖",
+   "电商运营"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "pdd-02",
+  "name": "电商运营专员",
+  "company": "拼多多",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖",
+   "电商运营"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "kuaishou-01",
+  "name": "后端开发工程师",
+  "company": "快手",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖",
+   "产品分析"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "kuaishou-02",
+  "name": "算法工程师",
+  "company": "快手",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖",
+   "产品分析"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "xiaohongshu-01",
+  "name": "产品经理",
+  "company": "小红书",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "产品分析",
+   "社区运营",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "xiaohongshu-02",
+  "name": "内容运营专员",
+  "company": "小红书",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "产品分析",
+   "社区运营",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "bilibili-01",
+  "name": "内容运营专员",
+  "company": "哔哩哔哩",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "内容运营",
+   "产品分析"
+  ],
+  "answer_mode": "voice",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "bilibili-02",
+  "name": "产品经理",
+  "company": "哔哩哔哩",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "内容运营",
+   "产品分析"
+  ],
+  "answer_mode": "voice",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "didi-01",
+  "name": "后端开发工程师",
+  "company": "滴滴出行",
+  "industry": "互联网",
+  "duration": 15,
+  "question_types": [
+   "技术深挖"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "xiaomi-01",
+  "name": "安卓开发工程师",
+  "company": "小米",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "硬件基础",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "xiaomi-02",
+  "name": "MIUI产品经理",
+  "company": "小米",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "硬件基础",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "xiaomi-03",
+  "name": "硬件测试工程师",
+  "company": "小米",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "硬件基础",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "xiaomi-04",
+  "name": "嵌入式开发工程师",
+  "company": "小米",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "硬件基础",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "sgcc-01",
+  "name": "电气工程岗",
+  "company": "国家电网",
+  "industry": "国企",
+  "duration": 25,
+  "question_types": [
+   "综合素养",
+   "专业基础",
+   "时政认知"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "sgcc-02",
+  "name": "信息通信岗",
+  "company": "国家电网",
+  "industry": "国企",
+  "duration": 25,
+  "question_types": [
+   "综合素养",
+   "专业基础",
+   "时政认知"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "sgcc-03",
+  "name": "财务管理岗",
+  "company": "国家电网",
+  "industry": "国企",
+  "duration": 25,
+  "question_types": [
+   "综合素养",
+   "专业基础",
+   "时政认知"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "sgcc-04",
+  "name": "综合管理岗",
+  "company": "国家电网",
+  "industry": "国企",
+  "duration": 25,
+  "question_types": [
+   "综合素养",
+   "专业基础",
+   "时政认知"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "cmcc-01",
+  "name": "网络工程师",
+  "company": "中国移动",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "专业基础",
+   "时政认知"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "cmcc-02",
+  "name": "市场运营岗",
+  "company": "中国移动",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "专业基础",
+   "时政认知"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "cmcc-03",
+  "name": "信息技术岗",
+  "company": "中国移动",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "专业基础",
+   "时政认知"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "petrochina-01",
+  "name": "油气储运岗",
+  "company": "中国石油",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "专业基础",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "petrochina-02",
+  "name": "安全管理岗",
+  "company": "中国石油",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "专业基础",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "sinopec-01",
+  "name": "化工工艺岗",
+  "company": "中国石化",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "专业基础",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "sinopec-02",
+  "name": "安全环保岗",
+  "company": "中国石化",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "专业基础",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "cscec-01",
+  "name": "土木工程师",
+  "company": "中国建筑",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "专业基础",
+   "工程管理",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "cscec-02",
+  "name": "工程管理岗",
+  "company": "中国建筑",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "专业基础",
+   "工程管理",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "tobacco-01",
+  "name": "综合管理岗",
+  "company": "中国烟草",
+  "industry": "国企",
+  "duration": 15,
+  "question_types": [
+   "综合素养",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "tobacco-02",
+  "name": "市场营销岗",
+  "company": "中国烟草",
+  "industry": "国企",
+  "duration": 15,
+  "question_types": [
+   "综合素养",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "icbc-01",
+  "name": "金融科技岗",
+  "company": "工商银行",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "金融科技",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "icbc-02",
+  "name": "综合业务岗",
+  "company": "工商银行",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "金融科技",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "icbc-03",
+  "name": "客户经理岗",
+  "company": "工商银行",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "金融科技",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "microsoft-01",
+  "name": "软件开发工程师",
+  "company": "微软中国",
+  "industry": "外企",
+  "duration": 25,
+  "question_types": [
+   "英文面试",
+   "技术深挖",
+   "系统设计"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "microsoft-02",
+  "name": "云计算工程师",
+  "company": "微软中国",
+  "industry": "外企",
+  "duration": 25,
+  "question_types": [
+   "英文面试",
+   "技术深挖",
+   "系统设计"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "apple-01",
+  "name": "软件工程师",
+  "company": "苹果中国",
+  "industry": "外企",
+  "duration": 25,
+  "question_types": [
+   "英文面试",
+   "技术深挖",
+   "硬件基础"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "tesla-01",
+  "name": "工艺工程师",
+  "company": "特斯拉中国",
+  "industry": "外企",
+  "duration": 20,
+  "question_types": [
+   "英文面试",
+   "专业基础",
+   "供应链"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "pg-01",
+  "name": "供应链管培生",
+  "company": "宝洁",
+  "industry": "外企",
+  "duration": 20,
+  "question_types": [
+   "行为面试 STAR",
+   "英文面试",
+   "供应链"
+  ],
+  "answer_mode": "voice",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "pg-02",
+  "name": "市场管培生",
+  "company": "宝洁",
+  "industry": "外企",
+  "duration": 20,
+  "question_types": [
+   "行为面试 STAR",
+   "英文面试",
+   "供应链"
+  ],
+  "answer_mode": "voice",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "unilever-01",
+  "name": "市场管培生",
+  "company": "联合利华",
+  "industry": "外企",
+  "duration": 20,
+  "question_types": [
+   "行为面试 STAR",
+   "市场分析"
+  ],
+  "answer_mode": "voice",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "unilever-02",
+  "name": "销售管培生",
+  "company": "联合利华",
+  "industry": "外企",
+  "duration": 20,
+  "question_types": [
+   "行为面试 STAR",
+   "市场分析"
+  ],
+  "answer_mode": "voice",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "loreal-01",
+  "name": "市场管培生",
+  "company": "欧莱雅中国",
+  "industry": "外企",
+  "duration": 20,
+  "question_types": [
+   "市场分析",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "voice",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "big4-01",
+  "name": "审计助理",
+  "company": "四大会计师事务所",
+  "industry": "外企",
+  "duration": 25,
+  "question_types": [
+   "案例分析",
+   "英文面试",
+   "专业基础"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "big4-02",
+  "name": "咨询顾问",
+  "company": "四大会计师事务所",
+  "industry": "外企",
+  "duration": 25,
+  "question_types": [
+   "案例分析",
+   "英文面试",
+   "专业基础"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "big4-03",
+  "name": "税务助理",
+  "company": "四大会计师事务所",
+  "industry": "外企",
+  "duration": 25,
+  "question_types": [
+   "案例分析",
+   "英文面试",
+   "专业基础"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "ant-01",
+  "name": "后端开发工程师",
+  "company": "蚂蚁集团",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "金融风控"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "ant-02",
+  "name": "算法工程师",
+  "company": "蚂蚁集团",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "金融风控"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "ant-03",
+  "name": "金融风控岗",
+  "company": "蚂蚁集团",
+  "industry": "互联网",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "金融风控"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "cmb-01",
+  "name": "金融科技岗",
+  "company": "招商银行",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "金融科技",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "cmb-02",
+  "name": "零售客户经理",
+  "company": "招商银行",
+  "industry": "国企",
+  "duration": 20,
+  "question_types": [
+   "综合素养",
+   "金融科技",
+   "情景模拟"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "cicc-01",
+  "name": "投行分析员",
+  "company": "中金公司",
+  "industry": "外企",
+  "duration": 25,
+  "question_types": [
+   "专业基础",
+   "案例分析",
+   "英文面试"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "huawei-01",
+  "name": "AI全栈工程师",
+  "company": "华为",
+  "industry": "制造业",
+  "duration": 25,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "综合素养",
+   "压力测试"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "huawei-02",
+  "name": "通信研发工程师",
+  "company": "华为",
+  "industry": "制造业",
+  "duration": 25,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "综合素养",
+   "压力测试"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "huawei-03",
+  "name": "嵌入式软件工程师",
+  "company": "华为",
+  "industry": "制造业",
+  "duration": 25,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "综合素养",
+   "压力测试"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "huawei-04",
+  "name": "硬件工程师",
+  "company": "华为",
+  "industry": "制造业",
+  "duration": 25,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "综合素养",
+   "压力测试"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "huawei-05",
+  "name": "海外销售经理",
+  "company": "华为",
+  "industry": "制造业",
+  "duration": 25,
+  "question_types": [
+   "AI全栈",
+   "技术深挖",
+   "综合素养",
+   "压力测试"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "dji-01",
+  "name": "嵌入式软件工程师",
+  "company": "大疆",
+  "industry": "制造业",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "专业基础"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "dji-02",
+  "name": "算法工程师",
+  "company": "大疆",
+  "industry": "制造业",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "专业基础"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "byd-01",
+  "name": "电池研发工程师",
+  "company": "比亚迪",
+  "industry": "制造业",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "专业基础",
+   "市场分析"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "byd-02",
+  "name": "整车研发工程师",
+  "company": "比亚迪",
+  "industry": "制造业",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "专业基础",
+   "市场分析"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "catl-01",
+  "name": "电池系统工程师",
+  "company": "宁德时代",
+  "industry": "制造业",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "专业基础"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "catl-02",
+  "name": "材料研发工程师",
+  "company": "宁德时代",
+  "industry": "制造业",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "专业基础"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "hikvision-01",
+  "name": "算法工程师",
+  "company": "海康威视",
+  "industry": "制造业",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "算法基础"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "hikvision-02",
+  "name": "嵌入式工程师",
+  "company": "海康威视",
+  "industry": "制造业",
+  "duration": 20,
+  "question_types": [
+   "技术深挖",
+   "算法基础"
+  ],
+  "answer_mode": "text",
+  "mode": "pressure",
+  "total_questions": 10
+ },
+ {
+  "id": "yili-01",
+  "name": "市场管培生",
+  "company": "伊利集团",
+  "industry": "快消",
+  "duration": 15,
+  "question_types": [
+   "市场分析",
+   "情景模拟"
+  ],
+  "answer_mode": "voice",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "yili-02",
+  "name": "销售管培生",
+  "company": "伊利集团",
+  "industry": "快消",
+  "duration": 15,
+  "question_types": [
+   "市场分析",
+   "情景模拟"
+  ],
+  "answer_mode": "voice",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "mars-01",
+  "name": "销售管培生",
+  "company": "玛氏中国",
+  "industry": "快消",
+  "duration": 15,
+  "question_types": [
+   "行为面试 STAR",
+   "供应链"
+  ],
+  "answer_mode": "voice",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "mars-02",
+  "name": "供应链管培生",
+  "company": "玛氏中国",
+  "industry": "快消",
+  "duration": 15,
+  "question_types": [
+   "行为面试 STAR",
+   "供应链"
+  ],
+  "answer_mode": "voice",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "wuxiapptec-01",
+  "name": "药物研发岗",
+  "company": "药明康德",
+  "industry": "医药",
+  "duration": 20,
+  "question_types": [
+   "专业基础",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "wuxiapptec-02",
+  "name": "分析化学岗",
+  "company": "药明康德",
+  "industry": "医药",
+  "duration": 20,
+  "question_types": [
+   "专业基础",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "admin-01",
+  "name": "人力资源专员",
+  "company": "通用行政",
+  "industry": "文职",
+  "duration": 15,
+  "question_types": [
+   "情景模拟",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ },
+ {
+  "id": "admin-02",
+  "name": "行政管理专员",
+  "company": "通用行政",
+  "industry": "文职",
+  "duration": 15,
+  "question_types": [
+   "情景模拟",
+   "行为面试 STAR"
+  ],
+  "answer_mode": "text",
+  "mode": "normal",
+  "total_questions": 8
+ }
+]
